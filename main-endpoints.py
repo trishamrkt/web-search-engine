@@ -1,5 +1,7 @@
 from bottle import *
 
+TEMPLATE_PATH.insert(0,'/views/css');
+
 @route('/')
 def root_path():
     return template('index')

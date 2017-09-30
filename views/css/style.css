@@ -1,0 +1,11 @@
+body {
+  text-align: center;
+  font-family: Overpass Mono;
+}
+
+#main-logo {
+  margin-top: 20%;
+  font-size: 50pt;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
