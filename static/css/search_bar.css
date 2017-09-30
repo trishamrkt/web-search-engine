@@ -6,15 +6,19 @@
 }
 
 #main-submit {
-  font-size: 12pt;
+
+  font-size: 10pt;
   font-family: Open Sans;
-  color: white;
-  margin-top: 15px;
+  color: #777777;
+  padding: 0.5%;
+  margin-top: 25px;
   border: none;
-  background-color: #515151;
+  background-color: #e0e0e0;
 }
 
 #main-submit:hover {
-  background-color: #70abaf;
+  background-color: #F3F3F3;
+  color: #362222;
+  border: 1px solid #e0e0e0;
   transition: 0.3s;
 }
