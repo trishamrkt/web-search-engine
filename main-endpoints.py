@@ -4,6 +4,7 @@ TEMPLATE_PATH.insert(0,'/views/css');
 
 @route('/')
 def root_path():
+    
     return template('index')
 
 @get('/static/css/<filepath:re:.*\.css>')
