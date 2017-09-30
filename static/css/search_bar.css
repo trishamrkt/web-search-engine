@@ -1,0 +1,20 @@
+#main-search-bar {
+  font-size: 15pt;
+  font-family: Open Sans;
+  outline: none;
+  width: 30%;
+}
+
+#main-submit {
+  font-size: 12pt;
+  font-family: Open Sans;
+  color: white;
+  margin-top: 15px;
+  border: none;
+  background-color: #515151;
+}
+
+#main-submit:hover {
+  background-color: #70abaf;
+  transition: 0.3s;
+}
