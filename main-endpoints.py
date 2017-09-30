@@ -1,12 +1,11 @@
 from bottle import *
-from crawlerservice.Crawler import *
+from crawlerservice.CrawlerService import *
 
-crawler = Crawler();
+crawlerService = CrawlerService();
 
 # ROOT PATH OF APPLICATION
 @route('/')
 def root_path():
-    crawler.get_resolved_inverted_index();
     return template('index')
 
 # QUERY ENDPOINTS
