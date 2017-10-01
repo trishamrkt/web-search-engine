@@ -53,16 +53,22 @@ class WebScrape():
         
         # exclude words containing the following characters
         for word in list:
-            if (';' not in word) and ('&' not in word) and ('<' not in word) and ('>' not in word) \
-            and ('\"' not in word) and ('-' not in word) and ('(' not in word) and (')' not in word) \
-            and ('\\' not in word) and ('/' not in word) and ('}' not in word) and ('{' not in word) \
-            and ('=' not in word) and ('$' not in word):
-                array.append(self.__clean_up_string(word))
+            if self.__is_valid_word(word):
+                array.append(self.__cleanup_word(word))
         
         return 
     
     # further polish words, excluding certain characters within words (such as commas, etc.)
-    def __clean_up_string(self, old_word):
+    def __cleanup_word(self, old_word):
         new_word = old_word.replace(',', '').replace('.', '').replace('<', '').replace('>', '').replace('?', '');
         return new_word
+    
+    def __is_valid_word(self, word):
+         if (';' not in word) and ('&' not in word) and ('<' not in word) and ('>' not in word) \
+            and ('\"' not in word) and ('-' not in word) and ('(' not in word) and (')' not in word) \
+            and ('\\' not in word) and ('/' not in word) and ('}' not in word) and ('{' not in word) \
+            and ('=' not in word) and ('$' not in word):
+             return False;
+         else:
+             return True;
         
