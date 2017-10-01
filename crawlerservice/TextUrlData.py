@@ -7,10 +7,10 @@ class TextUrlData():
         self.docId_to_url = []; 
         self.words_per_document = [];
         self.wordId_to_docIds = {};
-        self.word_to_url = {}; 
+        self.word_to_url = {};
     
-    def getWordId_to_Word(self):
-        return self.getWordId_to_Word; 
+    def getWordId_to_word(self):
+        return self.wordId_to_word; 
     
     def getWords_per_document(self):
         return self.words_per_document;

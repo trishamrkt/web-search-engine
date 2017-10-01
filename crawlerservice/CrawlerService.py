@@ -8,40 +8,24 @@ class CrawlerService():
     
     def __init__(self):
         self.textData = TextUrlData();
-        self.crawler = Crawler(); 
         self.webscraper = WebScrape(self.textData);
+        self.crawler = Crawler(self.textData); 
         
         self.generate_docId_to_url();
-        self.generate_word_to_url();
-        self.generate_wordId_to_docIds();
-        self.generate_wordId_to_word();
-        
         self.webscraper.scrape_the_web();
-        
-        
-    def generate_wordId_to_word(self):
-        wordId_to_word = self.textData.getWordId_to_Word();
-        
-        return
+        self.get_resolved_inverted_index();
     
     def generate_docId_to_url(self):
         docId_to_url = self.textData.getDocId_to_url();
         self.__read_input_file_helper(docId_to_url); 
         
-        # Testing function
-        print self.textData.docId_to_url
-        
         return
     
-    def generate_wordId_to_docIds(self):
-        
-        return 
-    
-    def generate_word_to_url(self):
+    def get_resolved_inverted_index(self): 
+#         print self.crawler.get_resolved_inverted_index();
         
         return
-    
-    
+        
     # Private Helper Functions
     
     # Reads input file from base path of application
