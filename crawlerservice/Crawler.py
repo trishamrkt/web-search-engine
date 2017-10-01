@@ -9,10 +9,8 @@ class Crawler():
         
     def get_resolved_inverted_index(self):
         resolved_inverted_index = {};
-        
-        print self.wordId_to_word[1];
-        print self.docId_to_url[0];
-        
+
+        # mapping real words and doc urls with their id's and putting them in a dictionary (as specified for Lab1)
         for word_id, doc_ids in self.wordId_to_docIds.iteritems():
             word = self.wordId_to_word[word_id]; 
             docs = [];
