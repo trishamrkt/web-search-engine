@@ -1,7 +1,9 @@
 from bottle import *
+from crawlerservice.CrawlerService import *
 from toptwenty.toptwenty import TopTwenty
 from toptwenty.word_data import WordData
 
+crawlerService = CrawlerService();
 most_popular = TopTwenty();
 
 @route('/')
