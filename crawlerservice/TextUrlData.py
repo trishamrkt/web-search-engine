@@ -3,24 +3,24 @@
 class TextUrlData():
     
     def __init__(self): 
-        self.wordId_to_word = []; 
-        self.docId_to_url = []; 
-        self.words_per_document = [];
-        self.wordId_to_docIds = {};
-        self.word_to_url = {};
+        self.__wordId_to_word = []; 
+        self.__docId_to_url = []; 
+        self.__words_per_document = [];
+        self.__wordId_to_docIds = {};
+        self.__word_to_url = {};
     
     def getWordId_to_word(self):
-        return self.wordId_to_word; 
+        return self.__wordId_to_word; 
     
     def getWords_per_document(self):
-        return self.words_per_document;
+        return self.__words_per_document;
     
     def getDocId_to_url(self):
-        return self.docId_to_url; 
+        return self.__docId_to_url;
     
     def getWordId_to_DocIds(self): 
-        return self.wordId_to_docIds; 
+        return self.__wordId_to_docIds; 
     
     def getWord_to_url(self): 
-        return self.word_to_url; 
+        return self.__word_to_url; 
     
