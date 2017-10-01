@@ -8,28 +8,22 @@ class CrawlerService():
     
     def __init__(self):
         # instantiates data / service classes
-        self.textData = TextUrlData();
-        self.webscraper = WebScrape(self.textData);
-        self.crawler = Crawler(self.textData); 
+        self.__textData = TextUrlData();
+        self.__webscraper = WebScrape(self.__textData);
+        self.__crawler = Crawler(self.__textData); 
         
         # loads all data structures by calling lower tier helper classes
-        self.generate_docId_to_url();
-        self.generate_webscraping_datastructures();
-        self.get_resolved_inverted_index();
-    
-    def generate_docId_to_url(self):
-        docId_to_url = self.textData.getDocId_to_url();
-        self.__read_input_file_helper(docId_to_url); 
-        return
-    
-    def generate_webscraping_datastructures(self):
-        self.webscraper.scrape_the_web();
-        return
+        self.__generate_data_structures();
+
     
     def get_resolved_inverted_index(self): 
-        inverted_index = self.crawler.get_resolved_inverted_index();
+        inverted_index = self.__crawler.get_resolved_inverted_index();
         return inverted_index;
-        
+    
+    def get_inverted_index(self):
+        return self.__textData.getWordId_to_DocIds();
+    
+    
     # Private Helper Functions
     # Reads input file from base path of application
     def __read_input_file_helper(self, docId_to_url):
@@ -38,4 +32,15 @@ class CrawlerService():
                 docId_to_url.append(line.strip());
         return docId_to_url;
     
+    def __generate_data_structures(self):
+        self.__generate_docId_to_url();
+        self.__generate_webscraping_datastructures();
     
+    def __generate_docId_to_url(self):
+        docId_to_url = self.__textData.getDocId_to_url();
+        self.__read_input_file_helper(docId_to_url); 
+        return
+    
+    def __generate_webscraping_datastructures(self):
+        self.__webscraper.scrape_the_web();
+        return
