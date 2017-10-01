@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import requests 
+import requests as requests
 
 # Beautiful Soup API calls
 class WebScrape():
@@ -44,9 +44,9 @@ class WebScrape():
         return
     
     def __call_beautiful_soup(self, url, array):
-        r = requests.get(url)
-        data = r.content
-        soup = BeautifulSoup(data)
+        r = requests.get(url);
+        data = r.content;
+        soup = BeautifulSoup(data, 'html.parser');
 
         everything = soup.findAll();       
         list = everything[0].prettify().split(); 
