@@ -1,20 +1,22 @@
 from TextUrlData import *; 
-from Crawler import *; 
-from WebScrape import *; 
+from Crawler import *;
+from WebScrape import *;
 
 # this class provides all methods for loading the data structures
 
 class CrawlerService():
     
     def __init__(self):
-        self.textData = TextUrlData(); 
+        self.textData = TextUrlData();
         self.crawler = Crawler(); 
-        self.webscraper = WebScrape();
+        self.webscraper = WebScrape(self.textData);
         
-        self.generate_docId_to_url(); 
-        self.generate_word_to_url(); 
+        self.generate_docId_to_url();
+        self.generate_word_to_url();
         self.generate_wordId_to_docIds();
-        self.generate_wordId_to_word(); 
+        self.generate_wordId_to_word();
+        
+        self.webscraper.scrape_the_web();
         
         
     def generate_wordId_to_word(self):
@@ -48,6 +50,6 @@ class CrawlerService():
         with open('input.txt') as inputfile:
             for line in inputfile:
                 docId_to_url.append(line.strip());
-        return docId_to_url; 
+        return docId_to_url;
     
     
