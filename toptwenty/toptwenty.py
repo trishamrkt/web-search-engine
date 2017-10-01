@@ -45,11 +45,11 @@ class TopTwenty():
                 self.top[word] = new_word_count;
                 del self.top[min_key]
 
-    # Puts top twenty dictionary data into an HTML table 
+    # Puts top twenty dictionary data into an HTML table
     def get_table_html(self):
-        html = '<h1>top 20 searched words:</h1><table><tr><td>word</td><td>count</td></tr>'
+        html = '<h1 class="table-header">top 20 searched words:</h1><table class="word-table"><tr class="col-title"><th>word</th><th>count</th></tr>'
         for key, value in sorted(self.top.items(), key=lambda (k,v): (v,k), reverse=True):
-            html = html + '<tr><td>' + key + '</td><td>' + str(value) + '</td></tr>'
+            html = html + '<tr class="word-data"><td class="word">' + key + '</td><td class="count">' + str(value) + '</td></tr>'
             print key + " " + str(self.top[key]);
 
         html = html + "</table>"

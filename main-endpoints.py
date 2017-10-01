@@ -14,7 +14,9 @@ def word_count():
     word_data = WordData();
 
     # Gets HTML for table with words and their word counts
-    html = word_data.get_table_html(search_string, most_popular);
+    html = '<link type="text/css" rel="stylesheet" href="/static/css/word_table_data.css"\>'
+    html += "<link href='https://fonts.googleapis.com/css?family=Assistant' rel='stylesheet'>"
+    html = html + word_data.get_table_html(search_string, most_popular);
     html = html + most_popular.get_table_html();
     return html;
 
