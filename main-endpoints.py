@@ -1,4 +1,8 @@
 from bottle import *
+from toptwenty.toptwenty import TopTwenty
+from toptwenty.word_data import WordData
+
+most_popular = TopTwenty();
 
 @route('/')
 def root_path():
@@ -6,28 +10,12 @@ def root_path():
 
 @route('/query')
 def word_count():
-    word_data = {};
     search_string = request.query['keywords'];
-    html = '<link type="text/css" rel="stylesheet" href="/static/css/style.css"\>'
+    word_data = WordData();
 
-    html = html + '<h1>Search for ' + search_string + '</h1>';
-    html = html + '<table>'
-    html = html + '<tr><td>Word</td><td>Count</td></tr>'
-
-    keywords = search_string.split(' ');
-
-    # Put words and word count into dictionary
-    for word in keywords:
-        if word in word_data.keys():
-            word_data[word] += 1;
-        else:
-            word_data[word] = 1;
-
-    # Create HTML table with words and their word counts
-    for key in word_data.keys():
-        html = html + '<tr><td>' + key + '</td>' + '<td>' + str(word_data[key]) + '</td></tr>'
-
-    html = html + '</table>'
+    # Gets HTML for table with words and their word counts
+    html = word_data.get_table_html(search_string, most_popular);
+    html = html + most_popular.get_table_html();
     return html;
 
 @get('/static/css/<filepath:re:.*\.css>')
