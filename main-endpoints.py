@@ -6,13 +6,9 @@ from toptwenty.word_data import WordData
 crawlerService = CrawlerService();
 most_popular = TopTwenty();
 
-@route('/')
-def root_path():
-    return template('index')
-
-@route('/query')
+# Returns HTML for results page 
 def word_count():
-    search_string = request.query['keywords'];
+    search_string = request.query['keywords'].lower();
     word_data = WordData();
 
     # Gets HTML for table with words and their word counts
@@ -22,6 +18,14 @@ def word_count():
     html = html + word_data.get_table_html(search_string.strip(), most_popular);
     html = html + most_popular.get_table_html();
     return html;
+
+@route('/')
+def root_path():
+    if request.query_string == '':
+        return template('index')
+    else:
+        return word_count();
+
 
 @get('/static/css/<filepath:re:.*\.css>')
 def static(filepath):
