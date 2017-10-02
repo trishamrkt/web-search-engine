@@ -50,7 +50,6 @@ class TopTwenty():
         html = '<h1 class="table-header">top 20 searched words:</h1><table class="word-table"><tr class="col-title"><th>word</th><th>count</th></tr>'
         for key, value in sorted(self.top.items(), key=lambda (k,v): (v,k), reverse=True):
             html = html + '<tr class="word-data"><td class="word">' + key + '</td><td class="count">' + str(value) + '</td></tr>'
-            print key + " " + str(self.top[key]);
 
         html = html + "</table>"
         return html
