@@ -15,7 +15,7 @@ class CrawlerService():
         # loads all data structures by calling lower tier helper classes
         self.__generate_data_structures();
 
-    
+
     def get_resolved_inverted_index(self): 
         inverted_index = self.__crawler.get_resolved_inverted_index();
         return inverted_index;
@@ -27,9 +27,11 @@ class CrawlerService():
     # Private Helper Functions
     # Reads input file from base path of application
     def __read_input_file_helper(self, docId_to_url):
-        with open('input.txt') as inputfile:
-            for line in inputfile:
-                docId_to_url.append(line.strip());
+        with open('url.txt') as inputfile:
+            for url in inputfile:
+                if not self.__is_doc_already_scanned(url.strip(), docId_to_url):
+                    docId_to_url.append(url.strip());
+        
         return docId_to_url;
     
     def __generate_data_structures(self):
@@ -44,3 +46,9 @@ class CrawlerService():
     def __generate_webscraping_datastructures(self):
         self.__webscraper.scrape_the_web();
         return
+    
+    def __is_doc_already_scanned(self, url, docId_to_url):
+        if url in docId_to_url:
+            return True; 
+        else:
+            return False;
