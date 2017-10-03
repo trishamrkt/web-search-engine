@@ -1,4 +1,4 @@
-from toptwenty import TopTwenty
+from ResultsPageServices import TopTwenty
 
 # This class does parses the keywords when the user inputs a search string
 class WordData():

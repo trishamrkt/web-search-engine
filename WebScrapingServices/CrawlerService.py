@@ -15,7 +15,6 @@ class CrawlerService():
         # loads all data structures by calling lower tier helper classes
         self.__generate_data_structures();
 
-
     def get_resolved_inverted_index(self): 
         inverted_index = self.__crawler.get_resolved_inverted_index();
         return inverted_index;
