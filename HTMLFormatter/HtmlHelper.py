@@ -1,4 +1,4 @@
-from toptwenty.word_data import WordData
+from ResultsPageServices.WordData import WordData
 
 # Returns HTML for results page
 def results_html(searchString, mostPopular):
