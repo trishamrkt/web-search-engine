@@ -22,9 +22,9 @@ class WordData():
                 self.word_data[word] = 1;
 
         # Create HTML table with words and their word counts
-        for key in self.word_data.keys():
-            all_words.add_word(key, self.word_data[key]);
-            self.html = self.html + '<tr class="word-data"><td class="word">' + key + '</td>' + '<td class="count">' + str(self.word_data[key]) + '</td></tr>'
+        for word in set(keywords):
+            all_words.add_word(word, self.word_data[word]);
+            self.html = self.html + '<tr class="word-data"><td class="word">' + word + '</td>' + '<td class="count">' + str(self.word_data[word]) + '</td></tr>'
 
         self.html = self.html + '</table>'
         return self.html;
