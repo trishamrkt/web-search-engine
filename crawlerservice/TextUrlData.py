@@ -9,6 +9,7 @@ class TextUrlData():
         self.__wordId_to_docIds = {};
         self.__word_to_url = {};
     
+    
     def getWordId_to_word(self):
         return self.__wordId_to_word; 
     
