@@ -47,7 +47,7 @@ class TopTwenty():
 
     # Puts top twenty dictionary data into an HTML table
     def get_table_html(self):
-        html = '<h1 class="table-header">top 20 searched words:</h1><table class="word-table"><tr class="col-title"><th>word</th><th>count</th></tr>'
+        html = '<h1 class="table-header">top 20 searched words:</h1><table class="word-table" id="history"><tr class="col-title"><th>word</th><th>count</th></tr>'
         for key, value in sorted(self.top.items(), key=lambda (k,v): (v,k), reverse=True):
             html = html + '<tr class="word-data"><td class="word">' + key + '</td><td class="count">' + str(value) + '</td></tr>'
 
