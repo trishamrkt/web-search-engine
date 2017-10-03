@@ -70,7 +70,8 @@ class WebScrape():
             and ('-' not in word) and ('(' not in word) and (')' not in word) and ('_' not in word) \
             and ('\\' not in word) and ('/' not in word) and ('}' not in word) and ('{' not in word) \
             and ('=' not in word) and ('$' not in word) and ('en' not in word) and ('meta' not in word) \
-            and ('charset' not in word) and ('script' not in word) and ('#' not in word) and ('=' not in word):
+            and ('charset' not in word) and ('script' not in word) and ('#' not in word) and ('=' not in word) \
+            and ('|' not in word):
              return True;
          else:
              return False;
