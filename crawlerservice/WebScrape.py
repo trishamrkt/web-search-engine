@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests as requests
+import re
 
 # Beautiful Soup API calls
 class WebScrape():
@@ -15,7 +16,7 @@ class WebScrape():
         
         # load all words of one url into an array (separation by spaces), and is contained in a bigger array indexed by document ids
         for url in self.__docId_to_url:
-            array = []; 
+            array = [];
             self.__call_beautiful_soup(url, array);
             self.__words_per_document.append(array);
         
@@ -43,6 +44,7 @@ class WebScrape():
         
         return
     
+    
     def __call_beautiful_soup(self, url, array):
         r = requests.get(url);
         data = r.content;
@@ -56,7 +58,7 @@ class WebScrape():
             if self.__is_valid_word(word):
                 array.append(self.__cleanup_word(word))
         
-        return 
+        return
     
     # further polish words, excluding certain characters within words (such as commas, etc.)
     def __cleanup_word(self, old_word):
@@ -65,10 +67,14 @@ class WebScrape():
     
     def __is_valid_word(self, word):
          if (';' not in word) and ('&' not in word) and ('<' not in word) and ('>' not in word) \
-            and ('\"' not in word) and ('-' not in word) and ('(' not in word) and (')' not in word) \
+            and ('-' not in word) and ('(' not in word) and (')' not in word) and ('_' not in word) \
             and ('\\' not in word) and ('/' not in word) and ('}' not in word) and ('{' not in word) \
-            and ('=' not in word) and ('$' not in word):
-             return False;
-         else:
+            and ('=' not in word) and ('$' not in word) and ('en' not in word) and ('meta' not in word) \
+            and ('charset' not in word) and ('script' not in word) and ('#' not in word) and ('=' not in word):
              return True;
-        
+         else:
+             return False;
+    
+    def __parse_document(self, document):
+        document = re.sub('<([^>]*)>', '', document.prettify());
+        return document;
