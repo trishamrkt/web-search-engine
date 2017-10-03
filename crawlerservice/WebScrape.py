@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests as requests
+import re
 
 # Beautiful Soup API calls
 class WebScrape():
@@ -65,10 +66,15 @@ class WebScrape():
     
     def __is_valid_word(self, word):
          if (';' not in word) and ('&' not in word) and ('<' not in word) and ('>' not in word) \
-            and ('\"' not in word) and ('-' not in word) and ('(' not in word) and (')' not in word) \
+            and ('-' not in word) and ('(' not in word) and (')' not in word) and ('_' not in word) \
             and ('\\' not in word) and ('/' not in word) and ('}' not in word) and ('{' not in word) \
-            and ('=' not in word) and ('$' not in word):
-             return False;
-         else:
+            and ('=' not in word) and ('$' not in word) and ('en' not in word) and ('meta' not in word) \
+            and ('charset' not in word) and ('script' not in word) and ('#' not in word) and ('=' not in word):
              return True;
-        
+         else:
+             return False;
+    
+    def __parse_document(self, document):
+        document = re.sub('<([^>]*)>', '', document.prettify());
+        return document;
+      

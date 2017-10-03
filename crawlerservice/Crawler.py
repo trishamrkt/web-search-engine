@@ -20,5 +20,4 @@ class Crawler():
             
             resolved_inverted_index[word] = docs;
         
-        print resolved_inverted_index;    
         return resolved_inverted_index;
