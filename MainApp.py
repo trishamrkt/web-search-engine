@@ -18,7 +18,9 @@ def root_path():
 def static(filepath):
     return static_file(filepath, root='static/css')
 
+@get ('/static/Images/<filepath:re:.*\.png>')
+def static_img(filepath):
+    return static_file(filepath, root='static/Images')
 
 if __name__ == '__main__':
     run(host='localhost', port=8000, debug=True);
-

@@ -7,34 +7,5 @@ body {
   font-size: 0;
   font-family: Futura;
   padding-bottom: 0;
-  margin-bottom: 1%;
-}
-
-.logo-letters {
-  font-size: 60pt;
-  display: inline-block;
-}
-
-#g-logo {
-  color: #4285f4;
-}
-
-#o-logo {
-  color: #db4437;
-}
-
-#o2-logo {
-  color: #f4b400;
-}
-
-#g2-logo {
-  color: #4285f4;
-}
-
-#a-logo {
-  color: #0f9d58;
-}
-
-#o3-logo {
-  color: #db4437;
+  margin-bottom: 0;
 }
