@@ -28,3 +28,26 @@ RUNNING WEB APPLICATION:
 -------------------------------------------------
 TESTING:
 -------------------------------------------------
+- There are two files used for testing the application, one for front-end and
+one for back-end.
+
+Front-end:
+- Tests the results obtained from the user's input query
+    (ie words and their word counts)
+- Tests the history of user inputs
+    (ie correctness of the top twenty searched keywords)
+
+Back-end:
+- Tests get_inverted_index() and get_resolved_inverted_index() functions.
+
+------------------------------------------------
+How to Test:
+------------------------------------------------
+1. On the command line, navigate to the project directory.
+    $ cd /path/to/project/directory
+2. Testing Front-end and Back-end functionalities
+   Run the following commands:
+a) Front-end:
+    $ python -m UnitTests.ResultsPageServicesTest
+b) Back-end:
+    $ python -m UnitTests.WebScrapingServicesTest
