@@ -79,9 +79,34 @@ class ResultsPageServicesTest(unittest.TestCase):
         self.assertEqual(expected, actual)
         return
 
-    def test_history_data(self):
+    # Simple test - multiple string inputs with duplicate words
+    def test_history_one(self):
         test_strings = ['Hello world', 'hello hello hello', 'world', 'thank you']
         expected_result = {'hello' : 4, 'world' : 2, 'thank' : 1, 'you' : 1}
+        self.history_test_template(test_strings, expected_result);
+        return
+
+    # > 20 unique word inputs - only the top 20 most frequent are in expected dict
+    # 1 only displayed onces, 2-21 displayed > 1 so they should be in the dict
+    def test_history_two(self):
+        test_strings = ['1', '2 2', '3 3', '4 4', '5 5', '6 6', '7 7', '8 8', '9 9', '10 10', '11 11',
+                        '12 12', '13 13', '14 14', '15 15', '16 16', '17 17', '18 18', '19 19', '20', '20', '20 20 20 20 20 20', '21 21']
+        expected_result = {'2' : 2, '3' : 2, '4' : 2, '5' : 2, '6' : 2, '7' : 2, '8' : 2, '9' : 2, '10' : 2, '11' : 2,
+                        '12' : 2, '13' : 2, '14' : 2, '15' : 2, '16' : 2, '17' : 2, '18' : 2, '19' : 2, '20': 8, '21' : 2}
+        self.history_test_template(test_strings, expected_result);
+        return
+
+    # No inputs strings
+    def test_history_three(self):
+        test_strings = []
+        expected_result = {}
+        self.history_test_template(test_strings, expected_result);
+        return
+
+    # All empty strings/all whitespace
+    def test_history_four(self):
+        test_strings = ['', '', '    ', ''];
+        expected_result = {};
         self.history_test_template(test_strings, expected_result);
         return
 
