@@ -17,7 +17,7 @@ class WebScrape():
         # load all words of one url into an array (separation by spaces), and is contained in a bigger array indexed by document ids
         for url in self.__docId_to_url:
             array = [];
-            self.__call_beautiful_soup(url, array);
+            array = self.__call_beautiful_soup(url, array);
             self.__words_per_document.append(array);
         
         # 1. separate words into individual indices, keeping uniqueness
@@ -41,24 +41,32 @@ class WebScrape():
                     index = self.__wordId_to_word.index(word);
                     if self.__words_per_document.index(document) not in self.__wordId_to_docIds[index]:
                         self.__wordId_to_docIds[index].add(doc_id);
-        
+            
         return
-    
     
     def __call_beautiful_soup(self, url, array):
         r = requests.get(url);
         data = r.content;
         soup = BeautifulSoup(data, 'html.parser');
-
-        everything = soup.findAll();       
-        list = everything[0].prettify().split(); 
         
-        # exclude words containing the following characters
-        for word in list:
-            if self.__is_valid_word(word):
-                array.append(self.__cleanup_word(word))
+        array = self.__parse_soup_text(soup);
+        return array;
+    
+    def __parse_soup_text(self, soup):
+        [s.extract() for s in soup(['iframe', 'script', 'meta', 'style'])]
         
-        return
+        body = soup.find('body');
+        
+        list = [];
+        for tag in body.findAll():
+            
+            inner_list = tag.text.split(' ');
+            for word in inner_list:
+                if word:
+                    parsed = word.replace('\n','').replace('\t', '')
+                    list.append(parsed);
+        
+        return list;
     
     # further polish words, excluding certain characters within words (such as commas, etc.)
     def __cleanup_word(self, old_word):
@@ -69,7 +77,7 @@ class WebScrape():
          if (';' not in word) and ('&' not in word) and ('<' not in word) and ('>' not in word) \
             and ('-' not in word) and ('(' not in word) and (')' not in word) and ('_' not in word) \
             and ('\\' not in word) and ('/' not in word) and ('}' not in word) and ('{' not in word) \
-            and ('=' not in word) and ('$' not in word) and ('en' not in word) and ('meta' not in word) \
+            and ('=' not in word) and ('$' not in word) and ('meta' not in word) \
             and ('charset' not in word) and ('script' not in word) and ('#' not in word) and ('=' not in word) \
             and ('|' not in word):
              return True;

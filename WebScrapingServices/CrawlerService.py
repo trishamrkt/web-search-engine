@@ -14,7 +14,7 @@ class CrawlerService():
         
         # loads all data structures by calling lower tier helper classes
         self.__generate_data_structures();
-
+        
     def get_resolved_inverted_index(self): 
         inverted_index = self.__crawler.get_resolved_inverted_index();
         return inverted_index;
@@ -29,7 +29,9 @@ class CrawlerService():
         with open('url.txt') as inputfile:
             for url in inputfile:
                 if not self.__is_doc_already_scanned(url.strip(), docId_to_url):
-                    docId_to_url.append(url.strip());
+                    newurl =url.strip();
+                    if newurl:
+                        docId_to_url.append(url.strip());
         
         return docId_to_url;
     
