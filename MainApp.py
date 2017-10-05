@@ -9,7 +9,7 @@ mostPopular = TopTwenty();
 
 @route('/')
 def root_path():
-    if request.query_string == '':
+    if request.query_string == '' or not request.query['keywords'].strip():
         return template('index')
     else:
         return results_html(request.query['keywords'].lower(), mostPopular);
