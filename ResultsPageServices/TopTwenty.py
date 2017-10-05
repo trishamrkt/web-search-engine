@@ -28,15 +28,13 @@ class TopTwenty():
             minKey = min(self.top);
 
         # Check if word is one of the 20 most popular
-        # If there are less than 20 words that have been word - go in most popular
-        # by default
         if topLength < 20:
             if word not in self.top.keys():
                 self.top[word] = count;
             elif word in self.top.keys():
                 self.top[word] += count;
 
-        # Else check if the current word has higher count than
+        # Check if the current word has higher count than
         # largest and smallest counts in top twenty
         elif newWordCount >= self.top[maxKey] or newWordCount > self.top[minKey]:
             if word in self.top.keys():
@@ -44,6 +42,12 @@ class TopTwenty():
             else:
                 self.top[word] = newWordCount;
                 del self.top[minKey]
+
+    def get_searched(self):
+        return self.searched;
+
+    def get_top(self):
+        return self.top;
 
     # Puts top twenty dictionary data into an HTML table
     def get_table_html(self):
@@ -53,3 +57,8 @@ class TopTwenty():
 
         html = html + "</table>"
         return html
+
+    def clear_history(self):
+        self.searched = {};
+        self.top = {};
+        return
