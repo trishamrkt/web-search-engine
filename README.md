@@ -13,6 +13,9 @@ Enter the following commands in:
 
 2. Installing BeautifulSoup Library (V 4.6.0)
   $ pip install beautifulsoup4
+  
+3. Installing PyNum (V 1.13.3)
+  $ pip install numpy
 
 -------------------------------------------------
 RUNNING WEB APPLICATION:
@@ -51,3 +54,6 @@ a) Front-end:
     $ python -m UnitTests.ResultsPageServicesTest
 b) Back-end:
     $ python -m UnitTests.WebScrapingServicesTest
+    
+    IMPORTANT: before run Back-end unit test, start application by running (from project root): 
+    $ python MainApp.py &
