@@ -14,6 +14,14 @@ def root_path():
     else:
         return results_html(request.query['keywords'].lower(), mostPopular);
 
+@route('/lab1unittest')
+def lab1_unit_test():
+    return template('lab1unittest')
+
+@route('/lab1unittest2')
+def lab1_unit_test2():
+    return template('lab1unittest2')
+
 @get('/static/css/<filepath:re:.*\.css>')
 def static(filepath):
     return static_file(filepath, root='static/css')
