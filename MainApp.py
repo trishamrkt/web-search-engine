@@ -31,4 +31,5 @@ def static_img(filepath):
     return static_file(filepath, root='static/Images')
 
 if __name__ == '__main__':
+    TEMPLATE_PATH.insert(0,'./views/unittest/')
     run(host='localhost', port=8000, debug=True);
