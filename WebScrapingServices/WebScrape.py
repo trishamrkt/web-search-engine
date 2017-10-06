@@ -12,10 +12,10 @@ class WebScrape():
         self.__wordId_to_word = self.__textData.getWordId_to_word();
         self.__wordId_to_docIds = self.__textData.getWordId_to_DocIds();
         
-    def scrape_the_web(self):
+    def scrape_the_web(self, url_list):
         
         # load all words of one url into an array (separation by spaces), and is contained in a bigger array indexed by document ids
-        for url in self.__docId_to_url:
+        for url in url_list:
             array = [];
             array = self.__call_beautiful_soup(url, array);
             self.__words_per_document.append(array);
@@ -56,14 +56,14 @@ class WebScrape():
         [s.extract() for s in soup(['iframe', 'script', 'meta', 'style'])]
         
         body = soup.find('body');
-        
+
         list = [];
         for tag in body.findAll():
             
-            inner_list = tag.text.split(' ');
+            inner_list = tag.text.split();
             for word in inner_list:
                 if word:
-                    parsed = word.replace('\n','').replace('\t', '')
+                    parsed = word.replace('\n','').replace('\t', '').replace('\r', '').replace(',', '').replace('.', '').strip();
                     list.append(parsed);
         
         return list;

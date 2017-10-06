@@ -2,11 +2,14 @@ class Crawler():
 
     def __init__(self, textData):
         self.textData = textData;
-        self.__docId_to_url = self.textData.getDocId_to_url();
-        self.__words_per_document = self.textData.getWords_per_document();
-        self.__wordId_to_word = self.textData.getWordId_to_word();
-        self.__wordId_to_docIds = self.textData.getWordId_to_DocIds();
+        self.refresh_references();
         
+    def refresh_references(self):
+         self.__docId_to_url = self.textData.getDocId_to_url();
+         self.__words_per_document = self.textData.getWords_per_document();
+         self.__wordId_to_word = self.textData.getWordId_to_word();
+         self.__wordId_to_docIds = self.textData.getWordId_to_DocIds();
+    
     def get_resolved_inverted_index(self):
         resolved_inverted_index = {};
 
