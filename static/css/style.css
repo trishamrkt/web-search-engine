@@ -1,0 +1,11 @@
+body {
+  text-align: center;
+}
+
+.main-logo {
+  margin-top: 20%;
+  font-size: 0;
+  font-family: Futura;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
