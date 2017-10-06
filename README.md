@@ -14,7 +14,7 @@ Enter the following commands in:
 2. Installing BeautifulSoup Library (V 4.6.0)
   $ pip install beautifulsoup4
   
-3. Installing PyNum (V 1.13.3)
+3. Installing NumPy (V 1.13.3)
   $ pip install numpy
 
 -------------------------------------------------
