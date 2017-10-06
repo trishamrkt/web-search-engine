@@ -6,24 +6,22 @@ from WebScrapingServices.TextUrlData import *
 
 class WebScrapingServicesTest(unittest.TestCase):
     
+    # For each new test, the data structures are refreshed, and the API is called again using a different URL
     def setUp(self):
         self.__textData = TextUrlData();
         self.__webScraper = WebScrape(self.__textData);
         self.__crawler = Crawler(self.__textData);
      
+    # Match each word of the computed result set with the expected result set
     def test_wordId_to_wordid_advanced(self):
-        # Match each word of the computed result set with the expected result set
         self.__textData.clear_datastructures();
         self.__textData.setDocId_to_url(['http://localhost:8000/lab1unittest']);
         self.__webScraper.scrape_the_web(self.__textData.getDocId_to_url());
         self.__textData.setWord_to_url(self.__crawler.get_resolved_inverted_index());
         
-        __docId_to_url = self.__textData.getDocId_to_url();
         __wordId_to_word = self.__textData.getWordId_to_word();
-        __wordId_to_docIds = self.__textData.getWordId_to_DocIds();
-        __word_to_url = self.__textData.getWord_to_url();
-        
         isValid = False; 
+        
         resultSet = ['Hi', 'thereee', 'In', 'the', 'Olympian', 'creation', 'myth', 'as', 'Hesiod', 'tells', 'it', 'in', 'Theogony', 'Uranus', 'came', \
                      'every', 'night', 'to', 'cover', 'earth', 'and', 'mate', 'with', 'Gaia', 'but', 'he', 'hated', 'children', 'she', 'bore', 'him', \
                      'named', 'their', 'first', 'six', 'sons', 'daughters', 'Titans', 'three', 'one-hundred-handed', 'giants', 'Hekatonkheires', \
@@ -46,6 +44,7 @@ class WebScrapingServicesTest(unittest.TestCase):
         
         return
     
+    # Calls WebScraper's scraping API, evaluates whether the returned datastructure is as expected
     def test_wordId_to_word_intermediate(self):
         self.__textData.clear_datastructures();
         self.__textData.setDocId_to_url(['http://localhost:8000/lab1unittest2']);
@@ -53,8 +52,8 @@ class WebScrapingServicesTest(unittest.TestCase):
         self.__textData.setWord_to_url(self.__crawler.get_resolved_inverted_index());
         
         __wordId_to_word = self.__textData.getWordId_to_word();
-        
         isValid = False;
+        
         resultSet = ['Hi', 'thereee', 'Company', 'Contact', 'Country', 'Alfreds', 'Futterkiste', 'Maria', 'Anders', 'Germany', 'Centro', 'comercial', 'Moctezuma', \
                      'Francisco', 'Chang', 'Mexico', 'Ernst', 'Handel', 'Roland', 'Mendel', 'Austria', 'Island', 'Trading', 'Helen', 'Bennett', 'UK', 'Laughing', \
                      'Bacchus', 'Winecellars', 'Yoshi', 'Tannamuri', 'Canada', 'Magazzini', 'Alimentari', 'Riuniti', 'Giovanni', 'Rovelli', 'Italy', 'Coffee', 'Tea',\
@@ -62,15 +61,15 @@ class WebScrapingServicesTest(unittest.TestCase):
 
         isValid = np.array_equal(np.array(resultSet), np.array(__wordId_to_word));
         self.assertEqual(isValid, True, 'Mismatch between expected and actual result sets for: WordId to Word mapping');
-    
+
+    # Calls WebScraper's scraping API, evaluates whether the returned datastructure is as expected
     def test_wordId_to_docIds_advanced(self):
         self.__textData.clear_datastructures();
         self.__textData.setDocId_to_url(['http://localhost:8000/lab1unittest']);
         self.__webScraper.scrape_the_web(self.__textData.getDocId_to_url());
         self.__textData.setWord_to_url(self.__crawler.get_resolved_inverted_index());
         
-        __wordId_to_docIds = self.__textData.getWordId_to_DocIds();
-                
+        __wordId_to_docIds = self.__textData.getWordId_to_DocIds(); 
         isValid = False;
         
         resultSet = {0: set([0]), 1: set([0]), 2: set([0]), 3: set([0]), 4: set([0]), 5: set([0]), 6: set([0]), 7: set([0]), 8: set([0]), 9: set([0]), \
@@ -101,7 +100,8 @@ class WebScrapingServicesTest(unittest.TestCase):
         self.assertEqual(isValid, True, '[ADVANCED] Mismatch between expected and actual result sets for: WordId to DocIds mapping');
 
         return 
-    
+
+    # Calls WebScraper's scraping API, evaluates whether the returned datastructure is as expected
     def test_wordId_to_docIds_intermediate(self):
         self.__textData.clear_datastructures();
         self.__textData.setDocId_to_url(['http://localhost:8000/lab1unittest2']);
@@ -109,20 +109,20 @@ class WebScrapingServicesTest(unittest.TestCase):
         self.__textData.setWord_to_url(self.__crawler.get_resolved_inverted_index());
         
         __wordId_to_docIds = self.__textData.getWordId_to_DocIds();
+        isValid = False;
         
         resultSet = {0: set([0]), 1: set([0]), 2: set([0]), 3: set([0]), 4: set([0]), 5: set([0]), 6: set([0]), 7: set([0]), 8: set([0]), 9: set([0]), \
                      10: set([0]), 11: set([0]), 12: set([0]), 13: set([0]), 14: set([0]), 15: set([0]), 16: set([0]), 17: set([0]), 18: set([0]), \
                      19: set([0]), 20: set([0]), 21: set([0]), 22: set([0]), 23: set([0]), 24: set([0]), 25: set([0]), 26: set([0]), 27: set([0]), \
                      28: set([0]), 29: set([0]), 30: set([0]), 31: set([0]), 32: set([0]), 33: set([0]), 34: set([0]), 35: set([0]), 36: set([0]), \
                      37: set([0]), 38: set([0]), 39: set([0]), 40: set([0]), 41: set([0]), 42: set([0]), 43: set([0]), 44: set([0])};
-
-        isValid = False;
         
         isValid = self.__is_dictionaries_same(resultSet, __wordId_to_docIds)
         self.assertEqual(isValid, True, '[INTERMEDIATE]: Mismatch between expected and actual result sets for: WordId to DocIds mapping');
 
         return 
     
+     # Calls WebScraper's scraping API, evaluates whether the returned datastructure is as expected
     def test_word_to_url_advanced(self):
         self.__textData.clear_datastructures();
         self.__textData.setDocId_to_url(['http://localhost:8000/lab1unittest']);
@@ -130,6 +130,7 @@ class WebScrapingServicesTest(unittest.TestCase):
         self.__textData.setWord_to_url(self.__crawler.get_resolved_inverted_index());
         
         __word_to_url = self.__textData.getWord_to_url();
+        isValid = False;
         str_replace = 'http://localhost:8000/lab1unittest';
 
         resultSet = {'Tartarus': set([str_replace]), 'six': set([str_replace]), 'legendary': set([str_replace]), 'traveller': set([str_replace]), 'caused': set([str_replace]), \
@@ -173,14 +174,13 @@ class WebScrapingServicesTest(unittest.TestCase):
                      'The': set([str_replace]), 'coast': set([str_replace]), 'had': set([str_replace]), 'a': set([str_replace]), 'cults': set([str_replace]), 're-imprisoned': set([str_replace]), \
                      'cover': set([str_replace]), 'or': set([str_replace]), 'so': set([str_replace]), 'time': set([str_replace]), 'very': set([str_replace]), 'Earth': set([str_replace]), \
                      'the': set([str_replace]), 'began': set([str_replace]), 'came': set([str_replace]), 'In': set([str_replace])};
-                     
-        isValid = False;
-        
+                             
         isValid = self.__is_dictionaries_same(resultSet, __word_to_url);               
         self.assertEqual(isValid, True, '[ADVANCED]: Mismatch between expected and actual result sets for: __word_to_url mapping');
         
         return
     
+    # Calls WebScraper's scraping API, evaluates whether the returned datastructure is as expected
     def test_word_to_url_intermediate(self):
         self.__textData.clear_datastructures();
         self.__textData.setDocId_to_url(['http://localhost:8000/lab1unittest2']);
@@ -188,6 +188,7 @@ class WebScrapingServicesTest(unittest.TestCase):
         self.__textData.setWord_to_url(self.__crawler.get_resolved_inverted_index());
         
         __word_to_url = self.__textData.getWord_to_url();
+        isValid = False;
         str_replace = 'http://localhost:8000/lab1unittest2';
         
         resultSet = {'Canada': set([str_replace]), 'Futterkiste': set([str_replace]), 'Italy': set([str_replace]), \
@@ -205,14 +206,14 @@ class WebScrapingServicesTest(unittest.TestCase):
                      'An': set([str_replace]), 'Alimentari': set([str_replace]), 'Riuniti': set([str_replace]), \
                      'Austria': set([str_replace]), 'Yoshi': set([str_replace]), 'Trading': set([str_replace]), \
                      'Tannamuri': set([str_replace]), 'Anders': set([str_replace]), 'Milk': set([str_replace])};
-                     
-        isValid = False;
-        
+                             
         isValid = self.__is_dictionaries_same(resultSet, __word_to_url)
         self.assertEqual(isValid, True, '[INTERMEDIATE]: Mismatch between expected and actual result sets for: __word_to_url mapping');
         
         return
     
+    # Deletes an index in an array, checks if the value of that index is still inside array, if yes, it means
+    # array does not contain unique values
     def test_word_uniqueness_advanced(self):
         self.__textData.clear_datastructures();
         self.__textData.setDocId_to_url(['http://localhost:8000/lab1unittest']);
@@ -220,11 +221,8 @@ class WebScrapingServicesTest(unittest.TestCase):
         self.__textData.setWord_to_url(self.__crawler.get_resolved_inverted_index());
          
         __wordId_to_word = self.__textData.getWordId_to_word(); 
-        
         isValid = True;
         
-        # Deletes an index in an array, checks if the value of that index is still inside array, if yes, it means
-        # array does not contain unique values
         for word in __wordId_to_word:
             index = __wordId_to_word.index(word);
             del __wordId_to_word[index]; 
@@ -233,7 +231,6 @@ class WebScrapingServicesTest(unittest.TestCase):
                 break;
         
         self.assertEqual(isValid, True, 'Duplicate word found in WordId_to_Word datastructure');
-        
         return
     
     def __is_dictionaries_same(self, dict1, dict2):
