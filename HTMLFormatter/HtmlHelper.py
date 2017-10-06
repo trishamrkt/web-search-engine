@@ -3,6 +3,7 @@ from ResultsPageServices.WordData import WordData
 # Returns HTML for results page
 def results_html(searchString, mostPopular):
     wordData = WordData();
+    wordData.add_words(searchString)
 
     # Gets HTML for table with words and their word counts
     html = '<link type="text/css" rel="stylesheet" href="/static/css/word_table_data.css"\>'
