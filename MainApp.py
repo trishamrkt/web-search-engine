@@ -19,7 +19,7 @@ def root_path():
     redirect_uri="http://localhost:8000/redirect")
 
     uri = flow.step1_get_authorize_url();
-    bottle.redirect(str(uri));
+    redirect(str(uri));
 
     if request.query_string == '' or not request.query['keywords'].strip():
         return template('index')
@@ -30,15 +30,12 @@ def root_path():
 @route('/redirect')
 def redirect_page():
     code = request.query.get('code','')
-
-@route('/redirect')
-def redirect_page():
-    flow = OAuth2WebServerFlow(client_id = 'xxxxxxx',
-    client_secret='xxxxxxx')
+    flow = OAuth2WebServerFlow(client_id = '',
+        client_secret='',
+        scope='https://www.googleapis.com/auth/plus.me',
+        redirect_uri='http://localhost:8000')
     credentials = flow.step2_exchange(code)
     token = credentials.id_token['sub']
-
-
 
 @route('/lab1unittest')
 def lab1_unit_test():
