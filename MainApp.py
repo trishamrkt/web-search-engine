@@ -4,15 +4,41 @@ from ResultsPageServices.TopTwenty import TopTwenty
 from ResultsPageServices.WordData import WordData
 from HTMLFormatter.HtmlHelper import results_html
 
+from oauth2client.client import OAuth2WebServerFlow
+from oauth2client.client import flow_from_clientsecrets
+from googleapiclient.errors import HttpError
+from googleapiclient.discovery import build
+
 crawlerService = CrawlerService();
 mostPopular = TopTwenty();
 
 @route('/')
 def root_path():
+    flow = flow_from_clientsecrets("client_secret.json",
+    scope='https://www.googleapis.com/auth/plus.me',
+    redirect_uri="http://localhost:8000/redirect")
+
+    uri = flow.step1_get_authorize_url();
+    bottle.redirect(str(uri));
+
     if request.query_string == '' or not request.query['keywords'].strip():
         return template('index')
     else:
         return results_html(request.query['keywords'].lower(), mostPopular);
+
+
+@route('/redirect')
+def redirect_page():
+    code = request.query.get('code','')
+
+@route('/redirect')
+def redirect_page():
+    flow = OAuth2WebServerFlow(client_id = 'xxxxxxx',
+    client_secret='xxxxxxx')
+    credentials = flow.step2_exchange(code)
+    token = credentials.id_token['sub']
+
+
 
 @route('/lab1unittest')
 def lab1_unit_test():
