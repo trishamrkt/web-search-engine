@@ -12,8 +12,8 @@ from googleapiclient.discovery import build
 crawlerService = CrawlerService();
 mostPopular = TopTwenty();
 
-flow = OAuth2WebServerFlow(client_id = 'xxx',
-    client_secret='xxx',
+flow = OAuth2WebServerFlow(client_id = 'CLIENT_ID',
+    client_secret='CLIENT_SECRET',
     scope='https://www.googleapis.com/auth/plus.me',
     redirect_uri='http://localhost:8000/redirect')
 
