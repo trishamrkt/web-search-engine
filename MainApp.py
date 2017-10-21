@@ -12,30 +12,47 @@ from googleapiclient.discovery import build
 crawlerService = CrawlerService();
 mostPopular = TopTwenty();
 
+flow = OAuth2WebServerFlow(client_id = 'xxx',
+    client_secret='xxx',
+    scope='https://www.googleapis.com/auth/plus.me',
+    redirect_uri='http://localhost:8000/redirect')
+
 @route('/')
 def root_path():
-    flow = flow_from_clientsecrets("client_secret.json",
-    scope='https://www.googleapis.com/auth/plus.me',
-    redirect_uri="http://localhost:8000/redirect")
+    # flow = flow_from_clientsecrets("client_secret.json",
+    # scope='https://www.googleapis.com/auth/plus.me',
+    # redirect_uri="http://localhost:8000/redirect")
 
     uri = flow.step1_get_authorize_url();
+    print "uri: " + str(uri);
     redirect(str(uri));
 
-    if request.query_string == '' or not request.query['keywords'].strip():
-        return template('index')
-    else:
-        return results_html(request.query['keywords'].lower(), mostPopular);
+    # if request.query_string == '' or not request.query['keywords'].strip():
+    #     return template('index')
+    # else:
+    #     return results_html(request.query['keywords'].lower(), mostPopular);
 
 
 @route('/redirect')
 def redirect_page():
     code = request.query.get('code','')
-    flow = OAuth2WebServerFlow(client_id = '',
-        client_secret='',
-        scope='https://www.googleapis.com/auth/plus.me',
-        redirect_uri='http://localhost:8000')
+    # flow = OAuth2WebServerFlow(client_id = 'xxx',
+    #     client_secret='xxx',
+    #     scope='https://www.googleapis.com/auth/plus.me',
+    #     redirect_uri='http://localhost:8000/redirect')
     credentials = flow.step2_exchange(code)
     token = credentials.id_token['sub']
+
+    redirect('/home');
+
+
+@route('/home')
+def render_home_page():
+    if request.query_string == '' or not request.query['keywords'].strip():
+        return template('index')
+    else:
+        return results_html(request.query['keywords'].lower(), mostPopular);
+
 
 @route('/lab1unittest')
 def lab1_unit_test():
