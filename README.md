@@ -58,6 +58,6 @@ How to Test:
     $ python -m UnitTests.WebScrapingServicesTest
 -  Session Management: 
     $ python -m UnitTests.UserSessionManagerTests
-    
-    IMPORTANT: before run Back-end unit test, start application by running (from project root): 
-    $ python MainApp.py &
+-----------------------------------------
+IMPORTANT: before run Back-end unit test, start application by running (from project root): 
+- $ python MainApp.py &
