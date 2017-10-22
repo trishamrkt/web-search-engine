@@ -1,13 +1,17 @@
 from ResultsPageServices.WordData import WordData
 from ResultsPageServices.TopTwenty import TopTwenty
 
-# Declare constants for HTML 
-STYLE = '<link type="text/css" rel="stylesheet" href="/static/css/word_table_data.css"\>'
-FONTS = '<link href="https://fonts.googleapis.com/css?family=Assistant" rel="stylesheet" >'
-NAV = '<nav class="navi"><a href="/">Googao</a></nav>'
+# Declare constants for HTML
+TABLE_STYLE = '<link type="text/css" rel="stylesheet" href="/static/css/word_table_data.css"\>'
+NAVI_STYLE = '<link type="text/css" rel="stylesheet" href="/static/css/sign_in_buttons.css"\>'
+STYLE = TABLE_STYLE + NAVI_STYLE
+FONTS = '<link href="https://fonts.googleapis.com/css?family=Assistant" rel="stylesheet" >\
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans"\>'
 
 # Return HTML for Anonymous mode
 def anonymous_results(search_string):
+    NAV = create_nav_bar('', False);
+
     word_data = WordData();
     word_data.add_words(search_string);
     table_html = word_data.get_table_html(search_string)
@@ -15,7 +19,9 @@ def anonymous_results(search_string):
     return html;
 
 # Return HTML for Signed In Mode
-def signed_in_results(search_string, history, most_recent):
+def signed_in_results(search_string, history, most_recent, email):
+    NAV = create_nav_bar(email, True);
+
     word_data = WordData();
     top_twenty = TopTwenty()
     word_data.add_words(search_string);
@@ -33,3 +39,17 @@ def signed_in_results(search_string, history, most_recent):
     most_recent_data = top_twenty.get_searched();
 
     return [html, top_twenty_data, most_recent_data];
+
+def create_nav_bar(email, signed_in):
+    if signed_in:
+        account = email;
+    else:
+        account = "Sign In";
+
+    nav = '<nav class="navi">\
+                <a href="/" id="googao-title">Googao</a>\
+                <a href="/login" class="account-buttons">' + account + '</a>\
+                <a href="/logout" class="account-buttons">Sign Out</a>\
+           </nav>'
+
+    return nav

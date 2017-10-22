@@ -43,7 +43,7 @@ def redirect_page():
     session = request.environ.get('beaker.session')
     session['access_token'] = token;
     session['signed_in'] = True;
-    
+
     http = httplib2.Http();
     http = credentials.authorize(http);
     users_service = build('oauth2', 'v2', http=http);
@@ -56,18 +56,20 @@ def redirect_page():
 @route('/')
 def render_home_page():
     session = request.environ.get('beaker.session')
+    user_email = userSessionManager.getUserEmail(session['_id'])
+
     if 'signed_in' not in session or not userSessionManager.isSessionActive(session['_id']):
         session['signed_in'] = False
 
     if request.query_string == '' or not request.query['keywords'].strip():
-        return template('index', signedIn= userSessionManager.getUserEmail(session['_id']) if session['signed_in'] else "Sign In")
+        return template('index', signedIn= user_email if session['signed_in'] else "Sign In")
 
     # Check for Anonymous mode and Signed_in Mode
     else:
         search_string = request.query['keywords'].lower()
         if session['signed_in']:
             user = userSessionManager.getUserBySessionId(session['_id']);
-            signed_in_data = signed_in_results(search_string, user.getHistory(), user.getMostRecent());
+            signed_in_data = signed_in_results(search_string, user.getHistory(), user.getMostRecent(), user_email);
             user.setHistory(signed_in_data[1]);
             user.setMostRecent(signed_in_data[2])
             return signed_in_data[0];

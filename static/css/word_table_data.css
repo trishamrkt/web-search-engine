@@ -46,7 +46,7 @@ th:hover {
 }
 
 .navi {
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   overflow: hidden;
   border-bottom: 1px solid #ebebeb;
 }
@@ -57,7 +57,6 @@ th:hover {
   display: block;
   padding: 14px 20px 16px 16px;
   color: #606060;
-  font-size: 20pt;
 }
 
 .navi a:hover {
