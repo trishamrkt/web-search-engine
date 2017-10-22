@@ -73,3 +73,6 @@ class UserSessionManager():
     def getUserEmail(self, sessionId):
         if sessionId in self.__active_sessions:
             return self.__active_sessions[sessionId];
+        
+        
+        

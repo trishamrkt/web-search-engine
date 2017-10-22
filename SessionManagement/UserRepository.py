@@ -28,7 +28,8 @@ class UserRepository():
     def deleteUser(self, id):
         del self.__user_table[id];
         
-    def createAndSaveUser(self, email, user_document):
+    def createAndSaveUser(self, user_document):
+        email = user_document['email'];
         if email not in self.__user_table:
             print 'Saving user: ' + email;
             user = User();

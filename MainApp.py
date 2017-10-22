@@ -17,10 +17,8 @@ import httplib2
 from beaker.middleware import SessionMiddleware
 
 crawlerService = CrawlerService();
-
 userRepository = UserRepository();
 userSessionManager = UserSessionManager(userRepository);
-
 
 flow = OAuth2WebServerFlow(client_id = 'XXX',
     client_secret='XXX',
@@ -30,11 +28,11 @@ flow = OAuth2WebServerFlow(client_id = 'XXX',
 
 app = main_app();
 
+
 @route('/login')
 def root_path():
     uri = flow.step1_get_authorize_url();
     redirect(str(uri));
-
 
 @route('/redirect')
 def redirect_page():
@@ -45,23 +43,15 @@ def redirect_page():
     session = request.environ.get('beaker.session')
     session['access_token'] = token;
     session['signed_in'] = True;
-
+    
     http = httplib2.Http();
     http = credentials.authorize(http);
     users_service = build('oauth2', 'v2', http=http);
     user_document = users_service.userinfo().get().execute();
 
-    _id = session['_id'];
-    email = user_document['email'];
-    userRepository.createAndSaveUser(email, user_document);
-    userSessionManager.addNewSession(_id, email);
-
-    users = userSessionManager.getActiveUsers();
-    for u in users:
-        print u.getUserInfo()['email'] + ' | ';
-
+    userRepository.createAndSaveUser(user_document);
+    userSessionManager.addNewSession(session['_id'], user_document['email']);
     redirect('/');
-
 
 @route('/')
 def render_home_page():

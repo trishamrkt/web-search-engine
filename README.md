@@ -4,19 +4,25 @@ HOW TO USE:
 -------------------------------------------------
 DOWNLOADING EXTERNAL PACKAGES:
 -------------------------------------------------
-Enter the following commands in:
+Enter the following commands in:<br>
   Terminal (Mac)
   Command Prompt (Windows)
 
-1. Installing Bottle Framework:
-  $ pip install bottle
+1. Installing Bottle Framework:<br>
+   $ pip install bottle
 
-2. Installing BeautifulSoup Library (V 4.6.0)
-  $ pip install beautifulsoup4
+2. Installing BeautifulSoup Library (V 4.6.0)<br>
+   $ pip install beautifulsoup4
   
-3. Installing NumPy (V 1.13.3)
-  $ pip install numpy
+3. Installing NumPy (V 1.13.3)<br>
+   $ pip install numpy
 
+4. Installing Beaker<br>
+   $ pip install beaker
+  
+5. Install http2 (AMI Linux dependency)<br>
+   $ pip install httplib2
+  
 -------------------------------------------------
 RUNNING WEB APPLICATION:
 -------------------------------------------------
@@ -31,29 +37,31 @@ RUNNING WEB APPLICATION:
 -------------------------------------------------
 TESTING:
 -------------------------------------------------
-- There are two files used for testing the application, one for front-end and
-one for back-end.
+- There are three files used for testing the application, one for front-end and
+two for back-end.
 
 Front-end:
-- Tests the results obtained from the user's input query
+- Lab 1: Tests the results obtained from the user's input query
     (ie words and their word counts)
-- Tests the history of user inputs
+- Lab 1: Tests the history of user inputs
     (ie correctness of the top twenty searched keywords)
 
 Back-end:
-- Tests get_inverted_index() and get_resolved_inverted_index() functions.
-
+- Lab 1: Tests get_inverted_index() and get_resolved_inverted_index() functions.
+- Lab 2: Tests functionality of session management class
 ------------------------------------------------
 How to Test:
 ------------------------------------------------
-1. On the command line, navigate to the project directory.
+1. On the command line, navigate to the project directory.<br>
     $ cd /path/to/project/directory
-2. Testing Front-end and Back-end functionalities
+2. Testing Front-end and Back-end functionalities<br>
    Run the following commands:
-a) Front-end:
+-  Front-end:<br>
     $ python -m UnitTests.ResultsPageServicesTest
-b) Back-end:
+-  Back-end:<br>
     $ python -m UnitTests.WebScrapingServicesTest
-    
-    IMPORTANT: before run Back-end unit test, start application by running (from project root): 
-    $ python MainApp.py &
+-  Session Management:<br>
+    $ python -m UnitTests.UserSessionManagerTests
+-----------------------------------------
+IMPORTANT: before run Back-end unit test, start application by running (from project root): 
+- $ python MainApp.py &
