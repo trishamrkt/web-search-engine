@@ -17,6 +17,8 @@ Enter the following commands in:
 3. Installing NumPy (V 1.13.3)
   $ pip install numpy
 
+4. Installing Beaker
+  $ pip install beaker
 -------------------------------------------------
 RUNNING WEB APPLICATION:
 -------------------------------------------------
@@ -31,18 +33,18 @@ RUNNING WEB APPLICATION:
 -------------------------------------------------
 TESTING:
 -------------------------------------------------
-- There are two files used for testing the application, one for front-end and
-one for back-end.
+- There are three files used for testing the application, one for front-end and
+two for back-end.
 
 Front-end:
-- Tests the results obtained from the user's input query
+- Lab 1: Tests the results obtained from the user's input query
     (ie words and their word counts)
-- Tests the history of user inputs
+- Lab 1: Tests the history of user inputs
     (ie correctness of the top twenty searched keywords)
 
 Back-end:
-- Tests get_inverted_index() and get_resolved_inverted_index() functions.
-
+- Lab 1: Tests get_inverted_index() and get_resolved_inverted_index() functions.
+- Lab 2: Tests functionality of session management class
 ------------------------------------------------
 How to Test:
 ------------------------------------------------
@@ -54,6 +56,8 @@ a) Front-end:
     $ python -m UnitTests.ResultsPageServicesTest
 b) Back-end:
     $ python -m UnitTests.WebScrapingServicesTest
+c)  Session Management: 
+    $ python -m UnitTests.UserSessionManagerTests
     
     IMPORTANT: before run Back-end unit test, start application by running (from project root): 
     $ python MainApp.py &
