@@ -9,19 +9,19 @@ Enter the following commands in:
   Command Prompt (Windows)
 
 1. Installing Bottle Framework:
-  $ pip install bottle
+  - $ pip install bottle
 
 2. Installing BeautifulSoup Library (V 4.6.0)
-  $ pip install beautifulsoup4
+  - $ pip install beautifulsoup4
   
 3. Installing NumPy (V 1.13.3)
-  $ pip install numpy
+  - $ pip install numpy
 
 4. Installing Beaker
-  $ pip install beaker
+  - $ pip install beaker
   
 5. Install http2 (AMI Linux dependency)
-  $ pip install httplib2
+  - $ pip install httplib2
   
 -------------------------------------------------
 RUNNING WEB APPLICATION:
