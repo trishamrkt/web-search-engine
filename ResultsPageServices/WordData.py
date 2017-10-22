@@ -1,4 +1,4 @@
-from ResultsPageServices import TopTwenty
+from ResultsPageServices.TopTwenty import TopTwenty
 
 # This class does parses the keywords when the user inputs a search string
 class WordData():
@@ -26,7 +26,7 @@ class WordData():
                     self.wordData[word] = 1;
 
     # inserts words into a table in html format
-    def get_table_html(self, searchString, allWords):
+    def get_table_html(self, searchString, allWords=TopTwenty()):
         self.html = self.html + '<h1 class="table-header">search for ' + searchString + '</h1>';
         self.html = self.html + '<table class="word-table" id="results">'
         self.html = self.html + '<tr class="col-title"><th>word</th><th>count</th></tr>'

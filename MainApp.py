@@ -2,8 +2,9 @@ from bottle import *
 from WebScrapingServices.CrawlerService import *
 from ResultsPageServices.TopTwenty import TopTwenty
 from ResultsPageServices.WordData import WordData
-from HTMLFormatter.HtmlHelper import results_html
+from HTMLFormatter.HtmlHelper import *
 from SessionManagement.SessionSetup import main_app
+from SessionManagement.User import User
 
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.client import flow_from_clientsecrets
@@ -15,6 +16,7 @@ from beaker.middleware import SessionMiddleware
 
 crawlerService = CrawlerService();
 mostPopular = TopTwenty();
+user = User();
 
 flow = OAuth2WebServerFlow(client_id = 'CLIENT_ID',
     client_secret='CLIENT_SECRET',
@@ -24,7 +26,7 @@ flow = OAuth2WebServerFlow(client_id = 'CLIENT_ID',
 
 app = main_app();
 
-@route('/')
+@route('/login')
 def root_path():
     uri = flow.step1_get_authorize_url();
     redirect(str(uri));
@@ -40,31 +42,35 @@ def redirect_page():
     session['access_token'] = token;
     session['signed_in'] = True;
 
-    # get user info
-    http = httplib2.Http()
-    http = credentials.authorize(http)
-
-    # get user email
-    users_service = build('oauth2', 'v2', http=http);
-    user_document = users_service.userinfo().get().execute()
-    user_email = user_document['email']
-
-    redirect('/home');
+    redirect('/');
 
 
-@route('/home')
+@route('/')
 def render_home_page():
+    session = request.environ.get('beaker.session')
+    if 'signed_in' not in session:
+        session['signed_in'] = False
+
     if request.query_string == '' or not request.query['keywords'].strip():
         return template('index')
+
+    # Check for Anonymous mode and Signed_in Mode
     else:
-        return results_html(request.query['keywords'].lower(), mostPopular);
+        search_string = request.query['keywords'].lower()
+        if session['signed_in']:
+            signed_in_data = signed_in_results(search_string, user.getHistory(), user.getMostRecent());
+            user.setHistory(signed_in_data[1]);
+            user.setMostRecent(signed_in_data[2])
+            return signed_in_data[0];
+        else:
+            return anonymous_results(search_string);
 
 @route('/logout')
 def stop_session():
     session = request.environ.get('beaker.session');
     session.invalidate();
     session['signed_in'] = False;
-    redirect('/home')
+    redirect('/')
 
 @route('/lab1unittest')
 def lab1_unit_test():
