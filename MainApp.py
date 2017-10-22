@@ -24,7 +24,7 @@ flow = OAuth2WebServerFlow(client_id = 'XXX',
     client_secret='XXX',
     scope='https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email',
     prompt='select_account',
-    redirect_uri='http://localhost:8000/redirect')
+    redirect_uri='http://ec2-54-174-107-175.compute-1.amazonaws.com/redirect')
 
 app = main_app();
 
@@ -106,4 +106,4 @@ def static_js(filepath):
 
 if __name__ == '__main__':
     TEMPLATE_PATH.insert(0,'./views/unittest/')
-    run(app=app, host='localhost', port=8000, debug=True);
+    run(app=app, host='0.0.0.0', port=80, debug=True);
