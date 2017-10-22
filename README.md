@@ -52,11 +52,11 @@ How to Test:
     $ cd /path/to/project/directory
 2. Testing Front-end and Back-end functionalities
    Run the following commands:
-a) Front-end:
+-  Front-end:
     $ python -m UnitTests.ResultsPageServicesTest
-b) Back-end:
+-  Back-end:
     $ python -m UnitTests.WebScrapingServicesTest
-c)  Session Management: 
+-  Session Management: 
     $ python -m UnitTests.UserSessionManagerTests
     
     IMPORTANT: before run Back-end unit test, start application by running (from project root): 
