@@ -3,45 +3,51 @@ from WebScrapingServices.CrawlerService import *
 from ResultsPageServices.TopTwenty import TopTwenty
 from ResultsPageServices.WordData import WordData
 from HTMLFormatter.HtmlHelper import results_html
+from SessionManagement.SessionSetup import main_app
 
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.client import flow_from_clientsecrets
 from googleapiclient.errors import HttpError
 from googleapiclient.discovery import build
+import httplib2
+
+from beaker.middleware import SessionMiddleware
 
 crawlerService = CrawlerService();
 mostPopular = TopTwenty();
 
 flow = OAuth2WebServerFlow(client_id = 'CLIENT_ID',
     client_secret='CLIENT_SECRET',
-    scope='https://www.googleapis.com/auth/plus.me',
+    scope='https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email',
+    prompt='select_account',
     redirect_uri='http://localhost:8000/redirect')
+
+app = main_app();
 
 @route('/')
 def root_path():
-    # flow = flow_from_clientsecrets("client_secret.json",
-    # scope='https://www.googleapis.com/auth/plus.me',
-    # redirect_uri="http://localhost:8000/redirect")
-
     uri = flow.step1_get_authorize_url();
-    print "uri: " + str(uri);
     redirect(str(uri));
-
-    # if request.query_string == '' or not request.query['keywords'].strip():
-    #     return template('index')
-    # else:
-    #     return results_html(request.query['keywords'].lower(), mostPopular);
 
 
 @route('/redirect')
 def redirect_page():
     code = request.query.get('code','')
-    # flow = OAuth2WebServerFlow(client_id = 'xxx',
-    #     client_secret='xxx',
-    #     scope='https://www.googleapis.com/auth/plus.me',
-    #     redirect_uri='http://localhost:8000/redirect')
     credentials = flow.step2_exchange(code)
     token = credentials.id_token['sub']
+
+    session = request.environ.get('beaker.session')
+    session['access_token'] = token;
+    session['signed_in'] = True;
+
+    # get user info
+    http = httplib2.Http()
+    http = credentials.authorize(http)
+
+    # get user email
+    users_service = build('oauth2', 'v2', http=http);
+    user_document = users_service.userinfo().get().execute()
+    user_email = user_document['email']
 
     redirect('/home');
 
@@ -53,6 +59,12 @@ def render_home_page():
     else:
         return results_html(request.query['keywords'].lower(), mostPopular);
 
+@route('/logout')
+def stop_session():
+    session = request.environ.get('beaker.session');
+    session.invalidate();
+    session['signed_in'] = False;
+    redirect('/home')
 
 @route('/lab1unittest')
 def lab1_unit_test():
@@ -70,6 +82,10 @@ def static(filepath):
 def static_img(filepath):
     return static_file(filepath, root='static/Images')
 
+@get ('/static/js/<filepath:re:.*\js>')
+def static_js(filepath):
+    return static_file(filepath, root="static/js")
+
 if __name__ == '__main__':
     TEMPLATE_PATH.insert(0,'./views/unittest/')
-    run(host='localhost', port=8000, debug=True);
+    run(app=app, host='localhost', port=8000, debug=True);

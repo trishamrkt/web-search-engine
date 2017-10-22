@@ -6,6 +6,7 @@
   <title>Fake GooGao</title>
   <meta name="description" content="Fake GooGao">
   <meta name="PandJ" content="Search Engine">
+  <meta name="google-signin-client_id" content="CLIENT_ID">
 
   <!-- Fonts to be used -->
   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
@@ -15,6 +16,8 @@
 
   <link type="text/css" rel="stylesheet" href="/static/css/style.css"\>
   <link type="text/css" rel="stylesheet" href="/static/css/search_bar.css"\>
+
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 </head>
 
@@ -28,6 +31,11 @@
     <input id="main-search-bar" type="text" name="keywords" /></br>
     <input id="main-submit" type="submit" value="search"/>
   </form>
+
+  <a href="/">Sign in</a>
+
+  <a href="/logout" onclick="signOut();">Sign out</a>
+  <script src="/static/js/GoogleSignOut.js"></script>
 
 </body>
 </html>
