@@ -39,6 +39,7 @@ class UserSessionManager():
         if Session could not be found -> return False
         """
         if sessionId in self.__active_sessions:
+            print 'Session deleted for: ' + self.__active_sessions[sessionId];
             del self.__active_sessions[sessionId];
             return True;
         else:
@@ -55,7 +56,7 @@ class UserSessionManager():
         """
         activeUsers = [];
         for key, value in self.__active_sessions.iteritems():
-            user = self.__userRepository.getUserById();
+            user = self.__userRepository.getUserById(value);
             if user:
                 activeUsers.append(user);
                 

@@ -7,9 +7,6 @@ from SessionManagement.UserSessionManager import *;
 # Initialize session attributes
 def main_app():
     
-    userRepository = UserRepository();
-    userSessionManager = UserSessionManager(userRepository);
-    
     session_opts = {
         'session.type' : 'cookie',
         'session.cookie_expires' : 300,

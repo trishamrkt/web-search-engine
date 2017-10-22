@@ -17,7 +17,7 @@ class UserRepository():
         
     def getUserById(self, id):
         if id in self.__user_table:
-            return self.__user_table['id'];
+            return self.__user_table[id];
         else:
             print 'User Id: ' + str(id) + ' not found in UserRepository!'
             return None;
@@ -27,3 +27,14 @@ class UserRepository():
         
     def deleteUser(self, id):
         del self.__user_table[id];
+        
+    def createAndSaveUser(self, email, user_document):
+        if email not in self.__user_table:
+            print 'Saving user: ' + email;
+            user = User();
+            user.setUserInfo(user_document);
+            self.__user_table[email] = user;
+        else:
+            print 'User already exists in database, updating current user'
+            user = self.__user_table[email];
+            user.setUserInfo(user_document);

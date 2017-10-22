@@ -5,9 +5,8 @@ class User():
     def __init__(self):
         self.__history = {};
         self.__most_recent = {};
-        self.__first_name = '';
-        self.__last_name = '';
-
+        self.__user_info = {};
+        
 
     def getHistory(self):
         return self.__history;
