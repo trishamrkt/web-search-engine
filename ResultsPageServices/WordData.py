@@ -1,9 +1,11 @@
+from collections import OrderedDict
+
 from ResultsPageServices.TopTwenty import TopTwenty
 
 # This class does parses the keywords when the user inputs a search string
 class WordData():
     def __init__(self):
-        self.wordData = {};
+        self.wordData = OrderedDict();
         self.html = '';
         self.uniqueWords = [];
 
@@ -44,4 +46,4 @@ class WordData():
         return self.wordData
 
     def clear_word_data(self):
-        self.wordData = {};
+        self.wordData = OrderedDict();
