@@ -19,6 +19,10 @@ Enter the following commands in:
 
 4. Installing Beaker
   $ pip install beaker
+  
+5. Install http2 (AMI Linux dependency)
+  $ pip install httplib2
+  
 -------------------------------------------------
 RUNNING WEB APPLICATION:
 -------------------------------------------------
