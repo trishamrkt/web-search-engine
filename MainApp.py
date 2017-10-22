@@ -5,6 +5,8 @@ from ResultsPageServices.WordData import WordData
 from HTMLFormatter.HtmlHelper import *
 from SessionManagement.SessionSetup import main_app
 from SessionManagement.User import User
+from SessionManagement.UserRepository import UserRepository
+from SessionManagement.UserSessionManager import UserSessionManager
 
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.client import flow_from_clientsecrets
@@ -15,10 +17,13 @@ import httplib2
 from beaker.middleware import SessionMiddleware
 
 crawlerService = CrawlerService();
-user = User();
 
-flow = OAuth2WebServerFlow(client_id = 'CLIENT_ID',
-    client_secret='CLIENT_SECRET',
+userRepository = UserRepository();
+userSessionManager = UserSessionManager(userRepository);
+
+
+flow = OAuth2WebServerFlow(client_id = 'XXX',
+    client_secret='XXX',
     scope='https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email',
     prompt='select_account',
     redirect_uri='http://localhost:8000/redirect')
@@ -41,13 +46,27 @@ def redirect_page():
     session['access_token'] = token;
     session['signed_in'] = True;
 
+    http = httplib2.Http();
+    http = credentials.authorize(http);
+    users_service = build('oauth2', 'v2', http=http);
+    user_document = users_service.userinfo().get().execute();
+
+    _id = session['_id'];
+    email = user_document['email'];
+    userRepository.createAndSaveUser(email, user_document);
+    userSessionManager.addNewSession(_id, email);
+
+    users = userSessionManager.getActiveUsers();
+    for u in users:
+        print u.getUserInfo()['email'] + ' | ';
+
     redirect('/');
 
 
 @route('/')
 def render_home_page():
     session = request.environ.get('beaker.session')
-    if 'signed_in' not in session:
+    if 'signed_in' not in session and not userRepository.isSessionActive(session['_id']):
         session['signed_in'] = False
 
     if request.query_string == '' or not request.query['keywords'].strip():
@@ -57,6 +76,7 @@ def render_home_page():
     else:
         search_string = request.query['keywords'].lower()
         if session['signed_in']:
+            user = userSessionManager.getUserBySessionId(session['_id']);
             signed_in_data = signed_in_results(search_string, user.getHistory(), user.getMostRecent());
             user.setHistory(signed_in_data[1]);
             user.setMostRecent(signed_in_data[2])
@@ -67,6 +87,7 @@ def render_home_page():
 @route('/logout')
 def stop_session():
     session = request.environ.get('beaker.session');
+    userSessionManager.deleteSession(session['_id']);
     session.invalidate();
     session['signed_in'] = False;
     redirect('/')

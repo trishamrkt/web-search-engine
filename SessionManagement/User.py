@@ -8,7 +8,6 @@ class User():
         self.__first_name = '';
         self.__last_name = '';
 
-
     def getHistory(self):
         return self.__history;
 
