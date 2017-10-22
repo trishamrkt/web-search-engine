@@ -60,7 +60,7 @@ def render_home_page():
         session['signed_in'] = False
 
     if request.query_string == '' or not request.query['keywords'].strip():
-        return template('index', signedIn= "Signed In" if session['signed_in'] else "Sign In")
+        return template('index', signedIn= userSessionManager.getUserEmail(session['_id']) if session['signed_in'] else "Sign In")
 
     # Check for Anonymous mode and Signed_in Mode
     else:
