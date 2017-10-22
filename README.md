@@ -4,24 +4,24 @@ HOW TO USE:
 -------------------------------------------------
 DOWNLOADING EXTERNAL PACKAGES:
 -------------------------------------------------
-Enter the following commands in:
+Enter the following commands in:<br>
   Terminal (Mac)
   Command Prompt (Windows)
 
-1. Installing Bottle Framework:
-  - $ pip install bottle
+1. Installing Bottle Framework:<br>
+   $ pip install bottle
 
-2. Installing BeautifulSoup Library (V 4.6.0)
-  - $ pip install beautifulsoup4
+2. Installing BeautifulSoup Library (V 4.6.0)<br>
+   $ pip install beautifulsoup4
   
-3. Installing NumPy (V 1.13.3)
-  - $ pip install numpy
+3. Installing NumPy (V 1.13.3)<br>
+   $ pip install numpy
 
-4. Installing Beaker
-  - $ pip install beaker
+4. Installing Beaker<br>
+   $ pip install beaker
   
-5. Install http2 (AMI Linux dependency)
-  - $ pip install httplib2
+5. Install http2 (AMI Linux dependency)<br>
+   $ pip install httplib2
   
 -------------------------------------------------
 RUNNING WEB APPLICATION:
@@ -52,15 +52,15 @@ Back-end:
 ------------------------------------------------
 How to Test:
 ------------------------------------------------
-1. On the command line, navigate to the project directory.
+1. On the command line, navigate to the project directory.<br>
     $ cd /path/to/project/directory
-2. Testing Front-end and Back-end functionalities
+2. Testing Front-end and Back-end functionalities<br>
    Run the following commands:
--  Front-end:
+-  Front-end:<br>
     $ python -m UnitTests.ResultsPageServicesTest
--  Back-end:
+-  Back-end:<br>
     $ python -m UnitTests.WebScrapingServicesTest
--  Session Management: 
+-  Session Management:<br>
     $ python -m UnitTests.UserSessionManagerTests
 -----------------------------------------
 IMPORTANT: before run Back-end unit test, start application by running (from project root): 
