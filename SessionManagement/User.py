@@ -3,8 +3,8 @@ from collections import OrderedDict
 class User():
 
     def __init__(self):
-        self.__history = {};
-        self.__most_recent = {};
+        self.__history = OrderedDict();
+        self.__most_recent = OrderedDict();
         self.__first_name = '';
         self.__last_name = '';
 
@@ -22,7 +22,7 @@ class User():
         self.__history = history;
 
     def setMostRecent(self, most_recent):
-        self.__most_recent = most_recent;
+        self.__most_recent = OrderedDict(most_recent);
 
     def setUserInfo(self, user_info):
-        self.__user_info = user_info;
+        self.__user_info = OrderedDict(user_info);
