@@ -1,4 +1,27 @@
 # csc326-project
+
+-------------------------------------------------
+AMAZON WEB SERVICES INFORMATION:
+-------------------------------------------------
+Public IP Address: 54.174.107.175
+
+To Access:
+- Go to http://ec2-54-174-107-175.compute-1.amazonaws.com/
+
+-------------------------------------------------
+BENCHMARK SETUP:
+-------------------------------------------------
+The following commands were used to perform preliminary
+benchmarking of our application:
+
+1. Analyzing Application Performance: <br>
+  $ ab -n 1000 -c 50 http://54.174.107.175/?keywords=helloworld+foo+bar
+
+2. Anyalyzing CPU performance: <br>
+  $ <some command>
+
+NOTE: The results of our performance analysis can be found in RESULTS.docx
+
 -------------------------------------------------
 HOW TO USE:
 -------------------------------------------------
@@ -13,20 +36,37 @@ Enter the following commands in:<br>
 
 2. Installing BeautifulSoup Library (V 4.6.0)<br>
    $ pip install beautifulsoup4
-  
+
 3. Installing NumPy (V 1.13.3)<br>
    $ pip install numpy
 
 4. Installing Beaker<br>
-   $ pip install beaker
-  
+   $ pip install Beaker
+
+5. Installing OAuth2 Library <br>
+   $ pip install oauth2client
+
+6. Instaling Google API Client for Python<br>
+   $ pip install --upgrade google-api-python-client
+
 5. Install http2 (AMI Linux dependency)<br>
    $ pip install httplib2
-  
+
+NOTE: For MAC users installing OAuth2 Library
+- It is recommended to use a virtual environment for the command line
+so as not to conflict with existing files during the oauth2client installation
+process
+- Can install virtual environment with the following command:
+   $ pip install virtualenv
+
 -------------------------------------------------
-RUNNING WEB APPLICATION:
+RUNNING WEB APPLICATION ON LOCAL MACHINE:
 -------------------------------------------------
-1. Enter ' $ python MainApp.py ' in:
+1. In /MainApp.py:
+  - Change Bottle Script to run with host='localhost' and port='8000'
+  - Change Google Redirect URL in Flow class initialization to redirect_uri='http://localhost:8000/redirect'
+  - Change Google CLIENT_ID and CLIENT_SECRET to correct values
+2. Enter ' $ python MainApp.py ' in:
   Terminal (Mac)
   Command Prompt (Windows)
 2. Open up web browser. Navigate to 'localhost:8000'
@@ -63,5 +103,5 @@ How to Test:
 -  Session Management:<br>
     $ python -m UnitTests.UserSessionManagerTests
 -----------------------------------------
-IMPORTANT: before run Back-end unit test, start application by running (from project root): 
+IMPORTANT: before run Back-end unit test, start application by running (from project root):
 - $ python MainApp.py &
