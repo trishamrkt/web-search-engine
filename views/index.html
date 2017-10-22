@@ -6,7 +6,7 @@
   <title>Fake GooGao</title>
   <meta name="description" content="Fake GooGao">
   <meta name="PandJ" content="Search Engine">
-  <meta name="google-signin-client_id" content="CLIENT_ID">
+  <meta name="google-signin-client_id" content="1019981387737-90f9o8t4euamns6g5pmsq7qdjo0elifj.apps.googleusercontent.com">
 
   <!-- Fonts to be used -->
   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
@@ -16,12 +16,17 @@
 
   <link type="text/css" rel="stylesheet" href="/static/css/style.css"\>
   <link type="text/css" rel="stylesheet" href="/static/css/search_bar.css"\>
+  <link type="text/css" rel="stylesheet" href="/static/css/sign_in_buttons.css"\>
 
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 </head>
 
 <body>
+  <nav id="navi-bar">
+    <a class="account-buttons" id="login" href="/login">{{signedIn}}</a>
+    <a class="account-buttons" id="logout" href="/logout" onclick="signOut();">Sign out</a>
+  </nav>
 
   <div class="main-logo">
     <img src="/static/Images/main_logo.png"/>
@@ -32,9 +37,6 @@
     <input id="main-submit" type="submit" value="search"/>
   </form>
 
-  <a href="/login">Sign in</a>
-
-  <a href="/logout" onclick="signOut();">Sign out</a>
   <script src="/static/js/GoogleSignOut.js"></script>
 
 </body>

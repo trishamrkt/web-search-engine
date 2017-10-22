@@ -1,0 +1,18 @@
+#navi-bar {
+  text-align: right;
+  padding-top: 15px;
+}
+
+.account-buttons {
+  font-family: Open Sans;
+  font-size: 10pt;
+  text-decoration: none;
+  color: #777777;
+  padding: 10px;
+  margin: 4px;
+}
+
+.account-buttons:hover {
+  color: #262626;
+  text-decoration: underline;
+}

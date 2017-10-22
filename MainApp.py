@@ -15,7 +15,6 @@ import httplib2
 from beaker.middleware import SessionMiddleware
 
 crawlerService = CrawlerService();
-mostPopular = TopTwenty();
 user = User();
 
 flow = OAuth2WebServerFlow(client_id = 'CLIENT_ID',
@@ -52,7 +51,7 @@ def render_home_page():
         session['signed_in'] = False
 
     if request.query_string == '' or not request.query['keywords'].strip():
-        return template('index')
+        return template('index', signedIn= "Signed In" if session['signed_in'] else "Sign In")
 
     # Check for Anonymous mode and Signed_in Mode
     else:
