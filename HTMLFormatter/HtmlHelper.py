@@ -6,7 +6,7 @@ TABLE_STYLE = '<link type="text/css" rel="stylesheet" href="/static/css/word_tab
 NAVI_STYLE = '<link type="text/css" rel="stylesheet" href="/static/css/sign_in_buttons.css"\>'
 STYLE = TABLE_STYLE + NAVI_STYLE
 FONTS = '<link href="https://fonts.googleapis.com/css?family=Assistant" rel="stylesheet" >\
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans"\>'
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"\>'
 
 # Return HTML for Anonymous mode
 def anonymous_results(search_string):
@@ -48,8 +48,8 @@ def create_nav_bar(email, signed_in):
 
     nav = '<nav class="navi">\
                 <a href="/" id="googao-title">Googao</a>\
-                <a href="/login" class="account-buttons">' + account + '</a>\
-                <a href="/logout" class="account-buttons">Sign Out</a>\
+                <a href="/logout" class="account-buttons results-acc-buttons">Sign Out</a>\
+                <a href="/login" class="account-buttons results-acc-buttons">' + account + '</a>\
            </nav>'
 
     return nav

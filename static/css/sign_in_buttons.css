@@ -16,3 +16,7 @@
   color: #262626;
   text-decoration: underline;
 }
+
+.results-acc-buttons {
+  float: right; 
+}

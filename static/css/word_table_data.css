@@ -51,7 +51,7 @@ th:hover {
   border-bottom: 1px solid #ebebeb;
 }
 
-.navi a {
+#googao-title {
   font-family: Futura;
   text-decoration: none;
   display: block;
@@ -59,7 +59,7 @@ th:hover {
   color: #606060;
 }
 
-.navi a:hover {
+#googal-title:hover {
   color: #262626;
   transition: 0.3s;
 }
