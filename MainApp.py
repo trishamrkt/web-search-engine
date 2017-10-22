@@ -108,7 +108,7 @@ def static(filepath):
 def static_img(filepath):
     return static_file(filepath, root='static/Images')
 
-@get ('/static/js/<filepath:re:.*\js>')
+@get ('/static/js/<filepath:re:.*\.js>')
 def static_js(filepath):
     return static_file(filepath, root="static/js")
 
