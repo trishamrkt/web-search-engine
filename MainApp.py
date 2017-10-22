@@ -66,7 +66,7 @@ def redirect_page():
 @route('/')
 def render_home_page():
     session = request.environ.get('beaker.session')
-    if 'signed_in' not in session and not userRepository.isSessionActive(session['_id']):
+    if 'signed_in' not in session and not userSessionManager.isSessionActive(session['_id']):
         session['signed_in'] = False
         
     if request.query_string == '' or not request.query['keywords'].strip():
