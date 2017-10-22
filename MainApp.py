@@ -16,8 +16,8 @@ from beaker.middleware import SessionMiddleware
 crawlerService = CrawlerService();
 mostPopular = TopTwenty();
 
-flow = OAuth2WebServerFlow(client_id = 'XXX',
-    client_secret='XXX',
+flow = OAuth2WebServerFlow(client_id = 'CLIENT_ID',
+    client_secret='CLIENT_SECRET',
     scope='https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email',
     prompt='select_account',
     redirect_uri='http://localhost:8000/redirect')
