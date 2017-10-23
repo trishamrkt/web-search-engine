@@ -15,10 +15,11 @@ The following commands were used to perform preliminary
 benchmarking of our application:
 
 1. Analyzing Application Performance: <br>
-  $ ab -n 1000 -c 50 http://54.174.107.175/?keywords=helloworld+foo+bar
+  $ ab -n 318 -c 318 http://54.174.107.175/?keywords=helloworld+foo+bar
 
 2. Anyalyzing CPU performance: <br>
-  $ <some command>
+  $ dstat --cpu -d --mem --net -io
+  $ ab -n 1000 -c318 http://54.174.107.175/?keywords=helloworld+foo+bar
 
 NOTE: The results of our performance analysis can be found in RESULTS.docx
 
@@ -62,17 +63,25 @@ process
 -------------------------------------------------
 RUNNING WEB APPLICATION ON LOCAL MACHINE:
 -------------------------------------------------
+Code Alterations:
 1. In /MainApp.py:
   - Change Bottle Script to run with host='localhost' and port='8000'
   - Change Google Redirect URL in Flow class initialization to redirect_uri='http://localhost:8000/redirect'
   - Change Google CLIENT_ID and CLIENT_SECRET to correct values
+
+Running Application:
 2. Enter ' $ python MainApp.py ' in:
   Terminal (Mac)
   Command Prompt (Windows)
 2. Open up web browser. Navigate to 'localhost:8000'
 3. Enter search string in input box.
-  - The results and history data tables will then be displayed to you.
-  - To return to the search page, click on the logo in the top left hand corner of the web page.
+
+Anonymous Mode:
+  - The results table with words and their word counts will be displayed
+
+Signed_in Mode:
+  - Results table, 20 most popular keyword searches, and 10 most recent words will be displayed
+  - Your search history will be saved for every subsequent login
 
 -------------------------------------------------
 TESTING:
