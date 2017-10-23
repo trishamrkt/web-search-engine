@@ -15,9 +15,18 @@
 
   <link type="text/css" rel="stylesheet" href="/static/css/style.css"\>
   <link type="text/css" rel="stylesheet" href="/static/css/search_bar.css"\>
+  <link type="text/css" rel="stylesheet" href="/static/css/sign_in_buttons.css"\>
+
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+
 </head>
 
 <body>
+  <nav id="navi-bar">
+    <a class="account-buttons" id="login" href="/login">{{signedIn}}</a>
+    <a class="account-buttons" id="logout" href="/logout" onclick="signOut()">Sign out</a>
+  </nav>
+
   <div class="main-logo">
     <img src="/static/Images/main_logo.png"/>
   </div>
@@ -26,6 +35,8 @@
     <input id="main-search-bar" type="text" name="keywords" /></br>
     <input id="main-submit" type="submit" value="search"/>
   </form>
+
+  <script src="/static/js/GoogleSignOut.js"></script>
 
 </body>
 </html>
