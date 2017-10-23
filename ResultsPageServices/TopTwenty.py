@@ -1,11 +1,14 @@
+from collections import OrderedDict
+
+
 # This class contains info about the top twenty most popular keywords
 class TopTwenty():
     def __init__(self):
         # Contains all the words that have been searched
-        self.searched = {};
+        self.searched = OrderedDict();
 
         # Contains the top twenty words that have been searched
-        self.top = {};
+        self.top = OrderedDict();
 
     # add word to dictionaries
     def add_word(self, word, count):
@@ -50,7 +53,7 @@ class TopTwenty():
         return self.top;
 
     # Puts top twenty dictionary data into an HTML table
-    def get_table_html(self):
+    def get_popular_table_html(self):
         html = '<h1 class="table-header">top 20 searched words:</h1><table class="word-table" id="history"><tr class="col-title"><th>word</th><th>count</th></tr>'
         for key, value in sorted(self.top.items(), key=lambda (k,v): (v,k), reverse=True):
             html = html + '<tr class="word-data"><td class="word">' + key + '</td><td class="count">' + str(value) + '</td></tr>'
@@ -58,7 +61,28 @@ class TopTwenty():
         html = html + "</table>"
         return html
 
+    def get_searched_table_html(self):
+        html = '<h1 class="table-header">10 most recent searches:</h1> \
+                <table class="word-table" id="searched">\
+                    <tr class="col-title"><th></th><th>word</th></tr>';
+
+        count = 0;
+        for key in self.searched.keys()[::-1]:
+            count += 1
+            html += '<tr class="word-data"><td class="count">' + str(count) + '</td><td class="word">' + key + '</td></tr>';
+            if count == 10:
+                break
+
+        html = html + "</table>";
+        return html
+
+    def set_searched(self, __searched):
+        self.searched = OrderedDict(__searched);
+
+    def set_top(self, __top):
+        self.top = OrderedDict(__top);
+
     def clear_history(self):
-        self.searched = {};
-        self.top = {};
+        self.searched = OrderedDict();
+        self.top = OrderedDict();
         return

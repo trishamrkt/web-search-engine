@@ -46,21 +46,20 @@ th:hover {
 }
 
 .navi {
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   overflow: hidden;
   border-bottom: 1px solid #ebebeb;
 }
 
-.navi a {
+#googao-title {
   font-family: Futura;
   text-decoration: none;
   display: block;
   padding: 14px 20px 16px 16px;
   color: #606060;
-  font-size: 20pt;
 }
 
-.navi a:hover {
+#googal-title:hover {
   color: #262626;
   transition: 0.3s;
 }
