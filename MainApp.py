@@ -7,6 +7,9 @@ from SessionManagement.SessionSetup import main_app
 from SessionManagement.User import User
 from SessionManagement.UserRepository import UserRepository
 from SessionManagement.UserSessionManager import UserSessionManager
+from PageRankServices.PageRankData import PageRankData
+from PageRankServices.PageRankService import PageRankService
+from WebScrapingServices.TextUrlData import TextUrlData
 
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.client import flow_from_clientsecrets
@@ -16,9 +19,16 @@ import httplib2
 
 from beaker.middleware import SessionMiddleware
 
-crawlerService = CrawlerService();
+textUrlData = TextUrlData();
+pageRankData = PageRankData();
+crawlerService = CrawlerService(textUrlData, pageRankData);
+pageRankService = PageRankService(textUrlData, pageRankData);
+
 userRepository = UserRepository();
 userSessionManager = UserSessionManager(userRepository);
+
+pageRankService.computePageRank('https://en.wikipedia.org/wiki/Marvel_Entertainment')
+
 
 flow = OAuth2WebServerFlow(client_id = 'XXX',
     client_secret='XXX',

@@ -6,10 +6,11 @@ from WebScrape import *;
 
 class CrawlerService():
     
-    def __init__(self):
+    def __init__(self, __textUrlData, __pageRankData):
         # instantiates data / service classes
-        self.__textData = TextUrlData();
-        self.__webscraper = WebScrape(self.__textData);
+        self.__textData = __textUrlData;
+        self.__pageRankData = __pageRankData;
+        self.__webscraper = WebScrape(self.__textData, self.__pageRankData);
         self.__crawler = Crawler(self.__textData); 
         
         # loads all data structures by calling lower tier helper classes
