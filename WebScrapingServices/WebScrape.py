@@ -79,33 +79,33 @@ class WebScrape():
 
         return list;
 
-    
+
     def __construct_inbound(self, url_list):
         """
         Let current url be 'x':
         if 'x' exists in the set of outbound urls to a url 'y' (within the list of available urls)
-        then 'y' is an inbound url to 'x'        
+        then 'y' is an inbound url to 'x'
         """
         for x in url_list:
             if x not in self.__inbound:
                 self.__inbound[x] = [];
-                
+
             for y in url_list:
-                
+
                 # If y is not the same as x, and y is in part of the outbound structure
                 if y != x and y in self.__outbound:
-                    
+
                     # If x is in the outbound of y, and y has not been inserted as an inbound url of x already
                     if x in self.__outbound[y] and y not in self.__inbound[x]:
                         self.__inbound[x].append(y);
-                       
+
         return
-    
+
     def __construct_outbound(self, a_tags, url, url_list):
         """
         Traverses each 'a' tag in url document and find the url which matches the
         url_list given, and puts that in the outbound datastructure
-        Criteria:    
+        Criteria:
             - Exclude links to itself
             - All outbound urls are unique (exclude ones which appear more than once in document)
         """
