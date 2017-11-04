@@ -3,8 +3,9 @@ from PageRankData import PageRankData
 
 class PageRankService():
 
-    def __init__(self):
-        self.__pageRankData = PageRankData();
+    def __init__(self, __textUrlData, __pageRankData):
+        self.__textUrlData = __textUrlData;
+        self.__pageRankData = __pageRankData;
         self.__inbound = self.__pageRankData.getInbound();
         self.__outbound = self.__pageRankData.getOutbound();
         self.__page_rank = self.__pageRankData.getPageRank();

@@ -24,8 +24,7 @@ class WebScrape():
             self.__words_per_document.append(array);
 
         self.__construct_inbound(url_list);
-
-
+        
         # 1. separate words into individual indices, keeping uniqueness
         # 2. putting common words between documents in single pair of a dictionary
         for document in self.__words_per_document:
