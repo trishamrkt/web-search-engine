@@ -5,19 +5,23 @@ import re
 # Beautiful Soup API calls
 class WebScrape():
     
-    def __init__(self, textData):
+    def __init__(self, textData, pageRankData):
         self.__textData = textData;
+        self.__pageRankData = pageRankData;
         self.__docId_to_url = self.__textData.getDocId_to_url();
         self.__words_per_document = self.__textData.getWords_per_document();
         self.__wordId_to_word = self.__textData.getWordId_to_word();
         self.__wordId_to_docIds = self.__textData.getWordId_to_DocIds();
+        self.__inbound = self.__pageRankData.getInbound();
+        self.__outbound = self.__pageRankData.getOutbound();
+        self.__num_links = self.__pageRankData.getNumLinks();
         
     def scrape_the_web(self, url_list):
         
         # load all words of one url into an array (separation by spaces), and is contained in a bigger array indexed by document ids
         for url in url_list:
             array = [];
-            array = self.__call_beautiful_soup(url, array);
+            array = self.__call_beautiful_soup(url, url_list, array);
             self.__words_per_document.append(array);
         
         # 1. separate words into individual indices, keeping uniqueness
@@ -44,19 +48,24 @@ class WebScrape():
             
         return
     
-    def __call_beautiful_soup(self, url, array):
+    def __call_beautiful_soup(self, url, url_list, array):
         r = requests.get(url);
         data = r.content;
         soup = BeautifulSoup(data, 'html.parser');
         
-        array = self.__parse_soup_text(soup);
+        array = self.__parse_soup_text(soup, url, url_list);
         return array;
     
-    def __parse_soup_text(self, soup):
+    def __parse_soup_text(self, soup, url, url_list):
         [s.extract() for s in soup(['iframe', 'script', 'meta', 'style'])]
         
         body = soup.find('body');
-
+        a_tags = soup.findAll('a', href=True); 
+        
+        # Construct out bound links to current link from Beautiful Soup
+        self.__construct_outbound(a_tags, url, url_list);
+        self.__num_links[url] = len(a_tags);
+        
         list = [];
         for tag in body.findAll():
             
@@ -68,6 +77,27 @@ class WebScrape():
         
         return list;
     
+    def __construct_outbound(self, a_tags, url, url_list):
+        """
+        Traverses each 'a' tag in url document and find the url which matches the
+        url_list given, and puts that in the outbound datastructure
+        """
+        for link in a_tags:
+            # Transform links to proper format
+            
+            new_link = link['href'];
+            if new_link.find('wikipedia.org') == -1:
+                new_link = 'https://en.wikipedia.org' + new_link;
+
+            # Check if link is in URL_list, if yes, put it into outbound list
+
+            if new_link in url_list:
+                if url not in self.__outbound:
+                    self.__outbound[url] = [];
+                
+                if new_link != url and new_link not in self.__outbound[url]:
+                    self.__outbound[url].append(new_link);
+        
     # further polish words, excluding certain characters within words (such as commas, etc.)
     def __cleanup_word(self, old_word):
         new_word = old_word.replace(',', '').replace('.', '').replace('<', '').replace('>', '').replace('?', '');
