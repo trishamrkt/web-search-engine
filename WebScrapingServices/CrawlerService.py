@@ -1,5 +1,4 @@
 from TextUrlData import *; 
-from PageRankData import *;
 from Crawler import *;
 from WebScrape import *;
 
@@ -7,10 +6,10 @@ from WebScrape import *;
 
 class CrawlerService():
     
-    def __init__(self):
+    def __init__(self, __pageRankData):
         # instantiates data / service classes
         self.__textData = TextUrlData();
-        self.__pageRankData = PageRankData();
+        self.__pageRankData = __pageRankData;
         self.__webscraper = WebScrape(self.__textData, self.__pageRankData);
         self.__crawler = Crawler(self.__textData); 
         

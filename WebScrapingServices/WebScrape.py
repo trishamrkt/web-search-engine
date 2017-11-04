@@ -24,6 +24,8 @@ class WebScrape():
             array = self.__call_beautiful_soup(url, url_list, array);
             self.__words_per_document.append(array);
         
+        print self.__outbound
+        
         # 1. separate words into individual indices, keeping uniqueness
         # 2. putting common words between documents in single pair of a dictionary
         for document in self.__words_per_document:

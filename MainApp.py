@@ -7,6 +7,8 @@ from SessionManagement.SessionSetup import main_app
 from SessionManagement.User import User
 from SessionManagement.UserRepository import UserRepository
 from SessionManagement.UserSessionManager import UserSessionManager
+from PageRankServices.PageRankData import PageRankData
+from PageRankServices.PageRankService import PageRankService
 
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.client import flow_from_clientsecrets
@@ -16,7 +18,8 @@ import httplib2
 
 from beaker.middleware import SessionMiddleware
 
-crawlerService = CrawlerService();
+pageRankService = PageRankService();
+crawlerService = CrawlerService(pageRankService.getPageRankData());
 userRepository = UserRepository();
 userSessionManager = UserSessionManager(userRepository);
 
