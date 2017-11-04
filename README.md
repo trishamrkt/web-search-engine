@@ -8,6 +8,9 @@ Public IP Address: 54.174.107.175
 To Access:
 - Go to http://ec2-54-174-107-175.compute-1.amazonaws.com/
 
+Instance setup script:
+- Found in /AWSInstances/InitializeInstances.py
+
 -------------------------------------------------
 BENCHMARK SETUP:
 -------------------------------------------------
