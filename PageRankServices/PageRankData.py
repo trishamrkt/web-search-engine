@@ -7,10 +7,6 @@ class PageRankData():
         self.__page_rank = {};
         self.__num_links = {};
 
-    def initializePageRanks(url_list):
-        for url in url_list:
-            self.__page_rank[url] = 1;
-
     def getInbound(self):
         return self.__inbound;
 

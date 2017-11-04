@@ -11,6 +11,9 @@ class PageRankService():
         self.__page_rank = self.__pageRankData.getPageRank();
         self.__num_links = self.__pageRankData.getNumLinks();
 
+        for url in __textUrlData.getDocId_to_url():
+            self.__page_rank[url] = 1;
+
     # Accessors
     def getPageRankData(self):
         return self.__pageRankData;
@@ -20,6 +23,10 @@ class PageRankService():
     def computePageRank(self, url, num_iterations=20, damping_factor=0.85):
         lead = 1.0 - damping_factor
 
+        # Links with no inbound urls
+        if len(self.__inbound[url]) == 0:
+            return lead;
+
         # Perform 20 iterations of algorithm
         for i in range(num_iterations):
 
@@ -27,10 +34,17 @@ class PageRankService():
             # Compute its pagerank and set its value accordingly in page_rank ds
             for link in self.__inbound[url]:
                 # Compute P(T1)/C(T1), P(T2)/C(T2), ... , P(Tn)/C(Tn)
-                partial_page_ranks = [self.__page_rank[l]/self.__num_links[l] for l in self.__inbound[link]]
-                print partial_page_ranks
+                if len(self.__inbound[link]) != 0:
+                    partial_page_ranks = [float(self.__page_rank[l])/float(self.__num_links[l]) for l in self.__inbound[link]]
+                    current_pagerank = damping_factor*(sum(partial_page_ranks))
+                    page_rank = lead + current_pagerank
+                else:
+                    page_rank = lead
 
-                current_pagerank = damping_factor*(sum([partial_page_ranks]))
-                self.__page_rank[link] = lead + current_pagerank
+                self.__page_rank[link] = page_rank;
 
-        # return self.__page_rank[url]
+        # Compute final page rank score of url
+        self.__page_rank[url] = lead + damping_factor*sum([float(self.__page_rank[l])/self.__num_links[l] for l in self.__inbound[url]])
+
+        print self.__page_rank[url]
+        return self.__page_rank[url]
