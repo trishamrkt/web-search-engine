@@ -17,7 +17,6 @@ class WebScrape():
         self.__num_links = self.__pageRankData.getNumLinks();
         
     def scrape_the_web(self, url_list):
-        
         # load all words of one url into an array (separation by spaces), and is contained in a bigger array indexed by document ids
         for url in url_list:
             array = [];
@@ -25,7 +24,7 @@ class WebScrape():
             self.__words_per_document.append(array);
 
         self.__construct_inbound(url_list);
-        
+
         # 1. separate words into individual indices, keeping uniqueness
         # 2. putting common words between documents in single pair of a dictionary
         for document in self.__words_per_document:
@@ -80,11 +79,24 @@ class WebScrape():
         return list;
     
     def __construct_inbound(self, url_list):
-        
-        for url in url_list:
-            for traverse_url in url_list:
-                if traverse_url != url:
-                    traverse_
+        """
+        Let current url be 'x':
+        if 'x' exists in the set of outbound urls to a url 'y' (within the list of available urls)
+        then 'y' is an inbound url to 'x'        
+        """
+        for x in url_list:
+            if x not in self.__inbound:
+                self.__inbound[x] = [];
+                
+            for y in url_list:
+                
+                # If y is not the same as x, and y is in part of the outbound structure
+                if y != x and y in self.__outbound:
+                    
+                    # If x is in the outbound of y, and y has not been inserted as an inbound url of x already
+                    if x in self.__outbound[y] and y not in self.__inbound[x]:
+                        self.__inbound[x].append(y);
+                       
         return
     
     def __construct_outbound(self, a_tags, url, url_list):
