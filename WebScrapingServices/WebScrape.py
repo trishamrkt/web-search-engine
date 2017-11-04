@@ -23,8 +23,8 @@ class WebScrape():
             array = [];
             array = self.__call_beautiful_soup(url, url_list, array);
             self.__words_per_document.append(array);
-        
-        print self.__outbound
+
+        self.__construct_inbound(url_list);
         
         # 1. separate words into individual indices, keeping uniqueness
         # 2. putting common words between documents in single pair of a dictionary
@@ -79,10 +79,21 @@ class WebScrape():
         
         return list;
     
+    def __construct_inbound(self, url_list):
+        
+        for url in url_list:
+            for traverse_url in url_list:
+                if traverse_url != url:
+                    traverse_
+        return
+    
     def __construct_outbound(self, a_tags, url, url_list):
         """
         Traverses each 'a' tag in url document and find the url which matches the
         url_list given, and puts that in the outbound datastructure
+        Criteria:    
+            - Exclude links to itself
+            - All outbound urls are unique (exclude ones which appear more than once in document)
         """
         for link in a_tags:
             # Transform links to proper format
