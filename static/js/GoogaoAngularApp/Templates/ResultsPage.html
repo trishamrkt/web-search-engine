@@ -6,9 +6,12 @@
     <th>title</th>
     <th>description</th>
   </tr>
-  <tr ng-repeat="result in search_results">
+  <tr ng-repeat="result in search_results[page_number]">
     <td>{{ result.url }}</td>
     <td>{{ result.title }}</td>
     <td>{{ result.description }}</td>
   </tr>
 </table>
+
+<p ng-click="next_page()">next</p>
+<p ng-click="prev_page()">prev</p>

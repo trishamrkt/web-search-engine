@@ -97,7 +97,10 @@ def stop_session():
 def ajax_test():
     return json.dumps({ 0: {'url': "googao.com", 'title': "googao", 'description' : "search engine"},
                         1: {'url': "yahoo.ca", 'title': "yahoo", 'description' : "another search engine"},
-                        2: {'url': "duckduckgo.com", 'title': "duckduckgo", 'description' : "anotheerr one"}
+                        2: {'url': "duckduckgo.com", 'title': "duckduckgo", 'description' : "anotheerr one"},
+                        3: {'url': 'tumblr.com', 'title': 'tumblr', 'description': 'blog'},
+                        4: {'url': 'facebook.com', 'title':'facebook', 'description': 'social media'},
+                        5: {'url': 'instagram.com', 'title': 'instagram', 'description': 'peechurs'}
                         })
 
 @route('/lab1unittest')
