@@ -23,12 +23,8 @@ textUrlData = TextUrlData();
 pageRankData = PageRankData();
 crawlerService = CrawlerService(textUrlData, pageRankData);
 pageRankService = PageRankService(textUrlData, pageRankData);
-
 userRepository = UserRepository();
 userSessionManager = UserSessionManager(userRepository);
-
-pageRankService.computePageRank('https://en.wikipedia.org/wiki/Marvel_Entertainment')
-
 
 flow = OAuth2WebServerFlow(client_id = 'XXX',
     client_secret='XXX',

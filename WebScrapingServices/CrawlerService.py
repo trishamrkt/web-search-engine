@@ -17,10 +17,12 @@ class CrawlerService():
         self.__generate_data_structures();
         
     def get_resolved_inverted_index(self): 
-        return self.__textData.getWord_to_url();
+        # Include DB access code to return resolved inverted index
+        return
     
     def get_inverted_index(self):
-        return self.__textData.getWordId_to_DocIds();
+        # Include DB access code to return inverted index
+        return
     
     
     # Private Helper Functions
@@ -36,17 +38,16 @@ class CrawlerService():
         return docId_to_url;
     
     def __generate_data_structures(self):
-        self.__generate_docId_to_url();
-        self.__generate_webscraping_datastructures();
-        self.__textData.setWord_to_url(self.__crawler.get_resolved_inverted_index());
+        docId_to_url = self.__generate_docId_to_url();
+        self.__generate_webscraping_datastructures(docId_to_url);
     
     def __generate_docId_to_url(self):
-        docId_to_url = self.__textData.getDocId_to_url();
+        docId_to_url = [];
         self.__read_input_file_helper(docId_to_url); 
-        return
+        return docId_to_url;
     
-    def __generate_webscraping_datastructures(self):
-        self.__webscraper.scrape_the_web(self.__textData.getDocId_to_url());
+    def __generate_webscraping_datastructures(self, docId_to_url):
+        self.__webscraper.scrape_the_web(docId_to_url);
         return
     
     def __is_doc_already_scanned(self, url, docId_to_url):
