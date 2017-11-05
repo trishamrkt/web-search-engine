@@ -105,24 +105,36 @@ class WebScrapePersistHelper():
                     if url not in url_array:
                         url_array.append(url);
             
-            # Set urls from word
+            self.__textData.set_urls_from_word(word, url_array);
             
         return
     
     def persist_inbound(self, inbound):
         """
         Persists inbound (old + new urls together)
-        """
+        """     
+        for url, inbound_array in inbound.iteritems():
+            self.__pageRankData.get_inbound_urls(url);
+            # Insert as new document
+            
         return
     
     def persist_outbound(self, outbound):
         """
         Persists outbound
         """
+        for url, outbound_array in outbound.iteritems():
+            # Insert as new document
+            self.__pageRankData.get_outbound_urls(url);
+            
         return
     
     def persist_num_links(self, num_links):
         """
         Persists num_links
         """
+        for url, num in num_links.iteritems():
+            # Insert as new document
+            self.__pageRankData.get_num_links(url);
+        
         return
