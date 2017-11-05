@@ -114,8 +114,7 @@ class WebScrapePersistHelper():
         Persists inbound (old + new urls together)
         """     
         for url, inbound_array in inbound.iteritems():
-            self.__pageRankData.get_inbound_urls(url);
-            # Insert as new document
+            self.__pageRankData.update_inbound(url, inbound_array);
             
         return
     
@@ -124,8 +123,7 @@ class WebScrapePersistHelper():
         Persists outbound
         """
         for url, outbound_array in outbound.iteritems():
-            # Insert as new document
-            self.__pageRankData.get_outbound_urls(url);
+            self.__pageRankData.update_outbound(url, outbound_array);
             
         return
     
@@ -134,7 +132,6 @@ class WebScrapePersistHelper():
         Persists num_links
         """
         for url, num in num_links.iteritems():
-            # Insert as new document
-            self.__pageRankData.get_num_links(url);
-        
+            self.__pageRankData.update_num_links(url, num);
+            
         return
