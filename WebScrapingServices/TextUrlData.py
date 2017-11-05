@@ -38,7 +38,7 @@ class TextUrlData():
         word_array = word_dict['words']
         return word_array[word_id]
 
-    # Given word -> returns int: word_id
+    # Given word -> returns int: word_id (if exists) / None (if not)
     def get_word_id_from_word(self, word):
         word_array = self.get_word_array()
         try:
@@ -89,10 +89,16 @@ class TextUrlData():
         # 2.
         collection.update_one({query_key : query_val},  {'$set' : {update_key : update_val}}, upsert=False)
 
+    # Set new url_array (all urls in url.txt)
     def set_url_from_doc_id(self, new_url_array):
         url_array = self.get_url_array()
         self.update_collections("docId_to_url", "url", url_array, "url", new_url_array)
 
+    # Set new word_array (all words in urls)
     def set_word_from_word_id(self, new_word_array):
         word_array = self.get_word_array()
         self.update_collections("wordId_to_url", "words", word_array, "words", new_word_array)
+
+    # Set new doc_ids for a word_id
+    def set_doc_ids_from_word_id(self, word_id, new_doc_ids):
+        self.update_collections("wordId_to_docIds", "wordId", word_id, "docIds", new_doc_ids)
