@@ -33,8 +33,12 @@ class PageRankData():
     # Input: url
     # Return array: links that point to url
     def get_inbound_urls(self, url):
-        inbound = self.access_collections("inbound", "url", url, "inbound_urls")
-        return inbound
+        inbound_coll = self.db["inbound"]
+        urls = [x['url'] for x in inbound_coll.find()]
+        if urls in url:
+            return self.access_collections("inbound", "url", url, "inbound_urls")
+        else:
+            return None
 
     # Input: url
     # Return array: links on url page that point to other links in url.txt
@@ -64,8 +68,12 @@ class PageRankData():
         collection = self.db[collection_name]
 
         # 2.
-        collection.update_one({query_key : query_val},  {'$set' : {update_key : update_val}}, upsert=False)
+        collection.update_one({query_key : query_val},  {'$set' : {update_key : update_val}}, upsert=True)
 
     # Update page rank of url
     def update_page_rank(self, url, new_rank):
         self.update_collections("page_rank", "url", url, "rank", new_rank);
+
+    # Update inbound urls for url
+    def update_inbound(self, url, new_inbound):
+        self.update_collections("inbound", "url", url, "inbound_urls", new_inbound)
