@@ -77,3 +77,10 @@ class PageRankData():
     # Update inbound urls for url
     def update_inbound(self, url, new_inbound):
         self.update_collections("inbound", "url", url, "inbound_urls", new_inbound)
+
+    # Update outbound urls for url 
+    def update_outbound(self, url, new_outbound):
+        self.update_collections("outbound", "url", url, "outbound_urls", new_outbound)
+
+    def update_num_links(self, url, new_num_links):
+        self.update_collections("num_links", "url", url, "num_links", new_num_links)
