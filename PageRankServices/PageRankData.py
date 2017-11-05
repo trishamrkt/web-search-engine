@@ -6,7 +6,7 @@ class PageRankData():
     def __init__(self):
         # Establish MongoDB Connections
         self.client = MongoClient('localhost', 27017)
-        self.db = client.GoogaoDB
+        self.db = self.client.GoogaoDB
 
         self.__inbound = {};
         self.__outbound = {};
@@ -78,7 +78,7 @@ class PageRankData():
     def update_inbound(self, url, new_inbound):
         self.update_collections("inbound", "url", url, "inbound_urls", new_inbound)
 
-    # Update outbound urls for url 
+    # Update outbound urls for url
     def update_outbound(self, url, new_outbound):
         self.update_collections("outbound", "url", url, "outbound_urls", new_outbound)
 

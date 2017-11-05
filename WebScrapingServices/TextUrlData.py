@@ -6,7 +6,7 @@ class TextUrlData():
     def __init__(self):
         # Establish MongoDB Connections
         self.client = MongoClient('localhost', 27017)
-        self.db = client.GoogaoDB
+        self.db = self.client.GoogaoDB
 
         self.__wordId_to_word = [];
         self.__docId_to_url = [];
@@ -50,7 +50,10 @@ class TextUrlData():
     # Return all words in all urls
     def get_word_array(self):
         word_dict = self.db["wordId_to_word"].find_one()
-        return word_dict['words']
+        if word_dict != None:
+            return word_dict['words']
+        else:
+            return []
 
     # Given doc_id -> return string: url
     def get_url_from_doc_id(self, doc_id):
@@ -61,7 +64,10 @@ class TextUrlData():
     # Return all urls in url.txt
     def get_url_array(self):
         url_dict = self.db["docId_to_url"].find_one()
-        return url_dict['url']
+        if url_dict != None:
+            return url_dict['url']
+        else:
+            return []
 
     # Given word_id -> return array: doc_ids containing word_id
     def get_doc_ids_from_word_id(self, word_id):
@@ -107,6 +113,6 @@ class TextUrlData():
     def set_doc_ids_from_word_id(self, word_id, new_doc_ids):
         self.update_collections("wordId_to_docIds", "wordId", word_id, "docIds", new_doc_ids)
 
-    # Set urls array for a word 
+    # Set urls array for a word
     def set_urls_from_word(self, word, new_urls):
         self.update_collections("word_to_url", "word", word, "url", new_urls)
