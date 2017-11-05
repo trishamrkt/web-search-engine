@@ -84,11 +84,10 @@ class WebScrapePersistHelper():
                     for docId in docIds:
                         array.append(docId);
                     # Set that wordId's value to array
+                    self.__textData.set_doc_ids_from_word_id(id, array);
                 else:
                     # Insert new document with wordId as key and docIds as value
-                    
-                                    
-            
+                    self.__textData.
         return
     
     def persist_word_to_url(self, word_to_url):
