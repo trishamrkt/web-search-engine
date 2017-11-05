@@ -68,32 +68,45 @@ class WebScrapePersistHelper():
         Persists wordId_to_docId
         """
         # Get wordId_to_word from db accessor
-        db_wordId_to_word = [];
+        db_wordId_to_word = self.__textData.get_word_array();
         
         for wordId, docIds in wordId_to_docIds.iteritems():
             # Check if this word already exists in DB
             if wordId_to_word[wordId]:
                 word = wordId_to_word[wordId];
-                
-                # Get id of this word (db_wordId_to_word)
                 id = self.__textData.get_word_id_from_word(word);
-                array = self.__textData.get_doc_ids_from_word_id(id)
                 
-                if array:
+                docId_array = self.__textData.get_doc_ids_from_word_id(id)
+                
+                if docId_array:
                     # Append to the docIds array
                     for docId in docIds:
-                        array.append(docId);
-                    # Set that wordId's value to array
-                    self.__textData.set_doc_ids_from_word_id(id, array);
-                else:
-                    # Insert new document with wordId as key and docIds as value
-                    self.__textData.
+                        if docId not in docId_array:
+                            docId_array.append(docId);
+                
+                # Function takes care of both cases when docId exists and does not exist
+                self.__textData.set_doc_ids_from_word_id(id, docId_array);
+
         return
     
     def persist_word_to_url(self, word_to_url):
         """
         Persists word_to_url
         """
+        # Get wordId_to_word from db accessor
+        db_wordId_to_word = self.__textData.get_word_array();
+        
+        for word, url_list in word_to_url.iteritems():
+            # Check if word exists in db
+            url_array = self.__textData.get_urls_from_word(word);
+            
+            if url_array:
+                for url in url_list:
+                    if url not in url_array:
+                        url_array.append(url);
+            
+            # Set urls from word
+            
         return
     
     def persist_inbound(self, inbound):
