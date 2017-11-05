@@ -61,8 +61,12 @@ class TextUrlData():
 
     # Given word_id -> return array: doc_ids containing word_id
     def get_doc_ids_from_word_id(self, word_id):
-        doc_ids = self.access_collections("wordId_to_docIds", "wordId", word_id, "docIds")
-        return doc_ids
+        word_id_to_doc_ids = self.db["wordId_to_docIds"]
+        word_ids = [x['wordId'] for x in word_id_to_doc_ids.find()]
+        if word_id in word_ids:
+            return self.access_collections("wordId_to_docIds", "wordId", word_id, "docIds")
+        else:
+            return None
 
     # Given word -> return array: urls containing word
     def get_urls_from_word(self, word):
