@@ -33,6 +33,8 @@ class WebScrape():
         self.__persist_to_db();
         self.__clear_in_memory_datastructures();
         
+        print "DONE PERSISTENCE AND MEMORY CLEAR!"
+        
         return
     
     def __beautiful_soup_controller(self, new_list, old_list):

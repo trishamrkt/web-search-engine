@@ -5,10 +5,10 @@ class PageRankService():
     def __init__(self, __textUrlData, __pageRankData):
         self.__textUrlData = __textUrlData;
         self.__pageRankData = __pageRankData;
-        self.__inbound = self.__pageRankData.getInbound();
-        self.__outbound = self.__pageRankData.getOutbound();
-        self.__page_rank = self.__pageRankData.getPageRank();
-        self.__num_links = self.__pageRankData.getNumLinks();
+        self.__inbound = self.__pageRankData.get_inbound();
+        self.__outbound = self.__pageRankData.get_outbound();
+        self.__page_rank = self.__pageRankData.get_page_rank();
+        self.__num_links = self.__pageRankData.get_num_links();
 
         for url in __textUrlData.getDocId_to_url():
             self.__page_rank[url] = 1;

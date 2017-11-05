@@ -25,7 +25,7 @@ class WebScrapePersistHelper():
             if url not in db_list:
                 new_list.append(url);
         
-        return url_list
+        return new_list;
     
     def persist_docId_to_url(self, docId_to_url):
         """
