@@ -33,13 +33,13 @@ class PageRankData():
     # Input: url
     # Return array: links that point to url
     def get_inbound_urls(self, url):
-        inbound = access_collections("inbound", "url", url, "inbound_urls")
+        inbound = self.access_collections("inbound", "url", url, "inbound_urls")
         return inbound
 
     # Input: url
     # Return array: links on url page that point to other links in url.txt
     def get_outbound_urls(self, url):
-        outbound = access_collections("outbound", "url", url, "outbound_urls")
+        outbound = self.access_collections("outbound", "url", url, "outbound_urls")
         return outbound
 
     # Input: url
@@ -51,7 +51,7 @@ class PageRankData():
     # Input: url
     # Return float: pagerank of url taken from pagerank algorithm
     def get_page_rank(self, url):
-        page_rank = access_collections("page_rank", "url", url, "rank")
+        page_rank = self.access_collections("page_rank", "url", url, "rank")
         return page_rank
 
     """ DATABASE UPDATE FUNCTIONS:
@@ -68,4 +68,4 @@ class PageRankData():
 
     # Update page rank of url
     def update_page_rank(self, url, new_rank):
-        update_collections("page_rank", "url", url, "rank", new_rank);
+        self.update_collections("page_rank", "url", url, "rank", new_rank);
