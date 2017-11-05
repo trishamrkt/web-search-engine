@@ -3,7 +3,7 @@ app.config(function($routeProvider){
   .when("/", {
     templateUrl : "/static/js/GoogaoAngularApp/Templates/HomePage.html"
   })
-  .when("/test", {
+  .when("/results", {
     templateUrl: "/static/js/GoogaoAngularApp/Templates/ResultsPage.html"
   });
 });

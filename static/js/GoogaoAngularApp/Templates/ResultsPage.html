@@ -1,1 +1,14 @@
-<h1> TESTING </h1>
+<h1> {{results_page_title}} </h1>
+
+<table>
+  <tr>
+    <th>url</th>
+    <th>title</th>
+    <th>description</th>
+  </tr>
+  <tr ng-repeat="result in search_results">
+    <td>{{ result.url }}</td>
+    <td>{{ result.title }}</td>
+    <td>{{ result.description }}</td>
+  </tr>
+</table>
