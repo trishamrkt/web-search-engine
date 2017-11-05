@@ -38,6 +38,11 @@ class TextUrlData():
         word_array = word_dict['words']
         return word_array[word_id]
 
+    # Given word -> returns int: word_id
+    def get_word_id_from_word(self, word):
+        word_array = self.get_word_array()
+        return word_array.index(word);
+
     # Return all words in all urls
     def get_word_array(self):
         word_dict = self.db["wordId_to_word"].find_one()
