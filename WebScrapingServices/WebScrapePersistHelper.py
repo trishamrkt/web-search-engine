@@ -43,15 +43,48 @@ class WebScrapePersistHelper():
     def persist_wordId_to_word(self, wordId_to_word):
         """
         Persists wordId_to_word to DB
+        1. iterate through dictionary
         """
+        # Get wordId_to_word from db accessor
+        db_wordId_to_word = [];
         
+        # Iterate through new words
+        for word in wordId_to_word:
+            
+            # If this word does not already exist in db, insert it
+            if word not in db_wordId_to_word:
+                db_wordId_to_word.append(word);
+        
+        # Persist db_wordId_to_word
         
         return
     
-    def persist_wordId_to_docId(self, wordId_to_docId):
+    def persist_wordId_to_docIds(self, wordId_to_docIds, wordId_to_word):
         """
         Persists wordId_to_docId
         """
+        # Get wordId_to_word from db accessor
+        db_wordId_to_word = [];
+        
+        for wordId, docIds in wordId_to_docIds.iteritems():
+            # Check if this word already exists in DB
+            if wordId_to_word[wordId]:
+                word = wordId_to_word[wordId];
+                
+                # Get id of this word (db_wordId_to_word)
+                id = 0;
+                array = self.__textData.get_doc_ids_from_word_id(id)
+                
+                if array:
+                    # Append to the docIds array
+                    for docId in docIds:
+                        array.append(docId);
+                    # Set that wordId's value to array
+                else:
+                    # Insert new document with wordId as key and docIds as value
+                    
+                                    
+            
         return
     
     def persist_word_to_url(self, word_to_url):

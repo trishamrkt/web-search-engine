@@ -34,7 +34,7 @@ class TextUrlData():
 
     # Given a word_id  -> return string: word
     def get_word_from_word_id(self, word_id):
-        word self.access_collections("wordId_to_word", "wordId", word_id, "word");
+        word = self.access_collections("wordId_to_word", "wordId", word_id, "word");
         return word
 
     # Given doc_id -> return string: url

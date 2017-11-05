@@ -80,7 +80,7 @@ class WebScrape():
     def __persist_to_db(self):
         self.__persistHelper.persist_docId_to_url(self.__docId_to_url);
         self.__persistHelper.persist_wordId_to_word(self.__wordId_to_word);
-        self.__persistHelper.persist_wordId_to_docId(self.__wordId_to_docIds);
+        self.__persistHelper.persist_wordId_to_docIds(self.__wordId_to_docIds);
         self.__persistHelper.persist_word_to_url(self.__word_to_url);
         
         self.__persistHelper.persist_inbound(self.__inbound);
