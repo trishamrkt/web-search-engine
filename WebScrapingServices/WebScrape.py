@@ -15,6 +15,8 @@ class WebScrape():
         self.__wordId_to_word = [];
         self.__wordId_to_docIds = {};
         self.__word_to_url = {};
+        self.__url_to_title = {};
+        self.__url_to_description = {};
         
         self.__inbound = {};
         # We must get the original outbound to compute the new inbound
@@ -26,15 +28,18 @@ class WebScrape():
         # Modify url_list to include only urls which are not present in database
         new_list = self.__persistHelper.parse_url(url_list);
         
-        self.__beautiful_soup_controller(new_list, url_list);
-        self.__print_in_memory_datastructures();
-
-        # Persist to database
-        self.__persist_to_db();
-        self.__clear_in_memory_datastructures();
-        
-        print "DONE PERSISTENCE AND MEMORY CLEAR!"
-        
+        if len(new_list) != 0:
+            self.__beautiful_soup_controller(new_list, url_list);
+            self.__print_in_memory_datastructures();
+    
+            # Persist to database
+            self.__persist_to_db();
+            self.__clear_in_memory_datastructures();
+            
+            print "DONE PERSISTENCE AND MEMORY CLEAR!"
+        else:
+            print "No new urls - skipping web scraping and persistence"
+            
         return
     
     def __beautiful_soup_controller(self, new_list, old_list):
@@ -58,16 +63,16 @@ class WebScrape():
             soup = self.__call_beautiful_soup(url);
             array = self.__parse_soup_text(soup, url);
             self.__words_per_document.append(array);
-
+        
         self.__construct_inbound(old_list);
         
         # 1. separate words into individual indices, keeping uniqueness
         # 2. putting common words between documents in single pair of a dictionary
         for document in self.__words_per_document:
             doc_id = self.__words_per_document.index(document);
-
+            
             for word in document:
-
+                
                 # 1
                 if word not in self.__wordId_to_word:
                     self.__wordId_to_word.append(word);
@@ -94,7 +99,11 @@ class WebScrape():
         self.__persistHelper.persist_inbound(self.__inbound);
         self.__persistHelper.persist_outbound(self.__outbound);
         self.__persistHelper.persist_num_links(self.__num_links);
-        return 
+        
+        self.__persistHelper.persist_url_to_title(self.__url_to_title);
+        self.__persistHelper.persist_url_to_description(self.__url_to_description);
+        
+        return
     
     def __get_resolved_inverted_index(self):        
         # mapping real words and doc urls with their id's and putting them in a dictionary (as specified for Lab1)
@@ -109,37 +118,73 @@ class WebScrape():
             
     def __call_beautiful_soup(self, url):
         r = requests.get(url);
-        data = r.content;
+        data = r.content.decode('utf-8', 'ignore');
         soup = BeautifulSoup(data, 'html.parser');
         
         return soup
 
     def __parse_soup_text(self, soup, url):
-        [s.extract() for s in soup(['iframe', 'script', 'meta', 'style'])]
+        [s.extract() for s in soup(['iframe', 'meta', 'script', 'style'])]
 
+        title = str(soup.findAll('title')[0]);
         body = soup.find('body');
-
+        
+        # Generate title for website
+        print "Title: " + title;
+        if url not in self.__url_to_title and title != None:
+            title = title.replace('<title>', '').replace('</title>', '');
+            self.__url_to_title[url] = title;
+        
+        description = '';
+        word_count = 25;
+        start_counting = False;
         list = [];
         for tag in body.findAll():
-
             inner_list = tag.text.split();
             for word in inner_list:
+                
+                # Getting description: (take 25 words, starts after a period has been encountered)
+                # If there was a nonascii character in the text, restart
+                if word_count > 0:
+                    if self.__is_ascii_encoded(word) and self.__is_valid_word(word) and start_counting:
+                        description = description + ' ' + word;
+                        word_count = word_count - 1;
+                    else:
+                        word_count = 25;
+                        description = '';
+                        start_counting = False;
+                if '.' in word:
+                    start_counting = True;
+                
                 if word:
                     parsed = word.replace('\n','').replace('\t', '').replace('\r', '').replace(',', '').replace('.', '').strip();
                     list.append(parsed);
-
+        
+        description = description + '...';
+        print description;
+        if url not in self.__url_to_description:
+            self.__url_to_description[url] = description;
+        
         return list;
     
+    def __is_ascii_encoded(self, word):
+        try:
+            word.decode('ascii');
+        except (UnicodeEncodeError, UnicodeDecodeError) as e:
+            return False;
+        else:
+            return True;
+        
+        
     def __parse_href_text(self, soup, url, old_list):
         [s.extract() for s in soup(['iframe', 'script', 'meta', 'style'])]
         
         a_tags = soup.findAll('a', href=True);
-
+        
         # Construct out bound links to current link from Beautiful Soup
         self.__construct_outbound(a_tags, url, old_list);
         self.__num_links[url] = len(a_tags);
-        
-
+                
     def __construct_inbound(self, url_list):
         """
         Let current url be 'x':
@@ -196,21 +241,31 @@ class WebScrape():
             and ('\\' not in word) and ('/' not in word) and ('}' not in word) and ('{' not in word) \
             and ('=' not in word) and ('$' not in word) and ('meta' not in word) \
             and ('charset' not in word) and ('script' not in word) and ('#' not in word) and ('=' not in word) \
-            and ('|' not in word):
+            and ('|' not in word) and not self.__numbers_in_word(word):
              return True;
          else:
              return False;
-
+    
+    def __numbers_in_word(self, word):
+        if ('0' in word or '1' in word or '2' in word or '3' in word or '4' in word or '5' in word \
+            or '6' in word or '7' in word or '8' in word or '9' in word) and ('f' in word or 'e' in word \
+            or 'u' in word):
+            return True;
+        else:
+            return False;
+        
     def __parse_document(self, document):
         document = re.sub('<([^>]*)>', '', document.prettify());
         return document;
     
     def __print_in_memory_datastructures(self):
         pprint.pprint(self.__docId_to_url);
-         
+          
         pprint.pprint(self.__inbound);
         pprint.pprint(self.__outbound);
         pprint.pprint(self.__num_links);
+        pprint.pprint(self.__url_to_title);
+        pprint.pprint(self.__url_to_description);
             
     def __clear_in_memory_datastructures(self):
         del self.__docId_to_url[:];
@@ -221,5 +276,7 @@ class WebScrape():
         self.__inbound.clear();
         self.__outbound.clear();
         self.__num_links.clear();
+        self.__url_to_description.clear();
+        self.__url_to_title.clear();
         
     
