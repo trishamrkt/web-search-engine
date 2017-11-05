@@ -74,8 +74,12 @@ class TextUrlData():
 
     # Given word -> return array: urls containing word
     def get_urls_from_word(self, word):
-        urls = self.access_collections("word_to_url", "word", word, "url")
-        return urls
+        word_to_urls = self.db["word_to_url"]
+        words = [x['word'] for x in word_to_urls.find()]
+        if word in words:
+            return self.access_collections("word_to_url", "word", word, "url")
+        else:
+            return None
 
     """ DATABASE UPDATE FUNCTIONS:
         All follow 2 steps:
@@ -102,3 +106,6 @@ class TextUrlData():
     # Set new doc_ids for a word_id
     def set_doc_ids_from_word_id(self, word_id, new_doc_ids):
         self.update_collections("wordId_to_docIds", "wordId", word_id, "docIds", new_doc_ids)
+
+    def set_urls_from_word(self, word, new_urls):
+        self.update_collections("word_to_url", "word", word, "url", new_urls)
