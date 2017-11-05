@@ -42,7 +42,7 @@ app = main_app();
 def root_path():
     uri = flow.step1_get_authorize_url();
     redirect(str(uri));
-    
+
 @route('/redirect')
 def redirect_page():
     code = request.query.get('code','')
@@ -93,10 +93,10 @@ def stop_session():
     session['signed_in'] = False;
     redirect('/')
 
-@route('/ajaxtest')
+@route('/ajaxtest', method="post")
 def ajax_test():
     return json.dumps({'status': 'OK', 'user': 'Jimmy', 'message' : 'It works!'})
-    
+
 @route('/lab1unittest')
 def lab1_unit_test():
     return template('lab1unittest')
@@ -116,6 +116,14 @@ def static_img(filepath):
 @get ('/static/js/<filepath:re:.*\.js>')
 def static_js(filepath):
     return static_file(filepath, root="static/js")
+
+@get ('/static/js/GoogaoAngularApp/<filepath:re:.*\.js>')
+def static_js_angular(filepath):
+    return static_file(filepath, root="static/js/GoogaoAngularApp")
+
+@get ('/static/js/GoogaoAngularApp/Templates/<filepath:re:.*\.html>')
+def static_js_angular(filepath):
+    return static_file(filepath, root="static/js/GoogaoAngularApp/Templates")
 
 if __name__ == '__main__':
     TEMPLATE_PATH.insert(0,'./views/unittest/')
