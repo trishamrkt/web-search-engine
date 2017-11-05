@@ -116,3 +116,6 @@ class TextUrlData():
     # Set urls array for a word
     def set_urls_from_word(self, word, new_urls):
         self.update_collections("word_to_url", "word", word, "url", new_urls)
+
+    def close_connection(self):
+        self.client.close()
