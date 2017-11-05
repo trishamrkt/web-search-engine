@@ -19,7 +19,7 @@ class WebScrapePersistHelper():
         new_list = [];
         
         # Get database url list (docId to url)
-        db_list = [];
+        db_list = self.__textData.get_url_array();
         
         for url in url_list:
             if url not in db_list:
@@ -32,11 +32,11 @@ class WebScrapePersistHelper():
         Persists docId_to_url to DB
         """
         # Get database url list function (docId to url)
-        db_list = [];
-        
+        db_list = self.__textData.get_url_array();
         db_list = db_list + docId_to_url;
         
         # Set database url list function
+        self.__textData.set_url_from_doc_id(db_list);
         
         return
     
@@ -46,16 +46,20 @@ class WebScrapePersistHelper():
         1. iterate through dictionary
         """
         # Get wordId_to_word from db accessor
-        db_wordId_to_word = [];
+        db_wordId_to_word = self.__textData.get_word_array();
+        persist = False;
         
         # Iterate through new words
         for word in wordId_to_word:
             
             # If this word does not already exist in db, insert it
             if word not in db_wordId_to_word:
+                persist = True;
                 db_wordId_to_word.append(word);
         
         # Persist db_wordId_to_word
+        if persist:
+            self.__textData.set_word_from_word_id(db_wordId_to_word);
         
         return
     
@@ -72,7 +76,7 @@ class WebScrapePersistHelper():
                 word = wordId_to_word[wordId];
                 
                 # Get id of this word (db_wordId_to_word)
-                id = 0;
+                id = self.__textData.get_word_id_from_word(word);
                 array = self.__textData.get_doc_ids_from_word_id(id)
                 
                 if array:
