@@ -87,7 +87,7 @@ class TextUrlData():
         collection = self.db[collection_name]
 
         # 2.
-        collection.update_one({query_key : query_val},  {'$set' : {update_key : update_val}}, upsert=False)
+        collection.update_one({query_key : query_val},  {'$set' : {update_key : update_val}}, upsert=True)
 
     # Set new url_array (all urls in url.txt)
     def set_url_from_doc_id(self, new_url_array):
