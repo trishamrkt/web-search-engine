@@ -107,5 +107,6 @@ class TextUrlData():
     def set_doc_ids_from_word_id(self, word_id, new_doc_ids):
         self.update_collections("wordId_to_docIds", "wordId", word_id, "docIds", new_doc_ids)
 
+    # Set urls array for a word 
     def set_urls_from_word(self, word, new_urls):
         self.update_collections("word_to_url", "word", word, "url", new_urls)
