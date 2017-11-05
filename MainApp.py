@@ -2,6 +2,7 @@ from bottle import *
 from WebScrapingServices.CrawlerService import *
 from ResultsPageServices.TopTwenty import TopTwenty
 from ResultsPageServices.WordData import WordData
+from ResultsPageServices.SearchResultsService import SearchResultsService
 from HTMLFormatter.HtmlHelper import *
 from SessionManagement.SessionSetup import main_app
 from SessionManagement.User import User
@@ -17,13 +18,16 @@ from googleapiclient.errors import HttpError
 from googleapiclient.discovery import build
 import httplib2
 import json
+import pprint
 
 from beaker.middleware import SessionMiddleware
+from boto.cloudsearch.search import SearchResults
 
 textUrlData = TextUrlData();
 pageRankData = PageRankData();
 crawlerService = CrawlerService(textUrlData, pageRankData);
 pageRankService = PageRankService(textUrlData, pageRankData);
+searchResultsService = SearchResultsService(textUrlData, pageRankData);
 pageRankService.computeAllPageRank();
 
 userRepository = UserRepository();
@@ -52,7 +56,7 @@ def redirect_page():
     session = request.environ.get('beaker.session')
     session['access_token'] = token;
     session['signed_in'] = True;
-
+    
     http = httplib2.Http();
     http = credentials.authorize(http);
     users_service = build('oauth2', 'v2', http=http);
