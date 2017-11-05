@@ -105,6 +105,10 @@ def lab1_unit_test():
 def lab1_unit_test2():
     return template('lab1unittest2')
 
+@error(404)
+def error_handler_404(error):
+    return template('error404')
+
 @get('/static/css/<filepath:re:.*\.css>')
 def static(filepath):
     return static_file(filepath, root='static/css')
