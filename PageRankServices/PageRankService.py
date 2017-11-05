@@ -1,4 +1,3 @@
-import numpy as np
 from PageRankData import PageRankData
 
 class PageRankService():
@@ -6,18 +5,24 @@ class PageRankService():
     def __init__(self, __textUrlData, __pageRankData):
         self.__textUrlData = __textUrlData;
         self.__pageRankData = __pageRankData;
-        self.__inbound = self.__pageRankData.getInbound();
-        self.__outbound = self.__pageRankData.getOutbound();
-        self.__page_rank = self.__pageRankData.getPageRank();
-        self.__num_links = self.__pageRankData.getNumLinks();
-
-        for url in __textUrlData.getDocId_to_url():
+        self.__inbound = self.__pageRankData.get_inbound();
+        self.__outbound = self.__pageRankData.get_outbound();
+        self.__page_rank = self.__pageRankData.get_all_page_ranks();
+        self.__num_links = self.__pageRankData.get_all_num_links();
+        self.__url_array = self.__textUrlData.get_url_array();
+        
+        for url in self.__url_array:
             self.__page_rank[url] = 1;
 
     # Accessors
     def getPageRankData(self):
         return self.__pageRankData;
-
+    
+    def computeAllPageRank(self):
+        for url in self.__url_array:
+            rank = self.computePageRank(url);
+            self.__pageRankData.update_page_rank(url, rank); 
+            
     # Compute page rank algorithm for the given url
     # Equation: PR(url) = (1 - d) + d*(P(T1)/C(T1)+...+P(n)/C(n))
     def computePageRank(self, url, num_iterations=20, damping_factor=0.85):
