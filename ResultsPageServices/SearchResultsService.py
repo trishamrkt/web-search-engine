@@ -48,10 +48,10 @@ class SearchResultsService():
                         self.__deep_copy_dictionary(highest_url_obj, url_obj);
                         highest_rank = rank;
                         
-            sorted_urls[n] = highest_url_obj;
-            del rank_url_obj[highest_rank];
+            if highest_rank != 0:
+                sorted_urls[n] = highest_url_obj;
+                del rank_url_obj[highest_rank];
             
-        
         return sorted_urls;
     
     def __get_url_obj(self, url):
