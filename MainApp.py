@@ -56,7 +56,7 @@ def redirect_page():
     session = request.environ.get('beaker.session')
     session['access_token'] = token;
     session['signed_in'] = True;
-    
+
     http = httplib2.Http();
     http = credentials.authorize(http);
     users_service = build('oauth2', 'v2', http=http);
@@ -99,13 +99,9 @@ def stop_session():
 
 @route('/ajaxtest', method="post")
 def ajax_test():
-    return json.dumps({ 0: {'url': "googao.com", 'title': "googao", 'description' : "search engine"},
-                        1: {'url': "yahoo.ca", 'title': "yahoo", 'description' : "another search engine"},
-                        2: {'url': "duckduckgo.com", 'title': "duckduckgo", 'description' : "anotheerr one"},
-                        3: {'url': 'tumblr.com', 'title': 'tumblr', 'description': 'blog'},
-                        4: {'url': 'facebook.com', 'title':'facebook', 'description': 'social media'},
-                        5: {'url': 'instagram.com', 'title': 'instagram', 'description': 'peechurs'}
-                        })
+    result = json.dumps(searchResultsService.find_word("the"))
+    print result
+    return result
 
 @route('/lab1unittest')
 def lab1_unit_test():

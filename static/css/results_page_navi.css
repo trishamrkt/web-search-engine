@@ -1,0 +1,36 @@
+.results-navi {
+  width: 100%;
+  background-color: #FAFAFA;
+  height: 75px;
+  overflow: hidden;
+  border-bottom: 1px solid #ebebeb;
+}
+
+#navi-title {
+  float: left;
+  font-family: Futura;
+  font-size: 20pt;
+  text-decoration: none;
+  color: #595959;
+  margin-left: 4px;
+  margin-right: 7px;
+  margin-top: 10px;
+}
+
+#navi-title:hover {
+  color: #d85858;
+  transition: 0.3s;
+}
+
+#navisearch {
+  margin-top: 12px;
+  padding: 5px;
+  outline: none;
+  font-size: 10pt;
+  font-family: Open Sans;
+  width: 50%;
+}
+
+.results-navi form input {
+  float: left;
+}

@@ -1,17 +1,16 @@
-<h1> {{results_page_title}} </h1>
+<nav class="results-navi">
+  <a href="/" id="navi-title">Googao</a>
+  <form ng-submit="search($event)" action="/ajaxtest" method="POST">
+    <input type="text" id="navisearch"/>
+    <input type="submit" style="display:none">
+  </form>
+</nav>
 
-<table>
-  <tr>
-    <th>url</th>
-    <th>title</th>
-    <th>description</th>
-  </tr>
-  <tr ng-repeat="result in search_results[page_number]">
-    <td>{{ result.url }}</td>
-    <td>{{ result.title }}</td>
-    <td>{{ result.description }}</td>
-  </tr>
-</table>
+<div class="results" ng-repeat="result in search_results[page_number]">
+  <h2 class="url-titles">{{ result.title }}</h2>
+  <p class="url-desc">{{ result.description }}</p>
+  <a href="result.url" class="url-links">{{ result.url }}</a>
+</div>
 
 <p ng-click="next_page()">next</p>
 <p ng-click="prev_page()">prev</p>
