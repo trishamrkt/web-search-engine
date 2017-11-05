@@ -16,6 +16,7 @@ from oauth2client.client import flow_from_clientsecrets
 from googleapiclient.errors import HttpError
 from googleapiclient.discovery import build
 import httplib2
+import json
 
 from beaker.middleware import SessionMiddleware
 
@@ -41,7 +42,7 @@ app = main_app();
 def root_path():
     uri = flow.step1_get_authorize_url();
     redirect(str(uri));
-
+    
 @route('/redirect')
 def redirect_page():
     code = request.query.get('code','')
@@ -92,6 +93,10 @@ def stop_session():
     session['signed_in'] = False;
     redirect('/')
 
+@route('/ajaxtest')
+def ajax_test():
+    return json.dumps({'status': 'OK', 'user': 'Jimmy', 'message' : 'It works!'})
+    
 @route('/lab1unittest')
 def lab1_unit_test():
     return template('lab1unittest')
