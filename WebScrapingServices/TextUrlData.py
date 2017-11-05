@@ -34,13 +34,25 @@ class TextUrlData():
 
     # Given a word_id  -> return string: word
     def get_word_from_word_id(self, word_id):
-        word self.access_collections("wordId_to_word", "wordId", word_id, "word");
-        return word
+        word_dict = self.db["wordId_to_word"].find_one()
+        word_array = word_dict['words']
+        return word_array[word_id]
+
+    # Return all words in all urls
+    def get_word_array(self):
+        word_dict = self.db["wordId_to_word"].find_one()
+        return word_dict['words']
 
     # Given doc_id -> return string: url
     def get_url_from_doc_id(self, doc_id):
-        url = self.access_collections("docId_to_url", "docId", doc_id, "url")
-        return url
+        url_dict = self.db["docId_to_url"].find_one()
+        url_array = url_dict['url']
+        return url_array[doc_id]
+
+    # Return all urls in url.txt
+    def get_url_array(self):
+        url_dict = self.db["docId_to_url"].find_one()
+        return url_dict['url']
 
     # Given word_id -> return array: doc_ids containing word_id
     def get_doc_ids_from_word_id(self, word_id):
@@ -51,3 +63,23 @@ class TextUrlData():
     def get_urls_from_word(self, word):
         urls = self.access_collections("word_to_url", "word", word, "url")
         return urls
+
+    """ DATABASE UPDATE FUNCTIONS:
+        All follow 2 steps:
+        1. Connect to appropriate collection within GoogaoDB
+        2. Set query dictionary to updated value
+    """
+    def update_collections(self, collection_name, query_key, query_val, update_key, update_val):
+        # 1.
+        collection = self.db[collection_name]
+
+        # 2.
+        collection.update_one({query_key : query_val},  {'$set' : {update_key : update_val}}, upsert=False)
+
+    def set_url_from_doc_id(self, new_url_array):
+        url_array = self.get_url_array()
+        self.update_collections("docId_to_url", "url", url_array, "url", new_url_array)
+
+    def set_word_from_word_id(self, new_word_array):
+        word_array = self.get_word_array()
+        self.update_collections("wordId_to_url", "words", word_array, "words", new_word_array)
