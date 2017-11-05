@@ -41,7 +41,11 @@ class TextUrlData():
     # Given word -> returns int: word_id
     def get_word_id_from_word(self, word):
         word_array = self.get_word_array()
-        return word_array.index(word);
+        try:
+            word_id = word_array.index(word)
+            return word_id
+        except:
+            return None
 
     # Return all words in all urls
     def get_word_array(self):
