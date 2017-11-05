@@ -23,6 +23,8 @@ textUrlData = TextUrlData();
 pageRankData = PageRankData();
 crawlerService = CrawlerService(textUrlData, pageRankData);
 pageRankService = PageRankService(textUrlData, pageRankData);
+pageRankService.computeAllPageRank();
+
 userRepository = UserRepository();
 userSessionManager = UserSessionManager(userRepository);
 

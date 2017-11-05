@@ -47,9 +47,16 @@ class WebScrape():
         # load all words of one url into an array (separation by spaces), and is contained in a bigger array indexed by document ids
         self.__docId_to_url = new_list;
         
+        # Scrape all urls for their href links (inbound, outbound datastructures)
+        for url in old_list:
+            soup = self.__call_beautiful_soup(url);
+            self.__parse_href_text(soup, url, old_list);
+        
+        # Scrape new urls to add them to other datastructures
         for url in new_list:
             array = [];
-            array = self.__call_beautiful_soup(url, old_list, array);
+            soup = self.__call_beautiful_soup(url);
+            array = self.__parse_soup_text(soup, url);
             self.__words_per_document.append(array);
 
         self.__construct_inbound(old_list);
@@ -100,23 +107,17 @@ class WebScrape():
             
             self.__word_to_url[word] = docs;
             
-    def __call_beautiful_soup(self, url, old_list, array):
+    def __call_beautiful_soup(self, url):
         r = requests.get(url);
         data = r.content;
         soup = BeautifulSoup(data, 'html.parser');
+        
+        return soup
 
-        array = self.__parse_soup_text(soup, url, old_list);
-        return array;
-
-    def __parse_soup_text(self, soup, url, old_list):
+    def __parse_soup_text(self, soup, url):
         [s.extract() for s in soup(['iframe', 'script', 'meta', 'style'])]
 
         body = soup.find('body');
-        a_tags = soup.findAll('a', href=True);
-
-        # Construct out bound links to current link from Beautiful Soup
-        self.__construct_outbound(a_tags, url, old_list);
-        self.__num_links[url] = len(a_tags);
 
         list = [];
         for tag in body.findAll():
@@ -128,7 +129,16 @@ class WebScrape():
                     list.append(parsed);
 
         return list;
+    
+    def __parse_href_text(self, soup, url, old_list):
+        [s.extract() for s in soup(['iframe', 'script', 'meta', 'style'])]
+        
+        a_tags = soup.findAll('a', href=True);
 
+        # Construct out bound links to current link from Beautiful Soup
+        self.__construct_outbound(a_tags, url, old_list);
+        self.__num_links[url] = len(a_tags);
+        
 
     def __construct_inbound(self, url_list):
         """

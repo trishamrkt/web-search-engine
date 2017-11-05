@@ -56,7 +56,7 @@ class PageRankData():
 
     def get_all_num_links(self):
         num_links_coll = self.db["num_links"];
-        return {x['url']:x['num_link'] for x in num_links_coll.find()}
+        return {x['url']:x['num_links'] for x in num_links_coll.find()}
 
     # Input: url
     # Return int: number of links on the url page
