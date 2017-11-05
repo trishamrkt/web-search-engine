@@ -47,19 +47,16 @@ class WebScrapePersistHelper():
         """
         # Get wordId_to_word from db accessor
         db_wordId_to_word = self.__textData.get_word_array();
-        persist = False;
         
         # Iterate through new words
         for word in wordId_to_word:
             
             # If this word does not already exist in db, insert it
             if word not in db_wordId_to_word:
-                persist = True;
                 db_wordId_to_word.append(word);
         
         # Persist db_wordId_to_word
-        if persist:
-            self.__textData.set_word_from_word_id(db_wordId_to_word);
+        self.__textData.set_word_from_word_id(db_wordId_to_word);
         
         return
     
@@ -71,6 +68,8 @@ class WebScrapePersistHelper():
         db_wordId_to_word = self.__textData.get_word_array();
         
         for wordId, docIds in wordId_to_docIds.iteritems():
+            docIds = list(docIds);
+            
             # Check if this word already exists in DB
             if wordId_to_word[wordId]:
                 word = wordId_to_word[wordId];
@@ -83,7 +82,9 @@ class WebScrapePersistHelper():
                     for docId in docIds:
                         if docId not in docId_array:
                             docId_array.append(docId);
-                
+                else:
+                    docId_array = docIds;
+                    
                 # Function takes care of both cases when docId exists and does not exist
                 self.__textData.set_doc_ids_from_word_id(id, docId_array);
 
@@ -104,7 +105,9 @@ class WebScrapePersistHelper():
                 for url in url_list:
                     if url not in url_array:
                         url_array.append(url);
-            
+            else:
+                url_array = list(url_list);
+                
             self.__textData.set_urls_from_word(word, url_array);
             
         return
