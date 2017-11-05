@@ -6,7 +6,7 @@ class TextUrlData():
     def __init__(self):
         # Establish MongoDB Connections
         self.client = MongoClient('localhost', 27017)
-        self.db = client.GoogaoDB
+        self.db = self.client.GoogaoDB
 
         self.__wordId_to_word = [];
         self.__docId_to_url = [];

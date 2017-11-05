@@ -6,7 +6,7 @@ class PageRankData():
     def __init__(self):
         # Establish MongoDB Connections
         self.client = MongoClient('localhost', 27017)
-        self.db = client.GoogaoDB
+        self.db = self.client.GoogaoDB
 
         self.__inbound = {};
         self.__outbound = {};

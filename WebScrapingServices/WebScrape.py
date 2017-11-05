@@ -27,11 +27,10 @@ class WebScrape():
         new_list = self.__persistHelper.parse_url(url_list);
         
         self.__beautiful_soup_controller(new_list, url_list);
-        
+        self.__print_in_memory_datastructures();
+
         # Persist to database
         self.__persist_to_db();
-        
-        self.__print_in_memory_datastructures();
         self.__clear_in_memory_datastructures();
         
         return
@@ -196,10 +195,6 @@ class WebScrape():
     
     def __print_in_memory_datastructures(self):
         pprint.pprint(self.__docId_to_url);
-        pprint.pprint(self.__words_per_document);
-        pprint.pprint(self.__wordId_to_word);
-        pprint.pprint(self.__wordId_to_docIds);
-        pprint.pprint(self.__word_to_url);
          
         pprint.pprint(self.__inbound);
         pprint.pprint(self.__outbound);
