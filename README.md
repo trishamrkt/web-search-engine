@@ -17,6 +17,10 @@ BENCHMARK SETUP:
 The following commands were used to perform preliminary
 benchmarking of our application:
 
+RESULTS AVAILABLE AT:
+- Lab2: RESULTS.pdf
+- Lab3: RESULTS-LAB3.pdf
+
 1. Analyzing Application Performance: <br>
   $ ab -n 318 -c 318 http://54.174.107.175/?keywords=helloworld+foo+bar
 
