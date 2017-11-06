@@ -86,7 +86,26 @@ class TextUrlData():
             return self.access_collections("word_to_url", "word", word, "url")
         else:
             return None
-
+    
+    # Given url -> return title of that url 
+    def get_title_from_url(self, url):
+        url_to_title = self.db["url_to_title"]
+        urls = [x['url'] for x in url_to_title.find()]
+        if url in urls:
+            return self.access_collections("url_to_title", "url", url, "title")
+        else:
+            return None
+    
+    # Given url -> return description for that urls's webpage (first sentences in ascii)
+    def get_description_from_url(self, url):
+        url_to_description = self.db["url_to_description"]
+        urls = [x['url'] for x in url_to_description.find()]
+        if url in urls:
+            return self.access_collections("url_to_description", "url", url, "desc")
+        else:
+            return None
+        
+        
     """ DATABASE UPDATE FUNCTIONS:
         All follow 2 steps:
         1. Connect to appropriate collection within GoogaoDB
@@ -116,6 +135,14 @@ class TextUrlData():
     # Set urls array for a word
     def set_urls_from_word(self, word, new_urls):
         self.update_collections("word_to_url", "word", word, "url", new_urls)
-
+    
+    # Update title for a url
+    def update_title_from_url(self, url, title):
+        self.update_collections("url_to_title", "url", url, "title", title);
+       
+    # Update description for a url 
+    def update_description_from_url(self, url, description):
+        self.update_collections("url_to_description", "url", url, "desc", description);
+        
     def close_connection(self):
         self.client.close()

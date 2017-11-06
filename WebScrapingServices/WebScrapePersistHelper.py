@@ -138,3 +138,21 @@ class WebScrapePersistHelper():
             self.__pageRankData.update_num_links(url, num);
             
         return
+    
+    def persist_url_to_title(self, url_to_title):
+        """
+        Persists url_to_title
+        """
+        for url, title in url_to_title.iteritems():
+            self.__textData.update_title_from_url(url, title);
+            
+        return
+    
+    def persist_url_to_description(self, url_to_description):
+        """
+        Persists url_to_description
+        """
+        for url, description in url_to_description.iteritems():
+            self.__textData.update_description_from_url(url, description);
+        
+        return 

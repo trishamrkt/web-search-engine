@@ -1,0 +1,26 @@
+<nav class="results-navi">
+  <a href="/" id="navi-title">Googao</a>
+  <form ng-submit="search($event, results_query_string)" action="/ajaxtest" method="POST">
+    <input type="text" id="navisearch" name="keywords" ng-model="results_query_string" />
+    <input type="submit" style="display:none">
+  </form>
+  <div id="navi-tabs">
+    <span class="tabs" id="web">Web</span>
+    <span class="tabs">Images</span>
+    <span class="tabs">History</span>
+  </div>
+</nav>
+
+<h1 id="no-result" ng-show="no_results">sorry, no keyword match found!</h1>
+
+<div class="results" ng-repeat="result in search_results[page_number]">
+  <a href="{{result.url}}" class="url-titles">{{ result.title }}</a>
+  <p class="url-desc">{{ result.description }}</p>
+  <a href="{{result.url}}" class="url-links">{{ result.url }}</a>
+</div>
+
+<div class="pagination">
+  <span ng-click="prev_page()">&laquo;</span>
+  <span ng-click="go_to_page($index)" ng-class="{ active: page_number === $index}"ng-repeat="page in search_results">{{ $index + 1}}</span>
+  <span ng-click="next_page()">&raquo;</span>
+</div>

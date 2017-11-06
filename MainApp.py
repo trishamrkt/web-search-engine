@@ -2,6 +2,7 @@ from bottle import *
 from WebScrapingServices.CrawlerService import *
 from ResultsPageServices.TopTwenty import TopTwenty
 from ResultsPageServices.WordData import WordData
+from ResultsPageServices.SearchResultsService import SearchResultsService
 from HTMLFormatter.HtmlHelper import *
 from SessionManagement.SessionSetup import main_app
 from SessionManagement.User import User
@@ -16,13 +17,17 @@ from oauth2client.client import flow_from_clientsecrets
 from googleapiclient.errors import HttpError
 from googleapiclient.discovery import build
 import httplib2
+import json
+import pprint
 
 from beaker.middleware import SessionMiddleware
+from boto.cloudsearch.search import SearchResults
 
 textUrlData = TextUrlData();
 pageRankData = PageRankData();
 crawlerService = CrawlerService(textUrlData, pageRankData);
 pageRankService = PageRankService(textUrlData, pageRankData);
+searchResultsService = SearchResultsService(textUrlData, pageRankData);
 pageRankService.computeAllPageRank();
 
 userRepository = UserRepository();
@@ -92,6 +97,14 @@ def stop_session():
     session['signed_in'] = False;
     redirect('/')
 
+@route('/ajaxtest', method="post")
+def ajax_test():
+    body = json.loads(request.body.read())
+    keywords = body['keywords']
+    keyword = keywords.split(" ")[0]
+    result = searchResultsService.find_word(keyword.lower())
+    return json.dumps(result)
+
 @route('/lab1unittest')
 def lab1_unit_test():
     return template('lab1unittest')
@@ -99,6 +112,10 @@ def lab1_unit_test():
 @route('/lab1unittest2')
 def lab1_unit_test2():
     return template('lab1unittest2')
+
+@error(404)
+def error_handler_404(error):
+    return template('error404')
 
 @get('/static/css/<filepath:re:.*\.css>')
 def static(filepath):
@@ -111,6 +128,14 @@ def static_img(filepath):
 @get ('/static/js/<filepath:re:.*\.js>')
 def static_js(filepath):
     return static_file(filepath, root="static/js")
+
+@get ('/static/js/GoogaoAngularApp/<filepath:re:.*\.js>')
+def static_js_angular(filepath):
+    return static_file(filepath, root="static/js/GoogaoAngularApp")
+
+@get ('/static/js/GoogaoAngularApp/Templates/<filepath:re:.*\.html>')
+def static_js_angular(filepath):
+    return static_file(filepath, root="static/js/GoogaoAngularApp/Templates")
 
 if __name__ == '__main__':
     TEMPLATE_PATH.insert(0,'./views/unittest/')
