@@ -2,6 +2,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.search_results = []
   $scope.page_number = 0;
   $scope.results_page_title = ""
+  $scope.no_results = false;
 
   $scope.search = function(e, query_string) {
     console.log("in function");
@@ -20,10 +21,10 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
       $location.path('/results')
 
       if ($scope.search_results.length !== 0){
-        $scope.results_page_title = "testing"
+        $scope.no_results = false;
       }
       else {
-        $scope.results_page_title = "sorry no results"
+        $scope.no_results = true;
       }
 
     }, function onError(error) {

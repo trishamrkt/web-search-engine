@@ -1,16 +1,25 @@
 .pagination {
   display: inline-block;
   font-family: Amiko;
+  margin-top: 50px;
+  color: #666666;
+  cursor: pointer;
 }
 
 .pagination span {
     font-family: Amiko;
-    color: #666666;
     float: left;
     padding: 8px 16px;
     text-decoration: none;
 }
 
-.pagination.active {
+.pagination span:hover {
   background-color: #d85858;
+  color: white;
+  transition: 0.3s;
+}
+
+.active {
+  background-color: #d85858;
+  color: white;
 }
