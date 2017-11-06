@@ -17,5 +17,8 @@
   <a href="{{result.url}}" class="url-links">{{ result.url }}</a>
 </div>
 
-<p ng-click="next_page()">next</p>
-<p ng-click="prev_page()">prev</p>
+<div class="pagination">
+  <span ng-click="prev_page()">&laquo;</span>
+  <span ng-click="go_to_page($index)" ng-class="{ active: page_number === $index}"ng-repeat="page in search_results">{{ $index + 1}}</span>
+  <span ng-click="next_page()">&raquo;</span>
+</div>

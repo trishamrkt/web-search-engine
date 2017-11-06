@@ -35,7 +35,6 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.return_results = function(data) {
     // Empty search_results in case there are results from prev searches
     $scope.search_results = []
-
     $scope.page_number = 0;
 
     // Get number of elements in JSON array
@@ -71,6 +70,10 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.prev_page = function() {
     if ($scope.page_number > 0)
       $scope.page_number -= 1
+  }
+
+  $scope.go_to_page = function(index) {
+    $scope.page_number = index;
   }
 
   // Get length of an arbitrary object
