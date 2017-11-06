@@ -21,7 +21,7 @@ benchmarking of our application:
   $ ab -n 318 -c 318 http://54.174.107.175/?keywords=helloworld+foo+bar
 
 2. Anyalyzing CPU performance: <br>
-  $ dstat --cpu -d --mem --net -io
+  $ dstat --cpu -d --mem --net -io <br>
   $ ab -n 1000 -c318 http://54.174.107.175/?keywords=helloworld+foo+bar
 
 NOTE: The results of our performance analysis can be found in RESULTS.docx
@@ -108,6 +108,11 @@ How to Test:
     $ cd /path/to/project/directory
 2. Testing Front-end and Back-end functionalities<br>
    Run the following commands:
+   
+   LAB 3: PAGERANK TESTS: <br>
+   $ python -m UnitTests.PageRankCrawlerTests
+   
+   LAB 1 & 2: CRAWLER & RESULTSPAGE TESTS: <br>
 -  Front-end:<br>
     $ python -m UnitTests.ResultsPageServicesTest
 -  Back-end:<br>
@@ -116,4 +121,4 @@ How to Test:
     $ python -m UnitTests.UserSessionManagerTests
 -----------------------------------------
 IMPORTANT: before run Back-end unit test, start application by running (from project root):
-- $ python MainApp.py &
+- $ python MainApp.py & (only necessary for lab 1 & 2 unittests)
