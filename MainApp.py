@@ -101,12 +101,8 @@ def stop_session():
 def ajax_test():
     body = json.loads(request.body.read())
     keywords = body['keywords']
-    print keywords
     keyword = keywords.split(" ")[0]
-    print keyword
-    result = searchResultsService.find_word(keyword)
-    print result
-
+    result = searchResultsService.find_word(keyword.lower())
     return json.dumps(result)
 
 @route('/lab1unittest')
