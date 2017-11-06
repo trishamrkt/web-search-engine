@@ -8,17 +8,24 @@ Public IP Address: 54.174.107.175
 To Access:
 - Go to http://ec2-54-174-107-175.compute-1.amazonaws.com/
 
+Instance setup script:
+- Found in /AWSInstances/InitializeInstances.py
+
 -------------------------------------------------
 BENCHMARK SETUP:
 -------------------------------------------------
 The following commands were used to perform preliminary
 benchmarking of our application:
 
+RESULTS AVAILABLE AT:
+- Lab2: RESULTS.pdf
+- Lab3: RESULTS-LAB3.pdf
+
 1. Analyzing Application Performance: <br>
   $ ab -n 318 -c 318 http://54.174.107.175/?keywords=helloworld+foo+bar
 
 2. Anyalyzing CPU performance: <br>
-  $ dstat --cpu -d --mem --net -io
+  $ dstat --cpu -d --mem --net -io <br>
   $ ab -n 1000 -c318 http://54.174.107.175/?keywords=helloworld+foo+bar
 
 NOTE: The results of our performance analysis can be found in RESULTS.docx
@@ -53,6 +60,9 @@ Enter the following commands in:<br>
 5. Install http2 (AMI Linux dependency)<br>
    $ pip install httplib2
 
+6. Install PyMongo <br>
+    $ pip install pymongo
+    
 NOTE: For MAC users installing OAuth2 Library
 - It is recommended to use a virtual environment for the command line
 so as not to conflict with existing files during the oauth2client installation
@@ -105,6 +115,11 @@ How to Test:
     $ cd /path/to/project/directory
 2. Testing Front-end and Back-end functionalities<br>
    Run the following commands:
+   
+   LAB 3: PAGERANK TESTS: <br>
+   $ python -m UnitTests.PageRankCrawlerTests
+   
+   LAB 1 & 2: CRAWLER & RESULTSPAGE TESTS: <br>
 -  Front-end:<br>
     $ python -m UnitTests.ResultsPageServicesTest
 -  Back-end:<br>
@@ -113,4 +128,4 @@ How to Test:
     $ python -m UnitTests.UserSessionManagerTests
 -----------------------------------------
 IMPORTANT: before run Back-end unit test, start application by running (from project root):
-- $ python MainApp.py &
+- $ python MainApp.py & (only necessary for lab 1 & 2 unittests)

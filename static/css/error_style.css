@@ -1,0 +1,27 @@
+body {
+  background-color: #fdfdfd;
+  font-family: Open Sans;
+  text-align: center;
+  color: #7f7e7e;
+}
+
+#totoro {
+  display: block;
+  margin-top: 12%;
+}
+
+#home-button {
+  color: #7f7e7e;
+  font-size: 30pt;
+}
+
+#home-button:hover {
+  color: #969696;
+  transition: 0.3s;
+}
+
+h1 {
+  font-size: 30pt;
+  padding: 0;
+  margin: 0;
+}

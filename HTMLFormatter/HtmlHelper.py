@@ -47,9 +47,9 @@ def create_nav_bar(email, signed_in):
         account = "Sign In";
 
     nav = '<nav class="navi">\
-                <a href="/" id="googao-title">Googao</a>\
                 <a href="/logout" class="account-buttons results-acc-buttons">Sign Out</a>\
                 <a href="/login" class="account-buttons results-acc-buttons">' + account + '</a>\
+                <a href="/" id="googao-title">Googao</a>\
            </nav>'
 
     return nav

@@ -9,6 +9,7 @@
 
   <!-- Fonts to be used -->
   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Amiko' rel='stylesheet'>
 
   <!-- Add icon library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -16,27 +17,30 @@
   <link type="text/css" rel="stylesheet" href="/static/css/style.css"\>
   <link type="text/css" rel="stylesheet" href="/static/css/search_bar.css"\>
   <link type="text/css" rel="stylesheet" href="/static/css/sign_in_buttons.css"\>
+  <link type="text/css" rel="stylesheet" href="/static/css/results_page_navi.css"\>
+  <link type="text/css" rel="stylesheet" href="/static/css/results_style.css"\>
+  <link type="text/css" rel="stylesheet" href="/static/css/pagination.css"\>
 
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 
+  <!-- Include AngularJS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+
+  <!-- Include AJAX/Jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 </head>
 
-<body>
-  <nav id="navi-bar">
-    <a class="account-buttons" id="login" href="/login">{{signedIn}}</a>
-    <a class="account-buttons" id="logout" href="/logout" onclick="signOut()">Sign out</a>
-  </nav>
+<body ng-app="googaoApp" ng-controller="queryPageCtrl">
 
-  <div class="main-logo">
-    <img src="/static/Images/main_logo.png"/>
-  </div>
-
-  <form action="/" method="GET">
-    <input id="main-search-bar" type="text" name="keywords" /></br>
-    <input id="main-submit" type="submit" value="search"/>
-  </form>
+  <ng-view>
+  </ng-view>
 
   <script src="/static/js/GoogleSignOut.js"></script>
+  <script src="/static/js/GoogaoAngularApp/app.js"></script>
+  <script src="/static/js/GoogaoAngularApp/QueryPageController.js"></script>
+  <script src="/static/js/GoogaoAngularApp/ResultsRouting.js"></script>
 
 </body>
 </html>
