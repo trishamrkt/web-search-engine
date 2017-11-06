@@ -158,7 +158,7 @@ class WebScrape():
                 
                 if word:
                     parsed = word.replace('\n','').replace('\t', '').replace('\r', '').replace(',', '').replace('.', '').strip();
-                    list.append(parsed);
+                    list.append(parsed.lower());
         
         description = description + '...';
         print description;

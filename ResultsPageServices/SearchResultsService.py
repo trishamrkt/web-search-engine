@@ -22,7 +22,7 @@ class SearchResultsService():
         # Step 1
         urls = self.__textData.get_urls_from_word(keyword);
         
-        if len(urls) != 0:
+        if urls != None:
             # Step 2
             url_rank = {};
             for url in urls:
