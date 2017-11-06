@@ -218,7 +218,7 @@ class WebScrape():
             # Transform links to proper format
 
             new_link = link['href'];
-            if new_link.find('wikipedia.org') == -1:
+            if (new_link.find('wikipedia.org') == -1) and ('wiki' in new_link):
                 new_link = 'https://en.wikipedia.org' + new_link;
 
             # Check if link is in URL_list, if yes, put it into outbound list
