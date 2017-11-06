@@ -57,9 +57,10 @@ th:hover {
   display: block;
   padding: 14px 20px 16px 16px;
   color: #606060;
+  font-size: 14pt;
 }
 
-#googal-title:hover {
+#googao-title:hover {
   color: #262626;
   transition: 0.3s;
 }
