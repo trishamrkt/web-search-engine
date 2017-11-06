@@ -17,43 +17,44 @@ class SearchResultsService():
             3. create dictionary with rank as key, and url object as its value
             4. compare the ranks to sort and put in new dictionary to return (sorted_urls)
         """
+        sorted_urls = {};
         
         # Step 1
         urls = self.__textData.get_urls_from_word(keyword);
-
-        # Step 2
-        url_rank = {};
-        for url in urls:
-            rank = self.__pageRankData.get_page_rank(url);
-            url_rank[url] = rank;
- 
-        # Step 3
-        rank_url_obj = {};
-        for url, rank in url_rank.iteritems():
-            url_obj = self.__get_url_obj(url);               
-            rank_url_obj[rank] = url_obj;
-
-        # Step 4
-        sorted_urls = {};
-        for n in range(0, len(urls)):
-            highest_url_obj = {};
-            highest_rank = float(0);
-            counter = 0;
-
-            for rank, url_obj in rank_url_obj.iteritems():
-                if counter == 0:
-                    self.__deep_copy_dictionary(highest_url_obj, url_obj);
-                    highest_rank = rank;
-                else:
-                    if rank > highest_rank:
+        
+        if len(urls) != 0:
+            # Step 2
+            url_rank = {};
+            for url in urls:
+                rank = self.__pageRankData.get_page_rank(url);
+                url_rank[url] = rank;
+     
+            # Step 3
+            rank_url_obj = {};
+            for url, rank in url_rank.iteritems():
+                url_obj = self.__get_url_obj(url);               
+                rank_url_obj[rank] = url_obj;
+    
+            # Step 4
+            for n in range(0, len(urls)):
+                highest_url_obj = {};
+                highest_rank = float(0);
+                counter = 0;
+    
+                for rank, url_obj in rank_url_obj.iteritems():
+                    if counter == 0:
                         self.__deep_copy_dictionary(highest_url_obj, url_obj);
                         highest_rank = rank;
-                        
-                counter = counter + 1;
-                        
-            if highest_rank != 0:
-                sorted_urls[n] = highest_url_obj;
-                del rank_url_obj[highest_rank];
+                    else:
+                        if rank > highest_rank:
+                            self.__deep_copy_dictionary(highest_url_obj, url_obj);
+                            highest_rank = rank;
+                            
+                    counter = counter + 1;
+                            
+                if highest_rank != 0:
+                    sorted_urls[n] = highest_url_obj;
+                    del rank_url_obj[highest_rank];
 
         return sorted_urls;
     
