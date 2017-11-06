@@ -1,4 +1,5 @@
 import unittest
+import pprint
 from WebScrapingServices.TextUrlData import TextUrlData
 from PageRankServices.PageRankData import PageRankData
 from ResultsPageServices.SearchResultsService import SearchResultsService
@@ -26,9 +27,8 @@ class PageRankCrawlerTests(unittest.TestCase):
         result = self.__searchResultsService.find_word('contributions');
         isValid = self.__is_dictionaries_same(resultSet, result);
 
-        print "resultSet: " + str(resultSet)
-
         self.assertEqual(isValid, True, str(result));
+        pprint.pprint(sorted(self.__pageRankData.get_all_page_ranks().iteritems(), key=lambda (k,v): (v,k), reverse=True));
 
         return
 
