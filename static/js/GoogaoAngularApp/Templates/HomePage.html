@@ -7,7 +7,7 @@
   <img src="/static/Images/main_logo.png"/>
 </div>
 
-<form id="search-form" action="/ajaxtest" method="POST" ng-submit="search($event)">
-  <input id="main-search-bar" type="text" name="keywords" /></br>
+<form id="search-form" action="/ajaxtest" method="POST" ng-submit="search($event, query_string)">
+  <input id="main-search-bar" type="text" name="keywords" ng-model="query_string"/></br>
   <input id="main-submit" type="submit" value="search"/>
 </form>

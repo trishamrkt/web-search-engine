@@ -3,12 +3,14 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.page_number = 0;
   $scope.results_page_title = ""
 
-  $scope.search = function(e) {
+  $scope.search = function(e, query_string) {
     console.log("in function");
+    console.log(query_string)
     e.preventDefault()
     $http({
       method : "POST",
       url : "/ajaxtest",
+      data : { "keywords" : query_string}
     }).then(function onSuccess(response){
       // JSON object
       var data = response.data

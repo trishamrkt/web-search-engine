@@ -1,7 +1,7 @@
 .results-navi {
   width: 100%;
   background-color: #FAFAFA;
-  height: 75px;
+  height: 90px;
   overflow: hidden;
   border-bottom: 1px solid #ebebeb;
 }
@@ -23,6 +23,7 @@
 }
 
 #navisearch {
+  clear:right;
   margin-top: 12px;
   padding: 5px;
   outline: none;
@@ -33,4 +34,26 @@
 
 .results-navi form input {
   float: left;
+}
+
+#navi-tabs {
+  clear: both;
+  margin-left: 110px;
+  margin-top: 15px;
+}
+.tabs {
+  float: left;
+  font-family: Amiko;
+  margin-right: 10px;
+  margin-top: 20px;
+  color: #494949;
+}
+
+#web {
+  border-bottom: 3px solid #d85858;
+  color: #d85858;
+}
+
+.tabs:hover {
+  color: #d85858;
 }
