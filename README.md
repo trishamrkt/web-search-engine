@@ -56,6 +56,9 @@ Enter the following commands in:<br>
 5. Install http2 (AMI Linux dependency)<br>
    $ pip install httplib2
 
+6. Install PyMongo <br>
+    $ pip install pymongo
+    
 NOTE: For MAC users installing OAuth2 Library
 - It is recommended to use a virtual environment for the command line
 so as not to conflict with existing files during the oauth2client installation
