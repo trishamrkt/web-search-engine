@@ -6,13 +6,14 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
 
   $scope.search = function(e, query_string) {
     console.log("in function");
-    console.log(query_string)
+    console.log("hallo")
     e.preventDefault()
     $http({
       method : "POST",
       url : "/ajaxtest",
       data : { "keywords" : query_string}
     }).then(function onSuccess(response){
+
       // JSON object
       var data = response.data
       $scope.return_results(data);
@@ -41,6 +42,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
     // Get number of elements in JSON array
     var num_results = length(data);
     var num_pages = Math.ceil(num_results/5.0)
+    console.log("num_pages")
 
     // Keeps track of # of results - used to obtain 5 results per page
     var result_count = 0;
@@ -55,7 +57,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
       else {
         $scope.search_results.push(results_per_page)
         results_per_page = [data[i]]
-        result_count = 0;
+        result_count = 1;
       }
     }
 
