@@ -139,4 +139,4 @@ def static_js_angular(filepath):
 
 if __name__ == '__main__':
     TEMPLATE_PATH.insert(0,'./views/unittest/')
-    run(app=app, host='0.0.0.0', port=80, debug=True);
+    run(app=app, host='localhost', port=8000, debug=True);
