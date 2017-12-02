@@ -13,6 +13,10 @@
 
 <h1 id="no-result" ng-show="no_results">sorry, no keyword match found!</h1>
 
+<div class="results">
+	<p class="url-desc"> Results computed in under {{ request_time }} ms</p>
+</div>
+
 <div class="results" ng-repeat="result in search_results[page_number]">
   <a href="{{result.url}}" class="url-titles">{{ result.title }}</a>
   <p class="url-desc">{{ result.description }}</p>
