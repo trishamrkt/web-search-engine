@@ -6,7 +6,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
 
   $scope.search = function(e, query_string) {
     console.log("in function");
-    console.log("hallo")
+    console.log("fuck this")
     e.preventDefault()
     $http({
       method : "POST",
@@ -39,30 +39,9 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
     $scope.search_results = []
     $scope.page_number = 0;
 
-    // Get number of elements in JSON array
-    var num_results = length(data);
-    var num_pages = Math.ceil(num_results/5.0)
-    console.log("num_pages")
-
-    // Keeps track of # of results - used to obtain 5 results per page
-    var result_count = 0;
-    var results_per_page = []
-
-    // Loop through all of the elements and place their objects in search_results array
-    for (var i = 0; i < num_results; i++) {
-      if (result_count < 5){
-        results_per_page.push(data[i])
-        result_count += 1;
-      }
-      else {
-        $scope.search_results.push(results_per_page)
-        results_per_page = [data[i]]
-        result_count = 1;
-      }
+    for (var i = 0; i < data.length; i++) {
+      $scope.search_results.push(data[i])
     }
-
-    if ($scope.search_results.length < num_pages)
-      $scope.search_results.push(results_per_page)
   }
 
   $scope.next_page = function() {

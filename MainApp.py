@@ -103,7 +103,8 @@ def ajax_test():
     keywords = body['keywords']
     keyword = keywords.split(" ")[0]
     result = searchResultsService.find_word(keyword.lower())
-    return json.dumps(result)
+    split_results = searchResultsService.get_return_results(result)
+    return json.dumps(split_results)
 
 @route('/lab1unittest')
 def lab1_unit_test():
