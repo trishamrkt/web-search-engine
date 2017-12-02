@@ -1,4 +1,6 @@
 import pprint
+import math
+import json
 
 class SearchResultsService():
 
@@ -67,6 +69,35 @@ class SearchResultsService():
                     del rank_url_obj[highest_num];
 
         return sorted_urls;
+
+    # Splits the sorted urls into arrays of 5 to be passed back into the frontend
+    def get_return_results(self, sorted_urls):
+        # Array containing data for each search result page (ie arrays of 5)
+        search_results = []
+
+        num_results = len(sorted_urls)
+        num_pages = math.ceil(num_results/5.0)
+
+        # Keep track of how many results in a page
+        result_count = 0
+        # Array to go into search results (holds max of 5 url objects)
+        results_per_page = []
+
+        # Iterate through sorted urls and adds to each page array 
+        for key, value in sorted_urls.iteritems():
+            if result_count < 5:
+                results_per_page.append(value)
+                result_count += 1
+            else:
+                search_results.append(results_per_page)
+                results_per_page = [value]
+                result_count = 1
+
+        if len(search_results) < num_pages:
+            search_results.append(results_per_page)
+
+        return search_results
+
 
     def __get_url_obj(self, url):
         title = self.__textData.get_title_from_url(url);
