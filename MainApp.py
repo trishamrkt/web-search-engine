@@ -3,6 +3,7 @@ from WebScrapingServices.CrawlerService import *
 from ResultsPageServices.TopTwenty import TopTwenty
 from ResultsPageServices.WordData import WordData
 from ResultsPageServices.SearchResultsService import SearchResultsService
+from ResultsPageServices.SearchResultsHelper import SearchResultsHelper
 from HTMLFormatter.HtmlHelper import *
 from SessionManagement.SessionSetup import main_app
 from SessionManagement.User import User
@@ -28,6 +29,7 @@ pageRankData = PageRankData();
 crawlerService = CrawlerService(textUrlData, pageRankData);
 pageRankService = PageRankService(textUrlData, pageRankData);
 searchResultsService = SearchResultsService(textUrlData, pageRankData);
+searchResultsHelper = SearchResultsHelper();
 pageRankService.computeAllPageRank();
 
 userRepository = UserRepository();
@@ -101,6 +103,7 @@ def stop_session():
 def ajax_test():
     body = json.loads(request.body.read())
     keywords = body['keywords']
+    searchResultsHelper.extract_keywords(keywords);
     keyword = keywords.split(" ")[0]
     result = searchResultsService.find_word(keyword.lower())
     return json.dumps(result)
