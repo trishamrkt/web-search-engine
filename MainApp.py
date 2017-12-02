@@ -99,14 +99,15 @@ def stop_session():
     session['signed_in'] = False;
     redirect('/')
 
-@route('/ajaxtest', method="post")
+@route('/query', method="post")
 def ajax_test():
     body = json.loads(request.body.read())
     keywords = body['keywords']
     searchResultsHelper.extract_keywords(keywords);
     keyword = keywords.split(" ")[0]
     result = searchResultsService.find_word(keyword.lower())
-    return json.dumps(result)
+    split_results = searchResultsService.get_return_results(result)
+    return json.dumps(split_results)
 
 @route('/lab1unittest')
 def lab1_unit_test():

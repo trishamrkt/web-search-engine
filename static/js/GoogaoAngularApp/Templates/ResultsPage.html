@@ -1,6 +1,6 @@
 <nav class="results-navi">
   <a href="/" id="navi-title">Googao</a>
-  <form ng-submit="search($event, results_query_string)" action="/ajaxtest" method="POST">
+  <form ng-submit="search($event, results_query_string)" action="/query" method="POST">
     <input type="text" id="navisearch" name="keywords" ng-model="results_query_string" />
     <input type="submit" style="display:none">
   </form>
