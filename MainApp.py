@@ -97,7 +97,7 @@ def stop_session():
     session['signed_in'] = False;
     redirect('/')
 
-@route('/ajaxtest', method="post")
+@route('/query', method="post")
 def ajax_test():
     body = json.loads(request.body.read())
     keywords = body['keywords']

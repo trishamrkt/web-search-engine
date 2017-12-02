@@ -10,7 +10,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
     e.preventDefault()
     $http({
       method : "POST",
-      url : "/ajaxtest",
+      url : "/query",
       data : { "keywords" : query_string}
     }).then(function onSuccess(response){
 
