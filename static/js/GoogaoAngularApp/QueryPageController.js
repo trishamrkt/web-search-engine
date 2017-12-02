@@ -3,6 +3,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.page_number = 0;
   $scope.results_page_title = ""
   $scope.no_results = false;
+  $scope.login_display = false;
 
   $scope.search = function(e, query_string) {
     console.log("in function");
@@ -56,6 +57,14 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
 
   $scope.go_to_page = function(index) {
     $scope.page_number = index;
+  }
+
+  $scope.login = function() {
+    $scope.login_display = true;
+  }
+
+  $scope.close_login = function() {
+    $scope.login_display = false;
   }
 
   // Get length of an arbitrary object
