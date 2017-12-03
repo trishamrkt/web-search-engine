@@ -153,6 +153,15 @@ def get_history():
     else:
         return json.dumps({});
 
+@route('/getimages', method='post')
+def get_images():
+    # Request payload: search_results in arrays of 5
+    body = json.loads(request.body.read());
+    urls = concat_arrays(body[0:]);
+    
+    # Returns array of urls for iages from order of priority 
+    return json.dumps({});
+
 @route('/lab1unittest')
 def lab1_unit_test():
     return template('lab1unittest')

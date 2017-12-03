@@ -128,12 +128,16 @@ class WebScrape():
 
         title = str(soup.findAll('title')[0]);
         body = soup.find('body');
+        images = soup.findAll('img');
         
         # Generate title for website
         print "Title: " + title;
         if url not in self.__url_to_title and title != None:
             title = title.replace('<title>', '').replace('</title>', '');
             self.__url_to_title[url] = title;
+        
+        # Extract images from website
+        
         
         description = '';
         word_count = 25;
