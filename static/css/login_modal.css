@@ -23,7 +23,25 @@
 .login-labels {
   display: inline-block;
   margin-top: 150px;
+  margin-right: 7px;
   font-size: 11pt;
+}
+
+#signup {
+  font-size: 10pt;
+  margin-left: 210pt;
+  color: #aaaaaa;
+}
+
+#signup a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #898989;
+}
+
+#signup a:hover {
+  color: black;
+  transition: 0.3s;
 }
 
 #username {
@@ -48,6 +66,7 @@
 #login-submit {
   font-family: Amiko;
   margin-top: 20px;
+  margin-right: 40pt;
   outline: none;
   color: #d85858;
   background-color: #fefefe;

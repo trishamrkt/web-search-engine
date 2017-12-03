@@ -1,0 +1,28 @@
+<nav class="results-navi">
+  <a href="/" id="navi-title">Googao</a>
+  <form ng-submit="search($event, results_query_string)" action="/query" method="POST">
+    <input type="text" id="navisearch" name="keywords" ng-model="results_query_string" />
+    <input type="submit" style="display:none">
+  </form>
+  <div id="navi-tabs">
+    <span class="tabs" ng-click="switch_tabs('results')">Web</span>
+    <span class="tabs">Images</span>
+    <span class="tabs" id="web">History</span>
+  </div>
+</nav>
+
+<div class="history-row">
+  <div class="hist-col left-col">
+    <h1>most popular searched words</h1>
+    <ul>
+      <li ng-repeat="word in most_popular">{{word}}</li>
+    </ul>
+  </div>
+
+  <div class="hist-col right-col">
+    <h1>search history</h1>
+    <ul>
+      <li ng-repeat="word in history">{{word}}</li>
+    </ul>
+  </div>
+</div>

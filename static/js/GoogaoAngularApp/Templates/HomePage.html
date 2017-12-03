@@ -1,7 +1,7 @@
 <!-- NAVI BAR WITH SIGN IN BUTTONS -->
 <nav id="navi-bar">
-  <a class="account-buttons" id="login" href="/" ng-click="login()">Sign In</a>
-  <a class="account-buttons" id="logout" href="/logout" ng-click="logout()">Sign out</a>
+  <a class="account-buttons" id="login" href="/" ng-click="login()">{{user_name}}</a>
+  <a class="account-buttons" id="logout" href="/logout" ng-click="signout()">Sign out</a>
 </nav>
 
 <!-- LOGIN MODAL CONTAINER -->
@@ -9,13 +9,15 @@
 
 
   <!-- Login form -->
-  <form class="login-form">
+  <form ng-submit="googao_form_submit($event, username)" action="/googaoLogin" method="POST" class="login-form">
     <span ng-click="close_login()" class="close">&times;</span>
 
     <img id="login-char" src="https://s-media-cache-ak0.pinimg.com/originals/20/d5/68/20d5687e43f1adb61d9d93e66542825e.png">
     <label class="login-labels"><b>Username</b></label></br>
-    <input type="text" id="username" placeholder="Username" name="username" required></br>
-    <input type="submit" id="login-submit" value="Login">
+    <input type="text" ng-model="username" id="username" placeholder="Enter username" name="username" required></br>
+    <input type="submit" id="login-submit" value="{{login_submit}}">
+    <p style="color:red" ng-show="!login_success">Username not valid!</p>
+    <p ng-show="no_account" id="signup">Don't have an account? <a href="/" ng-click="signup()">Sign up</a></p>
   </form>
 
 </div>
