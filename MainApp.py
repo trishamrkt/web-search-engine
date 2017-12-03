@@ -3,6 +3,7 @@ from WebScrapingServices.CrawlerService import *
 from ResultsPageServices.TopTwenty import TopTwenty
 from ResultsPageServices.WordData import WordData
 from ResultsPageServices.SearchResultsService import SearchResultsService
+from ResultsPageServices.SearchResultsHelper import SearchResultsHelper
 from HTMLFormatter.HtmlHelper import *
 from SessionManagement.SessionSetup import main_app
 from SessionManagement.User import User
@@ -27,7 +28,8 @@ textUrlData = TextUrlData();
 pageRankData = PageRankData();
 crawlerService = CrawlerService(textUrlData, pageRankData);
 pageRankService = PageRankService(textUrlData, pageRankData);
-searchResultsService = SearchResultsService(textUrlData, pageRankData);
+searchResultsHelper = SearchResultsHelper();
+searchResultsService = SearchResultsService(textUrlData, pageRankData, searchResultsHelper);
 pageRankService.computeAllPageRank();
 
 userRepository = UserRepository();
@@ -101,9 +103,13 @@ def stop_session():
 def ajax_test():
     body = json.loads(request.body.read())
     keywords = body['keywords']
-    keyword = keywords.split(" ")[0]
-    result = searchResultsService.find_word(keyword.lower())
-    split_results = searchResultsService.get_return_results(result)
+    keywords = searchResultsHelper.extract_keywords(keywords);
+    keywords = searchResultsHelper.lower_case(keywords);
+    result = searchResultsService.find_word(keywords);
+    time = result[1];
+    print "Time taken: " + str(time) + 'ms';
+    
+    split_results = searchResultsService.get_return_results(result[0])
     return json.dumps(split_results)
 
 @route('/lab1unittest')

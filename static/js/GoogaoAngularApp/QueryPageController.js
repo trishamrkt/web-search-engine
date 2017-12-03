@@ -3,21 +3,29 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.page_number = 0;
   $scope.results_page_title = ""
   $scope.no_results = false;
-
+  $scope.login_display = false;
+  $scope.request_time = 0;
+  
   $scope.search = function(e, query_string) {
     console.log("in function");
-    console.log("fuck this")
-    e.preventDefault()
+    console.log("fuck this");
+    e.preventDefault();
+    var start = performance.now();
+    
     $http({
       method : "POST",
       url : "/query",
       data : { "keywords" : query_string}
     }).then(function onSuccess(response){
-
+    
+      var end = performance.now();
+      $scope.request_time = end - start;
+      console.log($scope.request_time);
+      
       // JSON object
       var data = response.data
       $scope.return_results(data);
-
+      
       // Go to results page
       $location.path('/results')
 
@@ -56,6 +64,14 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
 
   $scope.go_to_page = function(index) {
     $scope.page_number = index;
+  }
+
+  $scope.login = function() {
+    $scope.login_display = true;
+  }
+
+  $scope.close_login = function() {
+    $scope.login_display = false;
   }
 
   // Get length of an arbitrary object
