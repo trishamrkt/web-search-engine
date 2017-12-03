@@ -5,5 +5,8 @@ app.config(function($routeProvider){
   })
   .when("/results", {
     templateUrl: "/static/js/GoogaoAngularApp/Templates/ResultsPage.html"
+  })
+  .when("/history", {
+    templateUrl: "/static/js/GoogaoAngularApp/Templates/HistoryTab.html"
   });
 });
