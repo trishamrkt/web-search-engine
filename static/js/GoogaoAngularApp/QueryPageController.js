@@ -72,6 +72,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location, $window){
       // Go to results page
       $location.path('/results')
 
+
       if ($scope.search_results.length !== 0){
         $scope.no_results = false;
       }
@@ -139,6 +140,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location, $window){
       var data = response.data
       console.log(data)
       $scope.results_images = data;
+      $scope.unfocus();
     })
   }
 

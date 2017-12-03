@@ -22,8 +22,7 @@
     <span class="img-pag img-prev" ng-click="prev_img()">&#8249;</span>
     <span class="img-pag img-next" ng-click="next_img()">&#8250;</span>
   </div>
-  <div class="image" ng-repeat="img_url in results_images">
-  	<p>{{img_url}}</p>
+  <div class="image" ng-repeat="img_url in results_images track by $index">
     <img class="img_src" ng-click="focus_img($index)" ng-src="{{ img_url }}" \>
   </div>
 </div>

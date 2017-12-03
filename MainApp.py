@@ -24,6 +24,7 @@ import pprint
 from beaker.middleware import SessionMiddleware
 from boto.cloudsearch.search import SearchResults
 
+
 textUrlData = TextUrlData();
 pageRankData = PageRankData();
 crawlerService = CrawlerService(textUrlData, pageRankData);
@@ -163,7 +164,8 @@ def get_images():
 
     # Returns array of urls for images from order of priority
     image_urls = crawlerService.get_images_from_urls(urls);
-    return json.dumps(image_urls);
+    unique_urls = crawlerService.make_unique(image_urls)
+    return json.dumps(unique_urls);
 
 @route('/lab1unittest')
 def lab1_unit_test():
