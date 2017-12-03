@@ -160,9 +160,12 @@ app.controller("queryPageCtrl", function($scope, $http, $location, $window){
   }
 
   $scope.login = function() {
-    $scope.login_submit = "Login";
-    $scope.login_display = true;
-    $scope.no_account = true;
+    console.log($scope.signed_in)
+    if (!$scope.signed_in){
+      $scope.login_submit = "Login";
+      $scope.login_display = true;
+      $scope.no_account = true;
+    }
   }
 
   $scope.signup = function() {
