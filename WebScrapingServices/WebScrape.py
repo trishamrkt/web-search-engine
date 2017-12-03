@@ -1,14 +1,16 @@
 from bs4 import BeautifulSoup
 import requests as requests
 import re
-import pprint 
+import pprint
 from WebScrapePersistHelper import WebScrapePersistHelper
+from WebScrapeHelper import *
 
 # Beautiful Soup API calls
 class WebScrape():
 
     def __init__(self, textData, pageRankData):
         self.__persistHelper = WebScrapePersistHelper(textData, pageRankData);
+        self.__textData = textData;
         
         self.__docId_to_url = [];
         self.__words_per_document = [];
@@ -28,13 +30,15 @@ class WebScrape():
         # Modify url_list to include only urls which are not present in database
         new_list = self.__persistHelper.parse_url(url_list);
         
+        self.__parse_soup_images(url_list);
+        
         if len(new_list) != 0:
             self.__beautiful_soup_controller(new_list, url_list);
-            self.__print_in_memory_datastructures();
+            self.print_in_memory_datastructures();
     
             # Persist to database
             self.__persist_to_db();
-            self.__clear_in_memory_datastructures();
+            self.clear_in_memory_datastructures();
             
             print "DONE PERSISTENCE AND MEMORY CLEAR!"
         else:
@@ -122,7 +126,28 @@ class WebScrape():
         soup = BeautifulSoup(data, 'html.parser');
         
         return soup
-
+    
+    def __parse_soup_images(self, url_list):
+        
+        print 'Getting images from URLs:';
+        
+        for url in url_list:
+            image_array = [];
+        
+            soup = self.__call_beautiful_soup(url);
+            images = soup.find_all('img', {"src":True});
+            
+            for image in images:
+                polished_imageurl = polish_image_url(image.get('src'), url);
+                if polished_imageurl != None:
+                    image_array.append(polished_imageurl);
+            
+            self.__textData.set_imageurls_by_url(url, image_array);
+        
+        self.__textData.print_url_to_imageurl();
+        
+        return 
+    
     def __parse_soup_text(self, soup, url):
         [s.extract() for s in soup(['iframe', 'meta', 'script', 'style'])]
 
@@ -146,7 +171,7 @@ class WebScrape():
                 # Getting description: (take 25 words, starts after a period has been encountered)
                 # If there was a nonascii character in the text, restart
                 if word_count > 0:
-                    if self.__is_ascii_encoded(word) and self.__is_valid_word(word) and start_counting:
+                    if is_ascii_encoded(word) and is_valid_word(word) and start_counting:
                         description = description + ' ' + word;
                         word_count = word_count - 1;
                     else:
@@ -166,15 +191,6 @@ class WebScrape():
             self.__url_to_description[url] = description;
         
         return list;
-    
-    def __is_ascii_encoded(self, word):
-        try:
-            word.decode('ascii');
-        except (UnicodeEncodeError, UnicodeDecodeError) as e:
-            return False;
-        else:
-            return True;
-        
         
     def __parse_href_text(self, soup, url, old_list):
         [s.extract() for s in soup(['iframe', 'script', 'meta', 'style'])]
@@ -234,40 +250,20 @@ class WebScrape():
     def __cleanup_word(self, old_word):
         new_word = old_word.replace(',', '').replace('.', '').replace('<', '').replace('>', '').replace('?', '');
         return new_word
-
-    def __is_valid_word(self, word):
-         if (';' not in word) and ('&' not in word) and ('<' not in word) and ('>' not in word) \
-            and ('-' not in word) and ('(' not in word) and (')' not in word) and ('_' not in word) \
-            and ('\\' not in word) and ('/' not in word) and ('}' not in word) and ('{' not in word) \
-            and ('=' not in word) and ('$' not in word) and ('meta' not in word) \
-            and ('charset' not in word) and ('script' not in word) and ('#' not in word) and ('=' not in word) \
-            and ('|' not in word) and not self.__numbers_in_word(word):
-             return True;
-         else:
-             return False;
-    
-    def __numbers_in_word(self, word):
-        if ('0' in word or '1' in word or '2' in word or '3' in word or '4' in word or '5' in word \
-            or '6' in word or '7' in word or '8' in word or '9' in word) and ('f' in word or 'e' in word \
-            or 'u' in word):
-            return True;
-        else:
-            return False;
         
     def __parse_document(self, document):
         document = re.sub('<([^>]*)>', '', document.prettify());
         return document;
-    
-    def __print_in_memory_datastructures(self):
+        
+    def print_in_memory_datastructures(self):
         pprint.pprint(self.__docId_to_url);
-          
         pprint.pprint(self.__inbound);
         pprint.pprint(self.__outbound);
         pprint.pprint(self.__num_links);
         pprint.pprint(self.__url_to_title);
         pprint.pprint(self.__url_to_description);
             
-    def __clear_in_memory_datastructures(self):
+    def clear_in_memory_datastructures(self):
         del self.__docId_to_url[:];
         del self.__words_per_document[:];
         del self.__wordId_to_word[:];
@@ -278,5 +274,3 @@ class WebScrape():
         self.__num_links.clear();
         self.__url_to_description.clear();
         self.__url_to_title.clear();
-        
-    
