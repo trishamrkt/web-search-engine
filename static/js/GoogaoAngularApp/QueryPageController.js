@@ -6,6 +6,8 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.login_display = false;
   $scope.login_success = true;
   $scope.user_name = "";
+  $scope.login_submit = "Login"
+  $scope.no_account = true;
   
   $scope.googaoLogin = function(e, username) {
 	  console.log("Googao Login Time Baby");
@@ -27,7 +29,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
 		  		  
 	  });
   }
-  
+
   $scope.search = function(e, query_string) {
     console.log("in function");
     console.log("fuck this")
@@ -85,7 +87,14 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   }
 
   $scope.login = function() {
+    $scope.login_submit = "Login";
     $scope.login_display = true;
+    $scope.no_account = true;
+  }
+
+  $scope.signup = function() {
+    $scope.no_account = false;
+    $scope.login_submit = "Sign up";
   }
 
   $scope.close_login = function() {
