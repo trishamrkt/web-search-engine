@@ -8,7 +8,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.user_name = "";
   $scope.login_submit = "Login"
   $scope.no_account = true;
-  
+
   $scope.googaoLogin = function(e, username) {
 	  console.log("Googao Login Time Baby");
 	  e.preventDefault();
@@ -17,7 +17,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
 		  method : "POST",
 	      url : "/googaoLogin",
 	      data : { "username" : username}
-	  
+
 	  }).then(function onSuccess(response){
 		  var data = response.data;
 		  if (data.success == true) {
@@ -26,7 +26,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
 		  } else {
 			  $scope.login_success = false;
 		  }
-		  		  
+
 	  });
   }
 
