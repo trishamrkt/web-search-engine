@@ -34,7 +34,7 @@
 }
 
 .foc-img-mod-content {
-  margin: 50px auto;
+  margin: 30px auto;
   width: 30%;
 }
 
@@ -67,5 +67,21 @@
 
 .img-instr:hover {
   text-decoration: underline;
+  transition: 0.3s;
+}
+
+.img-pag {
+  display: inline-block;
+  padding: 4px 11px;
+  border-radius: 50%;
+  color: #808080;
+  background-color: #333333;
+  margin-bottom: 20px;
+}
+
+.img-pag:hover {
+  cursor: pointer;
+  color: white;
+  background-color: #6D6D6D;
   transition: 0.3s;
 }

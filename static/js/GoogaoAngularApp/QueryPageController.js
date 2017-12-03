@@ -159,6 +159,22 @@ app.controller("queryPageCtrl", function($scope, $http, $location, $window){
     $scope.focused_img_index = -1;
   }
 
+  $scope.next_img = function() {
+    num_images = $scope.results_images.length
+    if ($scope.focused_img_index < num_images - 1) {
+      $scope.focused_img_index += 1;
+      $scope.focused_img_url = $scope.results_images[$scope.focused_img_index]
+    }
+  }
+
+  $scope.prev_img = function() {
+    num_images = $scope.results_images.length
+    if ($scope.focused_img_index > 0) {
+      $scope.focused_img_index -= 1;
+      $scope.focused_img_url = $scope.results_images[$scope.focused_img_index]
+    }
+  }
+
   $scope.login = function() {
     console.log($scope.signed_in)
     if (!$scope.signed_in){

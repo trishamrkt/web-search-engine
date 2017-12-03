@@ -19,7 +19,8 @@
         <img class="focused-img" src="{{focused_img_url}}" href="{{focused_img_url}}"\>
       </a>
     </div>
-    <p class="img-instr">Click to enlarge</p>
+    <span class="img-pag img-prev" ng-click="prev_img()">&#8249;</span>
+    <span class="img-pag img-next" ng-click="next_img()">&#8250;</span>
   </div>
   <div class="image" ng-repeat="img_url in results_images">
     <img class="img_src" ng-click="focus_img($index)" src="{{ img_url }}" \>
