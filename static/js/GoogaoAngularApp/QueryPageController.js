@@ -4,7 +4,30 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.results_page_title = ""
   $scope.no_results = false;
   $scope.login_display = false;
+  $scope.login_success = true;
+  $scope.user_name = "";
+  
+  $scope.googaoLogin = function(e, username) {
+	  console.log("Googao Login Time Baby");
+	  e.preventDefault();
 
+	  $http({
+		  method : "POST",
+	      url : "/googaoLogin",
+	      data : { "username" : username}
+	  
+	  }).then(function onSuccess(response){
+		  var data = response.data;
+		  if (data.success == true) {
+			  $scope.close_login();
+			  $scope.user_name = data.username;
+		  } else {
+			  $scope.login_success = false;
+		  }
+		  		  
+	  });
+  }
+  
   $scope.search = function(e, query_string) {
     console.log("in function");
     console.log("fuck this")
