@@ -96,25 +96,39 @@ def render_home_page():
 @route('/googaoLogin', method='post')
 def googao_session_login():
     body = json.loads(request.body.read())
-    print body;
     username = body['username'];
     
-    session = request.environ.get('beaker.session');
-    session['signed_in'] = True;
-    userSessionManager.addNewSession(session['_id'], username);
+    if userRepository.getUserById(username) != None:
+        userSessionManager.setSessionActive(request.environ.get('beaker.session'));
+        return json.dumps({'username':username, 'success':True});
+    else:
+        # Return username and success/failure
+        return json.dumps({'username':username, 'success':False});
     
-    print "Active Sessions:"
     print userSessionManager.getActiveSessions();
-    
-    return json.dumps({'username':username, 'success':False});
 
+@route('/googaoSignup', method='post')
+def googao_session_signup():
+    body = json.loads(request.body.read())
+    username = body['username'];
+    
+    # Check if username is taken
+    if userRepository.getUserById(username) != None: 
+        return json.dumps({'username':username, 'message':'Username already taken', 'success':False});
+    else:
+        userRepository.createAndSaveUser(username);
+        userSessionManager.setSessionActive(request.environ.get('beaker.session'));
+        return json.dumps({'username':username, 'message':'', 'success':True});
+
+    print userSessionManager.getActiveSessions();
+ 
 @route('/logout')
 def stop_session():
     session = request.environ.get('beaker.session');
     userSessionManager.deleteSession(session['_id']);
     session.invalidate();
     session['signed_in'] = False;
-    redirect('/')
+    redirect('/');
 
 @route('/query', method='get')
 def ajax_test():
@@ -125,10 +139,12 @@ def ajax_test():
     split_results = searchResultsService.get_return_results(result)
     return json.dumps(split_results)
 
-@route('/gethistory', method='get')
+@route('/gethistory', method='post')
 def get_history():
+    # username as parameter
     # SIGNED IN ONLY return Array of strings for top 20 & History (last 10 searched) 
-    
+    # Index 0 Top 20, Index 1 Top 10
+    # [[ TOP 20 ARRAY], [LAST 10 ARRAY]]
     pass
 
 @route('/lab1unittest')
