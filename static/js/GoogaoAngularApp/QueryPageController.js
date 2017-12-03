@@ -9,9 +9,9 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.login_submit = "Login"
   $scope.no_account = true;
   $scope.request_time = 0;
-  $scope.signed_in = true;
-  $scope.most_popular = []
-  $scope.history = []
+  $scope.signed_in = false;
+  $scope.most_popular = [];
+  $scope.history = [];
 
 
   $scope.googao_form_submit = function(e, username) {
