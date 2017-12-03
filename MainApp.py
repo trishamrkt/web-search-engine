@@ -157,7 +157,8 @@ def get_history():
 def get_images():
     # Request payload: search_results in arrays of 5
     body = json.loads(request.body.read());
-    urls = concat_arrays(body[0:]);
+    pprint.pprint(body['search_results']);
+    urls = concat_arrays(body['search_results']);
     
     # Returns array of urls for images from order of priority 
     image_urls = crawlerService.get_images_from_urls(urls);

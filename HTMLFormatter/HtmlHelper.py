@@ -41,10 +41,6 @@ def signed_in_results(search_string, history, most_recent, email):
 
     return [html, top_twenty_data, most_recent_data];
 
-def get_images_from_data():
-    
-    return
-
 def ordered_dict_to_array(ordered_dict):
     array = [];
     

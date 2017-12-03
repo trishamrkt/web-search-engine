@@ -56,7 +56,7 @@ def is_dns_valid(url):
     new_url = concat_https(url);
     print 'Trying: ' + new_url;
     try:
-        r = requests.get(new_url, timeout=0.1)
+        r = requests.get(new_url, timeout=0.05)
         if r.status_code < 400:
             print 'Valid url!'
             return True;

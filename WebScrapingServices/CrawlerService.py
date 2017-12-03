@@ -39,8 +39,9 @@ class CrawlerService():
     def get_images_from_urls(self, url_list):
         image_urls = [];
         
-        for url in url_list:
-            images = self.__textData.get_imageurls_by_url(url);
+        for obj in url_list:
+            print 'URL is: ' + obj['url'];
+            images = self.__textData.get_imageurls_by_url(obj['url']);
             image_urls = image_urls + images;
             
         return image_urls;
