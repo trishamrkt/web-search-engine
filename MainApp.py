@@ -159,8 +159,9 @@ def get_images():
     body = json.loads(request.body.read());
     urls = concat_arrays(body[0:]);
     
-    # Returns array of urls for iages from order of priority 
-    return json.dumps({});
+    # Returns array of urls for images from order of priority 
+    image_urls = crawlerService.get_images_from_urls(urls);
+    return json.dumps(image_urls);
 
 @route('/lab1unittest')
 def lab1_unit_test():

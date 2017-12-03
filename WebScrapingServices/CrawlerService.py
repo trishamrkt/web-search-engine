@@ -24,7 +24,6 @@ class CrawlerService():
         # Include DB access code to return inverted index
         return
     
-    
     # Private Helper Functions
     # Reads input file from base path of application
     def __read_input_file_helper(self, docId_to_url):
@@ -36,6 +35,15 @@ class CrawlerService():
                         docId_to_url.append(url.strip());
         
         return docId_to_url;
+    
+    def get_images_from_urls(self, url_list):
+        image_urls = [];
+        
+        for url in url_list:
+            images = self.__textData.get_imageurls_by_url(url);
+            image_urls = image_urls + images;
+            
+        return image_urls;
     
     def __generate_data_structures(self):
         docId_to_url = self.__generate_docId_to_url();
