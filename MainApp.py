@@ -71,7 +71,7 @@ def redirect_page():
 @route('/')
 def render_home_page():
     session = request.environ.get('beaker.session')
-    user_email = userSessionManager.getUserEmail(session['_id'])
+    user_email = userSessionManager.getSessionUsername(session['_id'])
     print "Session: "
     print session
     print "User Email:"
@@ -134,8 +134,14 @@ def stop_session():
 
 @route('/query', method='post')
 def ajax_test():
+    session = request.environ.get('beaker.session');
     body = json.loads(request.body.read())
-    keywords = body['keywords']
+    keywords = body['keywords'];
+    
+    if userSessionManager.isSessionActive(session['_id']):
+        user = userSessionManager.getUserBySessionId(session['_id']);
+        user.setLastSearched(keywords);
+        
     keywords = searchResultsHelper.extract_keywords(keywords);
     keywords = searchResultsHelper.lower_case(keywords);
     result = searchResultsService.find_word(keywords);
@@ -147,13 +153,20 @@ def ajax_test():
 
 @route('/gethistory', method='post')
 def get_history():
-    # username as parameter
-    # SIGNED IN ONLY return Array of strings for top 20 & History (last 10 searched) 
-    # Index 0 Top 20, Index 1 Top 10
-    # [[ TOP 20 ARRAY], [LAST 10 ARRAY]]
-
-    # SIGNED IN ONLY return Array of strings for top 20 & History (last 10 searched)
-    return json.dumps({0: ["loki", "bear", "watson", "knitting"], 1: ["hamilton", "cups", "coffee", "aaron", "burr"]})
+    session = request.environ.get('beaker.session');
+    if session['signed_in']:
+        return_json = {};
+        user = userSessionManager.getUserBySessionId(session['_id']);
+        signed_in_data = signed_in_results(user.getLastSearched(), user.getHistory(), user.getMostRecent(), user.getUsername());
+        user.setHistory(signed_in_data[1]);
+        user.setMostRecent(signed_in_data[2]);
+        return_json[0] = ordered_dict_to_array(user.getHistory());
+        return_json[1] = ordered_dict_to_array(user.getMostRecent());
+        
+        return json.dumps(return_json);
+    else:
+        return json.dumps({});
+#     return json.dumps({0: ["loki", "bear", "watson", "knitting"], 1: ["hamilton", "cups", "coffee", "aaron", "burr"]})
 
 @route('/lab1unittest')
 def lab1_unit_test():
