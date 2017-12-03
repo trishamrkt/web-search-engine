@@ -32,7 +32,7 @@ class UserRepository():
         if username not in self.__user_table:
             print 'Saving user: ' + username;
             user = User();
-            user.setUserInfo(username);
+#             user.setUserInfo(username);
             self.__user_table[username] = user;
         else:
             print 'User already exists in database, updating current user'

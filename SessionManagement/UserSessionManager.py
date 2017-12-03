@@ -20,7 +20,7 @@ class UserSessionManager():
         else:
             return None;
     
-    def setSessionActive(self, session):
+    def setSessionActive(self, session, username):
         session['signed_in'] = True;
         self.addNewSession(session['_id'], username);
 

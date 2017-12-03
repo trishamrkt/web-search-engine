@@ -101,7 +101,7 @@ def googao_session_login():
     username = body['username'];
     
     if userRepository.getUserById(username) != None:
-        userSessionManager.setSessionActive(request.environ.get('beaker.session'));
+        userSessionManager.setSessionActive(request.environ.get('beaker.session'), username);
         return json.dumps({'username':username, 'success':True});
     else:
         # Return username and success/failure
@@ -119,7 +119,7 @@ def googao_session_signup():
         return json.dumps({'username':username, 'message':'Username already taken', 'success':False});
     else:
         userRepository.createAndSaveUser(username);
-        userSessionManager.setSessionActive(request.environ.get('beaker.session'));
+        userSessionManager.setSessionActive(request.environ.get('beaker.session'), username);
         return json.dumps({'username':username, 'message':'', 'success':True});
 
     print userSessionManager.getActiveSessions();
