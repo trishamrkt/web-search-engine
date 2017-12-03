@@ -136,6 +136,10 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
     $scope.login_submit = "Sign up";
   }
 
+  $scope.signout = function() {
+    $scope.signed_in = false;
+  }
+
   $scope.close_login = function() {
     $scope.login_display = false;
   }
