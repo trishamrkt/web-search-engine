@@ -24,6 +24,36 @@ import pprint
 from beaker.middleware import SessionMiddleware
 from boto.cloudsearch.search import SearchResults
 
+print ' '
+print '   ____  ___   ___   ____    _    ___  '
+print '  / ___|/ _ \ / _ \ / ___|  / \  / _ \ '
+print ' | |  _| | | | | | | |  _  / _ \| | | |'
+print ' | |_| | |_| | |_| | |_| |/ ___ \ |_| |'
+print '  \____|\___/ \___/ \____/_/   \_\___/ '
+
+print ' '
+print '/\            /\      .____          .____     '
+print '\ \           \ \     |    |    ____ |    |    '
+print ' \ \   UofT    \ \    |    |   /  _ \|    |    '
+print '  \ \           \ \   |    |__(  <_> )    |___ '
+print '   \ \___________\ \  |_______ \____/|_______ \\'  
+print '    \/_____/_____/\/          \/             \/' 
+print '                                 ___      ._.  '
+print '                                /  /      | |  '
+print '                               /  /       |_|  '
+print '                              (  (        |-|  '
+print '                               \  \   /\  | |  '
+print '                                \__\  \/  |_|  '
+print '                                    ._.  ._.   '
+print '                                    | |  | |   '
+print '                                    |_|  |_|   '
+print '                                    |-|  |-|   '
+print '                                    | |  | |   '
+print '                                    | |  | |   '
+print 'Developed by: Patricia Marukot, Jimmy Li 1T9 \n\n'
+
+
+
 
 textUrlData = TextUrlData();
 pageRankData = PageRankData();
