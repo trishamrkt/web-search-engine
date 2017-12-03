@@ -5,7 +5,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.no_results = false;
   $scope.login_display = false;
   $scope.login_success = true;
-  $scope.user_name = "";
+  $scope.user_name = "Sign in";
   $scope.login_submit = "Login"
   $scope.no_account = true;
   $scope.request_time = 0;
@@ -36,7 +36,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
 		  var data = response.data;
 		  if (data.success == true) {
 			  $scope.close_login();
-			  $scope.user_name = data.username;
+			  $scope.user_name = username;
         $scope.signed_in = true;
 		  } else {
 			  $scope.login_success = false;
