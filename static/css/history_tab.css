@@ -1,7 +1,9 @@
 .history-row {
   width: 100%;
+  font-family: Amiko;
 }
 
 .hist-col {
+  float: left;
   width: 50%;
 }
