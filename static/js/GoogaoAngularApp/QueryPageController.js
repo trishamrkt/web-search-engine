@@ -26,7 +26,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.googaoLogin = function(e, username, req_url) {
 	  console.log("Googao Login Time Baby");
 	  e.preventDefault();
-
+	  
 	  $http({
 		  method : "POST",
 	      url : req_url,
@@ -37,7 +37,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
 		  if (data.success == true) {
 			  $scope.close_login();
 			  $scope.user_name = username;
-        $scope.signed_in = true;
+			  $scope.signed_in = true;
 		  } else {
 			  $scope.login_success = false;
 		  }
@@ -133,6 +133,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
 
   $scope.signup = function() {
     $scope.no_account = false;
+    $scope.login_success = true;
     $scope.login_submit = "Sign up";
   }
 
@@ -142,6 +143,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
 
   $scope.close_login = function() {
     $scope.login_display = false;
+    $scope.login_success = true;
   }
 
 
