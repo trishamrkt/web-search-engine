@@ -76,10 +76,10 @@ def render_home_page():
     print session
     print "User Email:"
     print user_email
-    
+
     if 'signed_in' not in session or not userSessionManager.isSessionActive(session['_id']):
         session['signed_in'] = False
-    
+
     if request.query_string == '' or not request.query['keywords'].strip():
         return template('index', signedIn= user_email if session['signed_in'] else "Sign In")
 
@@ -100,14 +100,14 @@ def googao_session_login():
     body = json.loads(request.body.read())
     print body;
     username = body['username'];
-    
+
     session = request.environ.get('beaker.session');
     session['signed_in'] = True;
     userSessionManager.addNewSession(session['_id'], username);
-    
+
     print "Active Sessions:"
     print userSessionManager.getActiveSessions();
-    
+
     return json.dumps({'username':username, 'success':False});
 
 @route('/logout')
@@ -118,7 +118,7 @@ def stop_session():
     session['signed_in'] = False;
     redirect('/')
 
-@route('/query', method='get')
+@route('/query', method='post')
 def ajax_test():
     body = json.loads(request.body.read())
     keywords = body['keywords']
@@ -127,15 +127,15 @@ def ajax_test():
     result = searchResultsService.find_word(keywords);
     time = result[1];
     print "Time taken: " + str(time) + 'ms';
-    
+
     split_results = searchResultsService.get_return_results(result[0])
     return json.dumps(split_results)
 
-@route('/gethistory', method='get')
+@route('/gethistory', method='post')
 def get_history():
-    # SIGNED IN ONLY return Array of strings for top 20 & History (last 10 searched) 
-    
-    pass
+    # SIGNED IN ONLY return Array of strings for top 20 & History (last 10 searched)
+    return json.dumps({0: ["loki", "bear", "watson", "knitting"], 1: ["hamilton", "cups", "coffee", "aaron", "burr"]})
+
 
 @route('/lab1unittest')
 def lab1_unit_test():
