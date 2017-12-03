@@ -74,7 +74,7 @@ class UserSessionManager():
         """
         return (sessionId in self.__active_sessions);
     
-    def getUserEmail(self, sessionId):
+    def getSessionUsername(self, sessionId):
         if sessionId in self.__active_sessions:
             return self.__active_sessions[sessionId];
         
