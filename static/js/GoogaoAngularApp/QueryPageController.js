@@ -1,5 +1,8 @@
-app.controller("queryPageCtrl", function($scope, $http, $location){
+app.controller("queryPageCtrl", function($scope, $http, $location, $window){
   $scope.search_results = []
+  $scope.results_images = []
+  $scope.img_chosen = false;
+  $scope.focused_img_index = -1;
   $scope.page_number = 0;
   $scope.results_page_title = ""
   $scope.no_results = false;
@@ -26,7 +29,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.googaoLogin = function(e, username, req_url) {
 	  console.log("Googao Login Time Baby");
 	  e.preventDefault();
-	  
+
 	  $http({
 		  method : "POST",
 	      url : req_url,
@@ -125,10 +128,60 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
     })
   }
 
+  $scope.display_images = function() {
+    $scope.switch_tabs('/images');
+
+    $http({
+      method: "POST",
+      url: "/getimages",
+      data: { "search_results" : $scope.search_results }
+    }).then(function onSuccess(response) {
+      var data = response.data
+      console.log(data)
+      $scope.results_images = data;
+    })
+  }
+
+  $scope.focus_img = function(img_index) {
+    if (img_index === $scope.focused_img_index){
+      $scope.img_chosen = !$scope.img_chosen;
+    }
+    else {
+      $scope.focused_img_index = img_index
+      $scope.focused_img_url = $scope.results_images[img_index]
+      $scope.img_chosen = true;
+      $window.scrollTo(0,0);
+    }
+  }
+
+  $scope.unfocus = function() {
+    $scope.img_chosen = false;
+    $scope.focused_img_index = -1;
+  }
+
+  $scope.next_img = function() {
+    num_images = $scope.results_images.length
+    if ($scope.focused_img_index < num_images - 1) {
+      $scope.focused_img_index += 1;
+      $scope.focused_img_url = $scope.results_images[$scope.focused_img_index]
+    }
+  }
+
+  $scope.prev_img = function() {
+    num_images = $scope.results_images.length
+    if ($scope.focused_img_index > 0) {
+      $scope.focused_img_index -= 1;
+      $scope.focused_img_url = $scope.results_images[$scope.focused_img_index]
+    }
+  }
+
   $scope.login = function() {
-    $scope.login_submit = "Login";
-    $scope.login_display = true;
-    $scope.no_account = true;
+    console.log($scope.signed_in)
+    if (!$scope.signed_in){
+      $scope.login_submit = "Login";
+      $scope.login_display = true;
+      $scope.no_account = true;
+    }
   }
 
   $scope.signup = function() {

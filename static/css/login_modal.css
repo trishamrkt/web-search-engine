@@ -27,6 +27,12 @@
   font-size: 11pt;
 }
 
+.invalid-usr {
+  color: #d85858;
+  margin-left: 202px;
+  font-size: 10pt;
+}
+
 #signup {
   font-size: 10pt;
   margin-left: 210pt;
