@@ -31,10 +31,10 @@ class UserRepository():
     def createAndSaveUser(self, username):
         if username not in self.__user_table:
             print 'Saving user: ' + username;
-            user = User();
-            user.setUserInfo(username);
+            user = User(username);
+#             user.setUserInfo(username);
             self.__user_table[username] = user;
         else:
-            print 'User already exists in database, updating current user'
-            user = self.__user_table[username];
-            user.setUserInfo(username);
+            print 'User already exists in database, do nothing'
+#             user = self.__user_table[username];
+#             user.setUserInfo(username);

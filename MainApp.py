@@ -3,6 +3,7 @@ from WebScrapingServices.CrawlerService import *
 from ResultsPageServices.TopTwenty import TopTwenty
 from ResultsPageServices.WordData import WordData
 from ResultsPageServices.SearchResultsService import SearchResultsService
+from ResultsPageServices.SearchResultsHelper import SearchResultsHelper
 from HTMLFormatter.HtmlHelper import *
 from SessionManagement.SessionSetup import main_app
 from SessionManagement.User import User
@@ -27,7 +28,8 @@ textUrlData = TextUrlData();
 pageRankData = PageRankData();
 crawlerService = CrawlerService(textUrlData, pageRankData);
 pageRankService = PageRankService(textUrlData, pageRankData);
-searchResultsService = SearchResultsService(textUrlData, pageRankData);
+searchResultsHelper = SearchResultsHelper();
+searchResultsService = SearchResultsService(textUrlData, pageRankData, searchResultsHelper);
 pageRankService.computeAllPageRank();
 
 userRepository = UserRepository();
@@ -69,15 +71,15 @@ def redirect_page():
 @route('/')
 def render_home_page():
     session = request.environ.get('beaker.session')
-    user_email = userSessionManager.getUserEmail(session['_id'])
+    user_email = userSessionManager.getSessionUsername(session['_id'])
     print "Session: "
     print session
     print "User Email:"
     print user_email
-    
+
     if 'signed_in' not in session or not userSessionManager.isSessionActive(session['_id']):
         session['signed_in'] = False
-    
+
     if request.query_string == '' or not request.query['keywords'].strip():
         return template('index', signedIn= user_email if session['signed_in'] else "Sign In")
 
@@ -99,7 +101,7 @@ def googao_session_login():
     username = body['username'];
     
     if userRepository.getUserById(username) != None:
-        userSessionManager.setSessionActive(request.environ.get('beaker.session'));
+        userSessionManager.setSessionActive(request.environ.get('beaker.session'), username);
         return json.dumps({'username':username, 'success':True});
     else:
         # Return username and success/failure
@@ -117,7 +119,7 @@ def googao_session_signup():
         return json.dumps({'username':username, 'message':'Username already taken', 'success':False});
     else:
         userRepository.createAndSaveUser(username);
-        userSessionManager.setSessionActive(request.environ.get('beaker.session'));
+        userSessionManager.setSessionActive(request.environ.get('beaker.session'), username);
         return json.dumps({'username':username, 'message':'', 'success':True});
 
     print userSessionManager.getActiveSessions();
@@ -130,22 +132,41 @@ def stop_session():
     session['signed_in'] = False;
     redirect('/');
 
-@route('/query', method='get')
+@route('/query', method='post')
 def ajax_test():
+    session = request.environ.get('beaker.session');
     body = json.loads(request.body.read())
-    keywords = body['keywords']
-    keyword = keywords.split(" ")[0]
-    result = searchResultsService.find_word(keyword.lower())
-    split_results = searchResultsService.get_return_results(result)
+    keywords = body['keywords'];
+    
+    if userSessionManager.isSessionActive(session['_id']):
+        user = userSessionManager.getUserBySessionId(session['_id']);
+        user.setLastSearched(keywords);
+        
+    keywords = searchResultsHelper.extract_keywords(keywords);
+    keywords = searchResultsHelper.lower_case(keywords);
+    result = searchResultsService.find_word(keywords);
+    time = result[1];
+    print "Time taken: " + str(time) + 'ms';
+
+    split_results = searchResultsService.get_return_results(result[0])
     return json.dumps(split_results)
 
 @route('/gethistory', method='post')
 def get_history():
-    # username as parameter
-    # SIGNED IN ONLY return Array of strings for top 20 & History (last 10 searched) 
-    # Index 0 Top 20, Index 1 Top 10
-    # [[ TOP 20 ARRAY], [LAST 10 ARRAY]]
-    pass
+    session = request.environ.get('beaker.session');
+    if session['signed_in']:
+        return_json = {};
+        user = userSessionManager.getUserBySessionId(session['_id']);
+        signed_in_data = signed_in_results(user.getLastSearched(), user.getHistory(), user.getMostRecent(), user.getUsername());
+        user.setHistory(signed_in_data[1]);
+        user.setMostRecent(signed_in_data[2]);
+        return_json[0] = ordered_dict_to_array(user.getHistory());
+        return_json[1] = ordered_dict_to_array(user.getMostRecent());
+        
+        return json.dumps(return_json);
+    else:
+        return json.dumps({});
+#     return json.dumps({0: ["loki", "bear", "watson", "knitting"], 1: ["hamilton", "cups", "coffee", "aaron", "burr"]})
 
 @route('/lab1unittest')
 def lab1_unit_test():

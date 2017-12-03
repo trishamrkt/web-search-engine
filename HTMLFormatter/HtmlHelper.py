@@ -40,6 +40,12 @@ def signed_in_results(search_string, history, most_recent, email):
 
     return [html, top_twenty_data, most_recent_data];
 
+def ordered_dict_to_array(ordered_dict):
+    array = [];
+    for key, value in ordered_dict.iteritems():
+        array.append(key);
+    return array;
+    
 def create_nav_bar(email, signed_in):
     if signed_in:
         account = email;
