@@ -16,7 +16,7 @@
     <label class="login-labels"><b>Username</b></label></br>
     <input type="text" ng-model="username" id="username" placeholder="Enter username" name="username" required></br>
     <input type="submit" id="login-submit" value="{{login_submit}}">
-    <p style="color:red" ng-show="!login_success">Username not valid!</p>
+    <p class="invalid-usr" ng-show="!login_success">Username not valid!</p>
     <p ng-show="no_account" id="signup">Don't have an account? <a href="/" ng-click="signup()">Sign up</a></p>
   </form>
 
