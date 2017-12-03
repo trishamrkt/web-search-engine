@@ -25,6 +25,7 @@ from beaker.middleware import SessionMiddleware
 from boto.cloudsearch.search import SearchResults
 
 print ' '
+print '=============================================================================================================='
 print '   ____  ___   ___   ____    _    ___  '
 print '  / ___|/ _ \ / _ \ / ___|  / \  / _ \ '
 print ' | |  _| | | | | | | |  _  / _ \| | | |'
@@ -51,6 +52,7 @@ print '                                    |-|  |-|   '
 print '                                    | |  | |   '
 print '                                    | |  | |   '
 print 'Developed by: Patricia Marukot, Jimmy Li 1T9 \n\n'
+print '=============================================================================================================='
 
 
 
