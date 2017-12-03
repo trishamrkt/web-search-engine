@@ -24,6 +24,7 @@ import pprint
 from beaker.middleware import SessionMiddleware
 from boto.cloudsearch.search import SearchResults
 
+
 textUrlData = TextUrlData();
 pageRankData = PageRankData();
 crawlerService = CrawlerService(textUrlData, pageRankData);
@@ -83,23 +84,23 @@ def render_home_page():
 def googao_session_login():
     body = json.loads(request.body.read())
     username = body['username'];
-    
+
     if userRepository.getUserById(username) != None:
         userSessionManager.setSessionActive(request.environ.get('beaker.session'), username);
         return json.dumps({'username':username, 'success':True});
     else:
         # Return username and success/failure
         return json.dumps({'username':username, 'success':False});
-    
+
     print userSessionManager.getActiveSessions();
 
 @route('/googaoSignup', method='post')
 def googao_session_signup():
     body = json.loads(request.body.read())
     username = body['username'];
-    
+
     # Check if username is taken
-    if userRepository.getUserById(username) != None: 
+    if userRepository.getUserById(username) != None:
         return json.dumps({'username':username, 'message':'Username already taken', 'success':False});
     else:
         userRepository.createAndSaveUser(username);
@@ -107,7 +108,7 @@ def googao_session_signup():
         return json.dumps({'username':username, 'message':'', 'success':True});
 
     print userSessionManager.getActiveSessions();
- 
+
 @route('/logout')
 def stop_session():
     session = request.environ.get('beaker.session');
@@ -121,11 +122,11 @@ def ajax_test():
     session = request.environ.get('beaker.session');
     body = json.loads(request.body.read())
     keywords = body['keywords'];
-    
+
     if userSessionManager.isSessionActive(session['_id']):
         user = userSessionManager.getUserBySessionId(session['_id']);
         user.setLastSearched(keywords);
-        
+
     keywords = searchResultsHelper.extract_keywords(keywords);
     keywords = searchResultsHelper.lower_case(keywords);
     result = searchResultsService.find_word(keywords);
@@ -138,20 +139,33 @@ def ajax_test():
 @route('/gethistory', method='post')
 def get_history():
     session = request.environ.get('beaker.session');
-    
+
     if session['signed_in'] != None and session['signed_in']:
         return_json = {};
         user = userSessionManager.getUserBySessionId(session['_id']);
         signed_in_data = signed_in_results(user.getLastSearched(), user.getHistory(), user.getMostRecent(), user.getUsername());
-        
+
         user.setHistory(signed_in_data[1]);
         user.setMostRecent(signed_in_data[2]);
         return_json[0] = [x[0] for x in sorted(user.getHistory().items(), key=lambda(k,v):(v,k), reverse=True)];
         return_json[1] = ordered_dict_to_array(user.getMostRecent());
-        
+
         return json.dumps(return_json);
     else:
         return json.dumps({});
+
+@route('/getimages', method='post')
+def get_images():
+
+    # Request payload: search_results in arrays of 5
+    body = json.loads(request.body.read());
+    pprint.pprint(body['search_results']);
+    urls = concat_arrays(body['search_results']);
+
+    # Returns array of urls for images from order of priority
+    image_urls = crawlerService.get_images_from_urls(urls);
+    unique_urls = crawlerService.make_unique(image_urls)
+    return json.dumps(unique_urls);
 
 @route('/lab1unittest')
 def lab1_unit_test():

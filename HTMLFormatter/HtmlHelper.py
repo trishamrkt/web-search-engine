@@ -56,6 +56,13 @@ def ordered_dict_to_array(ordered_dict):
     pprint.pprint(array);
     
     return array;
+
+def concat_arrays(array_list):
+    a = [];
+    for array in array_list:
+        a = a + array;
+    
+    return a;
     
 def create_nav_bar(email, signed_in):
     if signed_in:
