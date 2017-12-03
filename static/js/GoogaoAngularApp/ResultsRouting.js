@@ -8,5 +8,8 @@ app.config(function($routeProvider){
   })
   .when("/history", {
     templateUrl: "/static/js/GoogaoAngularApp/Templates/HistoryTab.html"
+  })
+  .when("/images", {
+    templateUrl: "/static/js/GoogaoAngularApp/Templates/ImagesTab.html"
   });
 });
