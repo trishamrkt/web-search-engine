@@ -4,6 +4,8 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.results_page_title = ""
   $scope.no_results = false;
   $scope.login_display = false;
+  $scope.login_submit = "Login"
+  $scope.no_account = true;
 
   $scope.search = function(e, query_string) {
     console.log("in function");
@@ -62,7 +64,14 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   }
 
   $scope.login = function() {
+    $scope.login_submit = "Login";
     $scope.login_display = true;
+    $scope.no_account = true;
+  }
+
+  $scope.signup = function() {
+    $scope.no_account = false;
+    $scope.login_submit = "Sign up";
   }
 
   $scope.close_login = function() {
