@@ -9,6 +9,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
     console.log("in function");
     console.log("fuck this")
     e.preventDefault()
+
     $http({
       method : "POST",
       url : "/query",
@@ -33,6 +34,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
       console.log(error)
     });
   }
+
 
   // Function to place search results in search_results array
   $scope.return_results = function(data) {
