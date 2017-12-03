@@ -7,11 +7,15 @@
   <div id="navi-tabs">
     <span class="tabs" id="web">Web</span>
     <span class="tabs">Images</span>
-    <span class="tabs">History</span>
+    <span class="tabs" ng-show="signed_in" ng-click="display_history()">History</a>
   </div>
 </nav>
 
 <h1 id="no-result" ng-show="no_results">sorry, no keyword match found!</h1>
+
+<div class="results">
+	<p class="url-desc"> Results computed in under {{ request_time }} ms</p>
+</div>
 
 <div class="results" ng-repeat="result in search_results[page_number]">
   <a href="{{result.url}}" class="url-titles">{{ result.title }}</a>

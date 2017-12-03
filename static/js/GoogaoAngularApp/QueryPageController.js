@@ -8,14 +8,28 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.user_name = "";
   $scope.login_submit = "Login"
   $scope.no_account = true;
+  $scope.request_time = 0;
+  $scope.signed_in = true;
+  $scope.most_popular = []
+  $scope.history = []
 
-  $scope.googaoLogin = function(e, username) {
+
+  $scope.googao_form_submit = function(e, username) {
+    if ($scope.login_submit === "Login") {
+      $scope.googaoLogin(e, username, "/googaoLogin")
+    }
+    else {
+      $scope.googaoLogin(e, username, "/googaoSignup")
+    }
+  }
+
+  $scope.googaoLogin = function(e, username, req_url) {
 	  console.log("Googao Login Time Baby");
 	  e.preventDefault();
 
 	  $http({
 		  method : "POST",
-	      url : "/googaoLogin",
+	      url : req_url,
 	      data : { "username" : username}
 
 	  }).then(function onSuccess(response){
@@ -23,6 +37,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
 		  if (data.success == true) {
 			  $scope.close_login();
 			  $scope.user_name = data.username;
+        $scope.signed_in = true;
 		  } else {
 			  $scope.login_success = false;
 		  }
@@ -32,14 +47,18 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
 
   $scope.search = function(e, query_string) {
     console.log("in function");
-    console.log("fuck this")
-    e.preventDefault()
-
+    console.log("fuck this");
+    e.preventDefault();
+    var start = performance.now();
     $http({
       method : "POST",
       url : "/query",
       data : { "keywords" : query_string}
     }).then(function onSuccess(response){
+
+      var end = performance.now();
+      $scope.request_time = end - start;
+      console.log($scope.request_time);
 
       // JSON object
       var data = response.data
@@ -86,6 +105,26 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
     $scope.page_number = index;
   }
 
+  $scope.switch_tabs = function(link) {
+    $location.path(link);
+  }
+
+  $scope.display_history = function() {
+    $scope.switch_tabs('/history');
+
+    $http({
+      method: "POST",
+      url: "/gethistory",
+      data: {"username" : $scope.user_name }
+    }).then(function onSuccess(response) {
+      var data = response.data
+      $scope.most_popular = data[0];
+      $scope.history = data[1];
+      console.log($scope.most_popular)
+      console.log($scope.history)
+    })
+  }
+
   $scope.login = function() {
     $scope.login_submit = "Login";
     $scope.login_display = true;
@@ -100,6 +139,8 @@ app.controller("queryPageCtrl", function($scope, $http, $location){
   $scope.close_login = function() {
     $scope.login_display = false;
   }
+
+
 
   // Get length of an arbitrary object
   function length(obj) {
