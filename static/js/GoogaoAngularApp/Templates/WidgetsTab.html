@@ -1,0 +1,35 @@
+<nav class="results-navi">
+  <a href="/" id="navi-title">Googao</a>
+  <form ng-submit="search($event, results_query_string)" action="/query" method="POST">
+    <input type="text" id="navisearch" name="keywords" ng-model="results_query_string" />
+    <input type="submit" style="display:none">
+  </form>
+  <div id="navi-tabs">
+    <span class="tabs" ng-click="switch_tabs('/results')">Web</span>
+    <span class="tabs" ng-click="display_images()">Images</span>
+    <span class="tabs" ng-show="signed_in" ng-click="display_history()">History</span>
+    <span class="tabs" id="web">Widgets</span>
+  </div>
+</nav>
+
+<div class="widgets-container">
+  <div class="news-container">
+    <h1> news </h1>
+    <div ng-repeat="article in news_articles" class="article">
+      <img ng-src="{{ article.image_url }}" class="news-img"\>
+      <a href="{{article.web_url}}" class="news-url">{{ article.headline }}</a>
+      <p class="news-date">{{ article.date }}</p>
+    </div>
+  </div>
+
+  <h1> weather </h1>
+  <div class="weather-container">
+    <div class="forecast" ng-repeat="fc_date in forecast">
+      <img class="fc-img" ng-src="{{ '/static/Images/' + fc_date.img_src}}"\>
+      <p class="fc-temp-h">{{ fc_date.high }}</p>
+      <p class="fc-temp-l">{{ fc_date.low }} <span class="celsius">&deg;C</span></p>
+      <p class="fc-text">{{ fc_date.text }}</p>
+      <p class="w-date">{{ fc_date.date }}</p>
+    </div>
+  </div>
+</div>

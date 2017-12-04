@@ -20,6 +20,10 @@ class UserSessionManager():
         else:
             return None;
     
+    def setSessionActive(self, session, username):
+        session['signed_in'] = True;
+        self.addNewSession(session['_id'], username);
+
     def addNewSession(self, sessionId, email):
         """
         Adds new sessionId to existing active sessions
@@ -70,9 +74,7 @@ class UserSessionManager():
         """
         return (sessionId in self.__active_sessions);
     
-    def getUserEmail(self, sessionId):
+    def getSessionUsername(self, sessionId):
         if sessionId in self.__active_sessions:
             return self.__active_sessions[sessionId];
-        
-        
         

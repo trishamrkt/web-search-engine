@@ -1,0 +1,29 @@
+<nav class="results-navi">
+  <a href="/" id="navi-title">Googao</a>
+  <form ng-submit="search($event, results_query_string)" action="/query" method="POST">
+    <input type="text" id="navisearch" name="keywords" ng-model="results_query_string" />
+    <input type="submit" style="display:none">
+  </form>
+  <div id="navi-tabs">
+    <span class="tabs" ng-click="switch_tabs('/results')">Web</span>
+    <span class="tabs" id="web">Images</span>
+    <span class="tabs" ng-show="signed_in" ng-click="display_history()">History</span>
+    <span class="tabs" ng-click="display_widgets()">Widgets</span>
+  </div>
+</nav>
+
+<div class="image-container">
+  <div class="foc-img-modal" ng-show="img_chosen">
+    <span class="img-close" ng-click="unfocus()">&times;</span>
+    <div class="foc-img-mod-content">
+      <a href="{{focused_img_url}}" target="new">
+        <img class="focused-img" src="{{focused_img_url}}" href="{{focused_img_url}}"\>
+      </a>
+    </div>
+    <span class="img-pag img-prev" ng-click="prev_img()">&#8249;</span>
+    <span class="img-pag img-next" ng-click="next_img()">&#8250;</span>
+  </div>
+  <div class="image" ng-repeat="img_url in results_images track by $index">
+    <img class="img_src" ng-click="focus_img($index)" ng-src="{{ img_url }}" \>
+  </div>
+</div>

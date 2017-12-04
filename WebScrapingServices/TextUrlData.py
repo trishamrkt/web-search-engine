@@ -1,4 +1,5 @@
 import pymongo
+import pprint
 from pymongo import MongoClient
 # contains all the data structures and data access methods
 class TextUrlData():
@@ -13,8 +14,32 @@ class TextUrlData():
         self.__words_per_document = [];
         self.__wordId_to_docIds = {};
         self.__word_to_url = {};
-
-
+        self.__url_to_imageurl = {};
+        self.__news = {};
+        
+    def get_news(self):
+        return self.__news;
+    
+    def set_news(self, news):
+        self.__news = news;
+        
+    # Imageurl in memory accessors
+    def set_imageurls_by_url(self, url, imageurls):
+        if url not in self.__url_to_imageurl:
+            self.__url_to_imageurl[url] = imageurls;
+        else:
+            self.__url_to_imageurl[url] = self.__url_to_imageurl[url] + imageurls;
+    
+    def get_imageurls_by_url(self, url):
+        if url in self.__url_to_imageurl:
+            return self.__url_to_imageurl[url];
+        else:
+            return None;
+    
+    def print_url_to_imageurl(self):
+        pprint.pprint(self.__url_to_imageurl);
+        
+        
     """ DATABASE ACCESS FUNCTIONS:
         All follow 3 steps:
         1. Connect to appropriate collection within GoogaoDB

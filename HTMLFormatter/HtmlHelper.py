@@ -1,5 +1,6 @@
 from ResultsPageServices.WordData import WordData
 from ResultsPageServices.TopTwenty import TopTwenty
+import pprint
 
 # Declare constants for HTML
 TABLE_STYLE = '<link type="text/css" rel="stylesheet" href="/static/css/word_table_data.css"\>'
@@ -40,6 +41,29 @@ def signed_in_results(search_string, history, most_recent, email):
 
     return [html, top_twenty_data, most_recent_data];
 
+def ordered_dict_to_array(ordered_dict):
+    array = [];
+    
+    counter = 0;
+    for key, value in ordered_dict.iteritems():
+        if counter < 20:
+            array.append(key);
+            counter = counter + 1;
+        else:
+            break
+        
+    print "Ordered Array: "
+    pprint.pprint(array);
+    
+    return array;
+
+def concat_arrays(array_list):
+    a = [];
+    for array in array_list:
+        a = a + array;
+    
+    return a;
+    
 def create_nav_bar(email, signed_in):
     if signed_in:
         account = email;

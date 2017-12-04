@@ -1,13 +1,34 @@
+<!-- NAVI BAR WITH SIGN IN BUTTONS -->
 <nav id="navi-bar">
-  <a class="account-buttons" id="login" href="/login">Sign In</a>
-  <a class="account-buttons" id="logout" href="/logout" onclick="signOut()">Sign out</a>
+  <a class="account-buttons" id="login" href="/" ng-click="login()">{{user_name}}</a>
+  <a class="account-buttons" id="logout" href="/logout" ng-click="signout()">Sign out</a>
 </nav>
 
+<!-- LOGIN MODAL CONTAINER -->
+<div class="login-container animate" ng-show="login_display">
+
+
+  <!-- Login form -->
+  <form ng-submit="googao_form_submit($event, username)" action="/googaoLogin" method="POST" class="login-form">
+    <span ng-click="close_login()" class="close">&times;</span>
+
+    <img id="login-char" src="https://s-media-cache-ak0.pinimg.com/originals/20/d5/68/20d5687e43f1adb61d9d93e66542825e.png">
+    <label class="login-labels"><b>Username</b></label></br>
+    <input type="text" ng-model="username" id="username" placeholder="Enter username" name="username" required></br>
+    <input type="submit" id="login-submit" value="{{login_submit}}">
+    <p class="invalid-usr" ng-show="!login_success">Username not valid!</p>
+    <p ng-show="no_account" id="signup">Don't have an account? <a href="/" ng-click="signup()">Sign up</a></p>
+  </form>
+
+</div>
+
+<!-- MAIN LOGO -->
 <div class="main-logo">
   <img src="/static/Images/main_logo.png"/>
 </div>
 
-<form id="search-form" action="/ajaxtest" method="POST" ng-submit="search($event, query_string)">
+<!-- SEARCH BAR  -->
+<form id="search-form" action="/query" method="POST" ng-submit="search($event, query_string)">
   <input id="main-search-bar" type="text" name="keywords" ng-model="query_string"/></br>
   <input id="main-submit" type="submit" value="search"/>
 </form>
