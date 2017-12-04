@@ -15,7 +15,14 @@ class TextUrlData():
         self.__wordId_to_docIds = {};
         self.__word_to_url = {};
         self.__url_to_imageurl = {};
-
+        self.__news = {};
+        
+    def get_news(self):
+        return self.__news;
+    
+    def set_news(self, news):
+        self.__news = news;
+        
     # Imageurl in memory accessors
     def set_imageurls_by_url(self, url, imageurls):
         if url not in self.__url_to_imageurl:
