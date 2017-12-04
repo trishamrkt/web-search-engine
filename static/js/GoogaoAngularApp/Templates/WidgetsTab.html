@@ -15,7 +15,9 @@
 <div class="widgets-container">
   <div class="news-container">
     <div ng-repeat="article in news_articles" class="article">
-      <a href="{{article.web_url}}">{{ article.headline }}</a>
+      <img ng-src="{{ article.image_url }}" class="news-img"\>
+      <a href="{{article.web_url}}" class="news-url">{{ article.headline }}</a>
+      <p class="news-date">{{ article.date }}</p>
     </div>
   </div>
 </div>
