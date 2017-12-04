@@ -15,10 +15,6 @@ from WebScrapingServices.TextUrlData import TextUrlData
 from WidgetServices.NewsWidgetService import NewsWidgetService
 from WidgetServices.WeatherWidgetService import WeatherWidgetService
 
-from oauth2client.client import OAuth2WebServerFlow
-from oauth2client.client import flow_from_clientsecrets
-from googleapiclient.errors import HttpError
-from googleapiclient.discovery import build
 import httplib2
 import json
 import pprint
@@ -72,12 +68,6 @@ weatherWidgetService = WeatherWidgetService()
 userRepository = UserRepository();
 userSessionManager = UserSessionManager(userRepository);
 
-flow = OAuth2WebServerFlow(client_id = 'XXX',
-    client_secret='XXX',
-    scope='https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email',
-    prompt='select_account',
-    redirect_uri='http://ec2-54-174-107-175.compute-1.amazonaws.com/redirect')
-
 app = main_app();
 
 
@@ -85,25 +75,6 @@ app = main_app();
 def root_path():
     uri = flow.step1_get_authorize_url();
     redirect(str(uri));
-
-@route('/redirect')
-def redirect_page():
-    code = request.query.get('code','')
-    credentials = flow.step2_exchange(code)
-    token = credentials.id_token['sub']
-
-    session = request.environ.get('beaker.session')
-    session['access_token'] = token;
-    session['signed_in'] = True;
-
-    http = httplib2.Http();
-    http = credentials.authorize(http);
-    users_service = build('oauth2', 'v2', http=http);
-    user_document = users_service.userinfo().get().execute();
-
-    userRepository.createAndSaveUser(user_document);
-    userSessionManager.addNewSession(session['_id'], user_document['email']);
-    redirect('/');
 
 @route('/')
 def render_home_page():
