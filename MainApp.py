@@ -12,6 +12,8 @@ from SessionManagement.UserSessionManager import UserSessionManager
 from PageRankServices.PageRankData import PageRankData
 from PageRankServices.PageRankService import PageRankService
 from WebScrapingServices.TextUrlData import TextUrlData
+from WidgetServices.NewsWidgetService import NewsWidgetService
+# from WidgetServices.WeatherWidgetService import WeatherWidgetService
 
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.client import flow_from_clientsecrets
@@ -37,8 +39,8 @@ print '/\            /\      .____          .____     '
 print '\ \           \ \     |    |    ____ |    |    '
 print ' \ \   UofT    \ \    |    |   /  _ \|    |    '
 print '  \ \           \ \   |    |__(  <_> )    |___ '
-print '   \ \___________\ \  |_______ \____/|_______ \\'  
-print '    \/_____/_____/\/          \/             \/' 
+print '   \ \___________\ \  |_______ \____/|_______ \\'
+print '    \/_____/_____/\/          \/             \/'
 print '                                 ___      ._.  '
 print '                                /  /      | |  '
 print '                               /  /       |_|  '
@@ -64,6 +66,7 @@ pageRankService = PageRankService(textUrlData, pageRankData);
 searchResultsHelper = SearchResultsHelper();
 searchResultsService = SearchResultsService(textUrlData, pageRankData, searchResultsHelper);
 pageRankService.computeAllPageRank();
+newsWidgetService = NewsWidgetService();
 
 userRepository = UserRepository();
 userSessionManager = UserSessionManager(userRepository);
@@ -198,6 +201,28 @@ def get_images():
     image_urls = crawlerService.get_images_from_urls(urls);
     unique_urls = crawlerService.make_unique(image_urls)
     return json.dumps(unique_urls);
+
+@route('/getnews', method="post")
+def get_news():
+    articles = newsWidgetService.get_news();
+#     article1 = {'headline' : 'Trump lashes out at FBI in series of tweets',
+#                 'date': '2017/03/12',
+#                 'organization': 'THE ASSOCIATED PRESS',
+#                 'web_url': 'https://www.google.ca/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwiipP3djO_XAhUE4IMKHfOtBEEQqUMIKzAA&url=http%3A%2F%2Fwww.cbc.ca%2Fnews%2Fworld%2Ftrump-comey-fbi-tweets-1.4430762&usg=AOvVaw1S2SvRJ6jV024ZOrj1MFjc',
+#                 'image_url' : "https://i.cbc.ca/1.4430900.1512332478!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_620/afp-ut85v.jpg"}
+#     article2 = {'headline' : 'Ottawa confirms Canadian man killed in Trinidad',
+#                 'date': '2017/03/12',
+#                 'organization' : 'WATSON',
+#                 'web_url' : 'https://www.google.ca/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&ved=0ahUKEwiipP3djO_XAhUE4IMKHfOtBEEQqUMILzAB&url=http%3A%2F%2Fwww.cbc.ca%2Fnews%2Fcanada%2Fcanadian-killed-trinidad-tobago-1.4431008&usg=AOvVaw0Y6AjaFPI5fTvzm1yFKSGT',
+#                 'image_url' : 'https://i.cbc.ca/1.4431019.1512341037!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_620/trinidad-disaster.jpg'
+#                 }
+#     article3 = {'headline' : 'Lol: Text message celebrates 25th birthday',
+#                 'date': '2017/03/12',
+#                 'organization': 'THE ASSOCIATED PRESS',
+#                 'web_url' : 'https://www.google.ca/url?sa=t&rct=j&q=&esrc=s&source=newssearch&cd=3&cad=rja&uact=8&ved=0ahUKEwjRsffhje_XAhXn7oMKHToaAUwQqQIIMCgAMAI&url=http%3A%2F%2Fwww.ctvnews.ca%2Fsci-tech%2Flol-text-message-celebrates-25th-birthday-1.3705255&usg=AOvVaw23fDqvOUwQVn6ZPFA-whdu',
+#                 'image_url' : 'https://www.ctvnews.ca/polopoly_fs/1.839140.1340043821!/httpImage/image.jpg_gen/derivatives/landscape_620/image.jpg'
+#                 }
+    return json.dumps(articles);
 
 @route('/lab1unittest')
 def lab1_unit_test():

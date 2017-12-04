@@ -7,23 +7,18 @@
   <div id="navi-tabs">
     <span class="tabs" ng-click="switch_tabs('/results')">Web</span>
     <span class="tabs" ng-click="display_images()">Images</span>
-    <span class="tabs" id="web">History</span>
-    <span class="tabs" ng-click="display_widgets()">Widgets</span>
+    <span class="tabs" ng-show="signed_in" ng-click="display_history()">History</span>
+    <span class="tabs" id="web">Widgets</span>
   </div>
 </nav>
 
-<div class="history-row">
-  <div class="hist-col left-col">
-    <h1>most popular searched words</h1>
-    <ul>
-      <li ng-repeat="word in most_popular">{{word}}</li>
-    </ul>
-  </div>
-
-  <div class="hist-col right-col">
-    <h1>search history</h1>
-    <ul>
-      <li ng-repeat="word in history">{{word}}</li>
-    </ul>
+<div class="widgets-container">
+  <div class="news-container">
+    <h1> news </h1>
+    <div ng-repeat="article in news_articles" class="article">
+      <img ng-src="{{ article.image_url }}" class="news-img"\>
+      <a href="{{article.web_url}}" class="news-url">{{ article.headline }}</a>
+      <p class="news-date">{{ article.date }}</p>
+    </div>
   </div>
 </div>
