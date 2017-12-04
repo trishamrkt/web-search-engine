@@ -21,4 +21,12 @@
       <p class="news-date">{{ article.date }}</p>
     </div>
   </div>
+  <div class="weather-container">
+    <div class="forecast" ng-repeat="fc_date in forecast">
+      <p class="fc-temp">{{ "high: " + fc_date.high + "&deg;C" }}</p>
+      <p class="fc-temp">{{ "low: " + fc_date.low + "&deg;C" }}
+      <p class="fc-text">{{ fc_date.text }}</p>
+      <p class="w-date">{{ fc_date.date }}</p>
+    </div>
+  </div>
 </div>

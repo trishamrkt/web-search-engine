@@ -5,6 +5,7 @@
   padding-top: 30px;
 }
 
+/* NEWS */
 .news-container {
   width: 50%;
   height: 400px;
@@ -54,4 +55,21 @@
 .news-date:hover {
   transition: 0.3s;
   color: #c6c6c6;
+}
+
+/* WEATHER */
+.weather-container {
+  width: 50%;
+  height: 400px;
+  margin: 0 auto;
+}
+
+.forecast {
+  width: 20%;
+  float: left;
+}
+
+.forecast p {
+  margin: 0;
+  padding: 0;
 }

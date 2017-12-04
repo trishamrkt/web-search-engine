@@ -13,7 +13,7 @@ from PageRankServices.PageRankData import PageRankData
 from PageRankServices.PageRankService import PageRankService
 from WebScrapingServices.TextUrlData import TextUrlData
 from WidgetServices.NewsWidgetService import NewsWidgetService
-# from WidgetServices.WeatherWidgetService import WeatherWidgetService
+from WidgetServices.WeatherWidgetService import WeatherWidgetService
 
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.client import flow_from_clientsecrets
@@ -67,6 +67,7 @@ searchResultsHelper = SearchResultsHelper();
 searchResultsService = SearchResultsService(textUrlData, pageRankData, searchResultsHelper);
 pageRankService.computeAllPageRank();
 newsWidgetService = NewsWidgetService();
+weatherWidgetService = WeatherWidgetService()
 
 userRepository = UserRepository();
 userSessionManager = UserSessionManager(userRepository);
@@ -223,6 +224,11 @@ def get_news():
 #                 'image_url' : 'https://www.ctvnews.ca/polopoly_fs/1.839140.1340043821!/httpImage/image.jpg_gen/derivatives/landscape_620/image.jpg'
 #                 }
     return json.dumps(articles);
+
+@route('/getweather', method="POST")
+def get_weather():
+    forecast = weatherWidgetService.get_forecast_by_region("toronto")
+    return json.dumps(forecast)
 
 @route('/lab1unittest')
 def lab1_unit_test():

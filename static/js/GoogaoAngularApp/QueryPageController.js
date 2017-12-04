@@ -16,6 +16,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location, $window){
   $scope.most_popular = [];
   $scope.history = [];
   $scope.news_articles = []
+  $scope.forecast = []
 
 
   $scope.googao_form_submit = function(e, username) {
@@ -181,6 +182,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location, $window){
   $scope.display_widgets = function(){
     $scope.switch_tabs('/widgets')
     get_news();
+    get_weather();
   }
 
   function get_news() {
@@ -196,8 +198,16 @@ app.controller("queryPageCtrl", function($scope, $http, $location, $window){
         new_date = convert_date(date);
         article.date = new_date
       })
+    })
+  }
 
-      console.log($scope.news_articles)
+  function get_weather() {
+    $http({
+      method: "POST",
+      url: "/getweather"
+    }).then(function onSuccess(response){
+      var data = response.data;
+      $scope.forecast = data;
     })
   }
 
