@@ -3,6 +3,8 @@
 -------------------------------------------------
 AMAZON WEB SERVICES INFORMATION:
 -------------------------------------------------
+DEPLOYMENT SCRIPT: /DeploymentScript/FinalDeploymentScript.py
+
 Public IP Address: 54.174.107.175
 
 To Access:
