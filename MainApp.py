@@ -208,6 +208,7 @@ def get_news():
     articles = newsWidgetService.get_news();
     return json.dumps(articles);
 
+
 @route('/getweather', method="POST")
 def get_weather():
     forecast = weatherWidgetService.get_forecast_by_region("toronto")
