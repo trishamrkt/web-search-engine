@@ -11,5 +11,8 @@ app.config(function($routeProvider){
   })
   .when("/images", {
     templateUrl: "/static/js/GoogaoAngularApp/Templates/ImagesTab.html"
+  })
+  .when("/widgets", {
+    templateUrl: "/static/js/GoogaoAngularApp/Templates/WidgetsTab.html"
   });
 });

@@ -15,6 +15,8 @@ app.controller("queryPageCtrl", function($scope, $http, $location, $window){
   $scope.signed_in = false;
   $scope.most_popular = [];
   $scope.history = [];
+  $scope.news_articles = []
+  $scope.forecast = []
 
 
   $scope.googao_form_submit = function(e, username) {
@@ -175,6 +177,56 @@ app.controller("queryPageCtrl", function($scope, $http, $location, $window){
       $scope.focused_img_index -= 1;
       $scope.focused_img_url = $scope.results_images[$scope.focused_img_index]
     }
+  }
+
+  $scope.display_widgets = function(){
+    $scope.switch_tabs('/widgets')
+    get_news();
+    get_weather();
+  }
+
+  function get_news() {
+    $http({
+      method: "POST",
+      url: "/getnews"
+    }).then(function onSuccess(response) {
+      var data = response.data
+      $scope.news_articles = data;
+
+      angular.forEach($scope.news_articles, function(article){
+        var date = new Date(article.date)
+        new_date = convert_date(date);
+        article.date = new_date
+      })
+    })
+  }
+
+  function get_weather() {
+    $http({
+      method: "POST",
+      url: "/getweather"
+    }).then(function onSuccess(response){
+      var data = response.data;
+      $scope.forecast = data;
+    })
+  }
+
+  function convert_date(d) {
+    var year = d.getFullYear();
+    var month = d.getMonth() + 1;
+    var dt = d.getDate();
+    var new_date = ''
+
+    if (dt < 10){
+      dt = '0' + dt
+    }
+    if (month < 10) {
+      month = '0' + month
+    }
+
+    new_date = year +'-'+ month +'-' + dt;
+    console.log(new_date);
+    return new_date
   }
 
   $scope.login = function() {

@@ -24,7 +24,13 @@ class CrawlerService():
     def get_inverted_index(self):
         # Include DB access code to return inverted index
         return
-
+    
+    def get_news(self):
+        return self.__textData.get_news();  
+    
+    def set_news(self, news):
+        return self.__textData.set_news(news);
+    
     # Private Helper Functions
     # Reads input file from base path of application
     def __read_input_file_helper(self, docId_to_url):
