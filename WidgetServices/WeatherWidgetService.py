@@ -23,12 +23,19 @@ class WeatherWidgetService():
             forecast_obj = {};
             forecast_obj['text'] = forecast.text();
             forecast_obj['date'] = forecast.date();
-            forecast_obj['high'] = forecast.high();
-            forecast_obj['low'] = forecast.low();
-        
-        print forecast_array;
+            forecast_obj['high'] = self.__f_to_c(self.__str_to_long(forecast.high()));
+            forecast_obj['low'] = self.__f_to_c(self.__str_to_long(forecast.low()));
+            forecast_array.append(forecast_obj);
+            
         return forecast_array;
     
+    def __str_to_long(self, str):
+        return long(float(str));
+    
+    def __f_to_c(self, temp):
+        return ((temp - 32) * 5/9);
+        
 if __name__ == "__main__":
+    print 'HI THERE'
     weatherWidgetService = WeatherWidgetService();
-    weatherWidgetService.get_forecast_by_region('toronto');
+    print weatherWidgetService.get_forecast_by_region('toronto');
