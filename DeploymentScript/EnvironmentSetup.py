@@ -44,7 +44,7 @@ def env_setup():
         "db.createCollection('word_to_url')",
         'exit',
         "cd /",
-        "cd csc326-project/Datafiles",
+        "cd csc326-project/DataFiles",
         "mongoimport --db GoogaoDB --collection docId_to_url --file docId_to_url.json",
         "mongoimport --db GoogaoDB --collection inbound --file inbound.json",
         "mongoimport --db GoogaoDB --collection num_links --file num_links.json",
