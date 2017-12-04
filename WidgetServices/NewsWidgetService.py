@@ -1,3 +1,4 @@
+from nytimesarticle import articleAPI
 
 class NewsWidgetService():
     
@@ -6,9 +7,8 @@ class NewsWidgetService():
     
     def get_news(self):
         # Returns top 3 news from nyt
-        # Returns top 3 news from nyt
         
-        articles = api.search();
+        articles = self.__nyt_api.search();
         response = articles['response'];
         docs = response['docs'];
         
@@ -32,12 +32,12 @@ class NewsWidgetService():
                     image_url = multimedia[0]['url'] if 'url' in multimedia[0] else None;
                 
                 if publish_date != None and headline != None and web_url != None and image_url != None:
-                    print 'HI WE"RE IN HERE'
+                    
                     snippet = {
                                 'headline': headline,
                                 'date': publish_date,
                                 'web_url': web_url,
-                                'image_url': image_url
+                                'image_url': 'http://www.nytimes.com/' + image_url
                                };
                     print snippet          
                     news.append(snippet);
@@ -45,7 +45,7 @@ class NewsWidgetService():
             else:
                 break;
         
-            return news;
+        return news;
                 
                 
         
