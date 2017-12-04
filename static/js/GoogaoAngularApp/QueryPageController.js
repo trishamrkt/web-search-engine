@@ -15,6 +15,7 @@ app.controller("queryPageCtrl", function($scope, $http, $location, $window){
   $scope.signed_in = false;
   $scope.most_popular = [];
   $scope.history = [];
+  $scope.news_articles = []
 
 
   $scope.googao_form_submit = function(e, username) {
@@ -175,6 +176,21 @@ app.controller("queryPageCtrl", function($scope, $http, $location, $window){
       $scope.focused_img_index -= 1;
       $scope.focused_img_url = $scope.results_images[$scope.focused_img_index]
     }
+  }
+
+  $scope.display_widgets = function(){
+    $scope.switch_tabs('/widgets')
+    get_news();
+  }
+
+  function get_news() {
+    $http({
+      method: "POST",
+      url: "/getnews"
+    }).then(function onSuccess(response) {
+      var data = response.data
+      $scope.news_articles = data;
+    })
   }
 
   $scope.login = function() {

@@ -11,3 +11,11 @@
     <span class="tabs" id="web">Widgets</span>
   </div>
 </nav>
+
+<div class="widgets-container">
+  <div class="news-container">
+    <div ng-repeat="article in news_articles" class="article">
+      <a href="{{article.web_url}}">{{ article.headline }}</a>
+    </div>
+  </div>
+</div>
