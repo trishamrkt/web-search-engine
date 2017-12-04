@@ -190,7 +190,33 @@ app.controller("queryPageCtrl", function($scope, $http, $location, $window){
     }).then(function onSuccess(response) {
       var data = response.data
       $scope.news_articles = data;
+
+      angular.forEach($scope.news_articles, function(article){
+        var date = new Date(article.date)
+        new_date = convert_date(date);
+        article.date = new_date
+      })
+
+      console.log($scope.news_articles)
     })
+  }
+
+  function convert_date(d) {
+    var year = d.getFullYear();
+    var month = d.getMonth() + 1;
+    var dt = d.getDate();
+    var new_date = ''
+
+    if (dt < 10){
+      dt = '0' + dt
+    }
+    if (month < 10) {
+      month = '0' + month
+    }
+
+    new_date = year +'-'+ month +'-' + dt;
+    console.log(new_date);
+    return new_date
   }
 
   $scope.login = function() {
