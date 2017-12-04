@@ -1,0 +1,11 @@
+{"_id":{"$oid":"59ffab5b95f29073f8422328"},"inbound_urls":[],"url":"https://en.wikipedia.org/wiki/Wikipedia:Very_short_featured_articles"}
+{"_id":{"$oid":"59ffab5b95f29073f8422329"},"inbound_urls":[],"url":"https://en.wikipedia.org/wiki/St_Mary%27s_Catholic_School,_Bishop%27s_Stortford"}
+{"_id":{"$oid":"59ffab5b95f29073f842232a"},"inbound_urls":["https://en.wikipedia.org/wiki/New_York_State_Route_373"],"url":"https://en.wikipedia.org/wiki/New_York_State_Department_of_Transportation"}
+{"_id":{"$oid":"59ffab5b95f29073f842232b"},"inbound_urls":["https://en.wikipedia.org/wiki/Keeseville,_New_York"],"url":"https://en.wikipedia.org/wiki/Census-designated_place"}
+{"_id":{"$oid":"59ffab5b95f29073f842232c"},"inbound_urls":["https://en.wikipedia.org/wiki/Wikipedia:Very_short_featured_articles"],"url":"https://en.wikipedia.org/wiki/New_York_State_Route_373"}
+{"_id":{"$oid":"59ffab5b95f29073f842232d"},"inbound_urls":["https://en.wikipedia.org/wiki/Album-equivalent_unit","https://en.wikipedia.org/wiki/St_Mary%27s_Catholic_School,_Bishop%27s_Stortford"],"url":"https://en.wikipedia.org/wiki/Sam_Smith_(singer)"}
+{"_id":{"$oid":"59ffab5b95f29073f842232e"},"inbound_urls":["https://en.wikipedia.org/wiki/New_York_State_Route_373"],"url":"https://en.wikipedia.org/wiki/Keeseville,_New_York"}
+{"_id":{"$oid":"59ffab5b95f29073f842232f"},"inbound_urls":[],"url":"https://en.wikipedia.org/wiki/The_Hamilton_Mixtape"}
+{"_id":{"$oid":"59ffab5b95f29073f8422330"},"inbound_urls":["https://en.wikipedia.org/wiki/The_Hamilton_Mixtape"],"url":"https://en.wikipedia.org/wiki/Album-equivalent_unit"}
+{"_id":{"$oid":"59ffab5b95f29073f8422331"},"inbound_urls":["https://en.wikipedia.org/wiki/Wikipedia:Very_short_featured_articles","https://en.wikipedia.org/wiki/New_York_State_Route_373","https://en.wikipedia.org/wiki/Keeseville,_New_York","https://en.wikipedia.org/wiki/Census-designated_place","https://en.wikipedia.org/wiki/New_York_State_Department_of_Transportation","https://en.wikipedia.org/wiki/The_Hamilton_Mixtape","https://en.wikipedia.org/wiki/Album-equivalent_unit","https://en.wikipedia.org/wiki/Sam_Smith_(singer)","https://en.wikipedia.org/wiki/St_Mary%27s_Catholic_School,_Bishop%27s_Stortford"],"url":"https://en.wikipedia.org/wiki/Main_Page"}
+{"_id":{"$oid":"59ffbb2595f29073f84223d6"},"inbound_urls":[],"url":"http://www.eecg.toronto.edu/"}
