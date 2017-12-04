@@ -1,4 +1,5 @@
 from weather import Weather
+import weather
  
 class WeatherWidgetService():
     
@@ -42,9 +43,13 @@ class WeatherWidgetService():
         elif weather_category == 'Showers':
             img_src = 'showers'
         elif weather_category == 'Breezy':
-            img_src = 'cloudy';       
-        elif weather_category == 'Light Rain':
-            img_src = 'showers';
+            img_src = 'cloudy';   
+        elif weather_category == 'Drizzle':
+            img_src = 'light_showers';    
+        elif weather_category == 'Light Showers':
+            img_src = 'light_showers';
+        elif weather_category == 'Showers':
+            img_src = 'very_showers';
         else:
             img_src = 'partial_cloudy';
         
