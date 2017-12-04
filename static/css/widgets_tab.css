@@ -15,7 +15,6 @@
   float: left;
   width: 30%;
   border: 1px solid #e2e2e2;
-  padding-bottom: 60px;
   margin: 0 5px;
 }
 
@@ -34,6 +33,7 @@
   text-align: left;
   color: #2b2b2b;
   margin-bottom: 50px;
+  padding: 0 2px;
 }
 
 .news-url:hover {
@@ -46,7 +46,9 @@
   font-size: 8pt;
   color: #9b9b9b;
   float: right;
-  padding: 5px;
+  padding: 0 5px;
+  margin-top: 40px;
+  margin-bottom: 0;
 }
 
 .news-date:hover {
