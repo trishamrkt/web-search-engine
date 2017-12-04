@@ -62,6 +62,12 @@ Enter the following commands in:<br>
 
 6. Install PyMongo <br>
     $ pip install pymongo
+   
+7. Install NYT Articles API
+    $ pip install nytiesarticle
+
+8. Install Weather API
+    $ pip install weather-api
     
 NOTE: For MAC users installing OAuth2 Library
 - It is recommended to use a virtual environment for the command line
